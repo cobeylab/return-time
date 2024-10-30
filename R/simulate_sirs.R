@@ -34,7 +34,7 @@ simulate_sirs <- function(b_1=2*(365/7+1/50),
                          npifun=npifun_default,
                          yini,
                          tmin=1900,
-                         tmax=2100) {
+                         tmax=2030) {
   parms <- c(b_1=b_1,
              theta=theta,
              phi=phi,
