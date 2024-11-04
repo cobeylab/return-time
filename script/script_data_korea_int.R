@@ -21,11 +21,12 @@ data_korea_scale_int <- data_korea_int %>%
     total=sum(cases)
   )
 
-roll_total_int <- zoo::rollapply(data_korea_scale_int$total,
+roll_total_int <- zoo::rollapply(filter(data_korea_scale_int, year<2020)$total,
                              width=2*52, mean, partial=TRUE)
 
 scale_korea_int <- c(
-  roll_total_int/tail(roll_total_int, 1)
+  roll_total_int/tail(roll_total_int, 1),
+  rep(1, nrow(data_korea_scale_int)-length(roll_total_int))
 )
 
 data_korea_int_scaled <- data_korea_int %>%

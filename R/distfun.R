@@ -7,7 +7,7 @@ distfun <- function(mat_perturb,
   mat_perturb_scale <- t(t(mat_perturb)/mat_sd)
   mat_unperturb_scale <- t(t(mat_unperturb)/mat_sd)
     
-  mat_dist <- mat_perturb_scale-mat_unperturb_scale
+  mat_dist <- abs(mat_perturb_scale-mat_unperturb_scale)
   
   if (out=="comb") {
     sqrt(rowSums(mat_dist^2))
