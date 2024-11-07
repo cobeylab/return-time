@@ -2,7 +2,7 @@ distfun <- function(mat_perturb,
                     mat_unperturb,
                     time, tbreak,
                     out="comb") {
-  mat_sd <- apply(mat_perturb[time<tbreak,], 2, sd)
+  mat_sd <- apply(mat_unperturb[time<tbreak,], 2, sd)
 
   mat_perturb_scale <- t(t(mat_perturb)/mat_sd)
   mat_unperturb_scale <- t(t(mat_unperturb)/mat_sd)

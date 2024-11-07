@@ -7,6 +7,7 @@ source("../script/script_data_korea_int.R")
 source("../script/script_data_canada_resp.R")
 source("../script/script_data_hongkong_resp.R")
 source("../script/script_data_hongkong_piv.R")
+source("../script/script_data_hongkong_fecal.R")
 
 data_hongkong_piv_all_scaled <- data_hongkong_piv_scaled %>%
   group_by(year, week) %>%
@@ -54,7 +55,7 @@ hongkong_pred <- lapply(split(data_hongkong_all_scaled, data_hongkong_all_scaled
 
 data_korea_all_scaled <- bind_rows(
   data_korea_ari_scaled,
-  filter(data_korea_int_scaled, key=="Norovirus")
+  filter(data_korea_int_scaled, key %in% c("Norovirus", "Astrovirus"))
 )
 
 korea_pred <- lapply(split(data_korea_all_scaled, data_korea_all_scaled$key), function(x) {
@@ -74,7 +75,7 @@ korea_pred <- lapply(split(data_korea_all_scaled, data_korea_all_scaled$key), fu
     key=factor(key,
                levels=c("Adenovirus", "Human metapneumovirus",
                          "Parainfluenza virus", "Rhinovirus",
-                         "RSV", "Human coronavirus", "Bocavirus", "Norovirus"))
+                         "RSV", "Human coronavirus", "Bocavirus", "Norovirus", "Astrovirus"))
   )
 
 canada_pred <- lapply(split(data_canada_resp_scaled, data_canada_resp_scaled$key), function(x) {
@@ -157,7 +158,7 @@ g3 <- ggplot(korea_pred) +
   scale_x_continuous("Year", expand=c(0, 0),
                      breaks=2015:2024) +
   scale_y_continuous("Scaled cases", expand=c(0, 0)) +
-  facet_wrap(~key, scale="free", nrow=8) +
+  facet_wrap(~key, scale="free", ncol=1) +
   ggtitle("Korea") +
   theme(
     panel.grid = element_blank(),

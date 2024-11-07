@@ -30,12 +30,14 @@ model_bhattacharyya <- function(t, y, parms) {
     
     Seff1 <- S + R2 * epsilon12
     Seff2 <- S + R1 * epsilon21
+    Sall <- S + R2 + R1
     
     list(c(dS, dI1, dI2, dR1, dR2, dJ1, dJ2, dR),
          prevalence1=prevalence1,
          prevalence2=prevalence2,
          Seff1=Seff1,
          Seff2=Seff2,
+         Sall=Sall,
          Reff1=beta1/(gamma1+mu)*Seff1,
          Reff2=beta2/(gamma2+mu)*Seff2)
   })

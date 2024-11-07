@@ -198,7 +198,7 @@ g9 <- ggplot(filter(dist_SI_bh1, time >= 2020)) +
   geom_function(fun=function(x) exp(predict(lfit_SI_bh1)[1]) * exp(-ee_bh1*(x-maxt_SI_bh1)),
                 lwd=0.7, lty=3) +
   geom_smooth(data=filter(dist_SI_bh1, time>=maxt_SI_bh1), aes(time, dist), method="lm", col="#224B95") +
-  scale_x_continuous("Year") +
+  scale_x_continuous("Year", breaks=seq(2020, 2030, 2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
   coord_cartesian(ylim=c(1e-5, 10)) +
   theme(
@@ -252,7 +252,57 @@ g12 <- ggplot(filter(dist_SI_bh2, time >= 2020)) +
   geom_function(fun=function(x) exp(predict(lfit_SI_bh2)[1]) * exp(-ee_bh2*(x-maxt_SI_bh2)),
                 lwd=0.7, lty=3) +
   geom_smooth(data=filter(dist_SI_bh2, time>=maxt_SI_bh2), aes(time, dist), method="lm", col="#224B95") +
-  scale_x_continuous("Year") +
+  scale_x_continuous("Year", breaks=seq(2020, 2030, 2)) +
+  scale_y_log10("Distance from attractor", expand=c(0, 0)) +
+  coord_cartesian(ylim=c(1e-5, 10)) +
+  theme(
+    panel.grid = element_blank(),
+    legend.position = "none"
+  )
+
+mat_perturb_SI_bh3 <- matrix(c(ss_perturb_bh$Sall, log(ss_perturb_bh$prevalence1+ss_perturb_bh$prevalence2)), ncol=2)
+mat_unperturb_SI_bh3 <- matrix(c(ss_unperturb_bh$Sall, log(ss_perturb_bh$prevalence1+ss_unperturb_bh$prevalence2)), ncol=2)
+
+dist_SI_bh3 <- distfun(mat_perturb_SI_bh3, mat_unperturb_SI_bh3,
+                       ss_perturb_bh$time,
+                       2020, "all") %>%
+  filter(time>=2020)
+
+g13 <- ggplot(ss_perturb_bh) +
+  annotate("rect", xmin=2020, xmax=2020.5, ymin=-Inf, ymax=Inf, fill="gray80") +
+  geom_line(aes(time, prevalence1+prevalence2, col=group)) +
+  geom_line(data=ss_unperturb_bh, aes(time, prevalence1+prevalence2), col="#EF6351", lty=2) +
+  scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5)) +
+  scale_y_continuous("Infected", expand=c(0, 0), limits=c(0, 0.2)) +
+  scale_color_manual(values=c("#224B95", "#EF6351")) +
+  ggtitle("RSV-hMPV model, both") +
+  theme(
+    panel.grid = element_blank(),
+    legend.position = "none"
+  )
+
+g14 <- ggplot(bind_cols(as.data.frame(mat_perturb_SI_bh3), data.frame(time=time))) +
+  geom_path(aes(V1, exp(V2)), col="#224B95") +
+  geom_path(data=bind_cols(as.data.frame(mat_unperturb_SI_bh3), data.frame(time=time)),
+            aes(V1, exp(V2)), col="#EF6351") +
+  scale_x_continuous("Susceptibles") +
+  scale_y_log10("Infected") +
+  theme(
+    panel.grid = element_blank(),
+    legend.position = "none"
+  )
+
+maxt_SI_bh3 <- dist_SI_bh3$time[which.max(dist_SI_bh3$dist)]
+lfit_SI_bh3 <- lm(log(dist)~time, data=filter(dist_SI_bh3, time>=maxt_SI_bh3))
+
+g15 <- ggplot(filter(dist_SI_bh3, time >= 2020)) +
+  geom_line(aes(time, dist), col="#224B95", alpha=0.2, lwd=1) +
+  geom_vline(xintercept=maxt_SI_bh3, lty=2, col="#224B95") +
+  geom_smooth(data=filter(dist_SI_bh3, time>=maxt_SI_bh3), aes(time, dist), col="orange", method="loess") +
+  geom_function(fun=function(x) exp(predict(lfit_SI_bh3)[1]) * exp(-ee_bh1*(x-maxt_SI_bh3)),
+                lwd=0.7, lty=3) +
+  geom_smooth(data=filter(dist_SI_bh3, time>=maxt_SI_bh3), aes(time, dist), method="lm", col="#224B95") +
+  scale_x_continuous("Year", breaks=seq(2020, 2030, 2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
   coord_cartesian(ylim=c(1e-5, 10)) +
   theme(
@@ -261,8 +311,9 @@ g12 <- ggplot(filter(dist_SI_bh2, time >= 2020)) +
   )
 
 gcomb <- ggarrange(g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12,
+                   g13, g14, g15,
           nrow=3,
           byrow = FALSE,
-          labels=LETTERS[1:12])
+          labels=LETTERS[1:15])
 
-ggsave("figure_schematic.pdf", gcomb, width=12, height=8)
+ggsave("figure_schematic.pdf", gcomb, width=15, height=8)
