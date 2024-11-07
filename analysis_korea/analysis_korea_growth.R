@@ -5,6 +5,7 @@ library(tidyr)
 source("../script/script_data_korea.R")
 source("../script/script_data_korea_int.R")
 source("../R/distfun.R")
+source("../R/takens.R")
 
 name <- c("adeno", "boca", "hcov", "hmpv", "noro", "piv", "rhino", "rsv")
 realname <- c("Adenovirus", "Bocavirus", "Human coronavirus", "Human metapneumovirus",
@@ -45,19 +46,35 @@ for (i in 1:length(name)) {
     
     C <- unname(unlist(dd_samp[,grepl("C\\[", colnames(dd_samp))]))
     
-    tmp <- data.frame(
-      year=truedata_filter$year,
-      week=truedata_filter$week,
-      r=r,
-      logC=log(C)
-    ) %>%
-      group_by(week) %>%
-      mutate(
-        meanr=mean(r[year < 2020], na.rm=TRUE),
-        meanlogC=mean(logC[year < 2020], na.rm=TRUE)
-      )
+    if (name[i] == "noro") {
+      tmp <- data.frame(
+        year=truedata_filter$year,
+        week=truedata_filter$week,
+        r=r,
+        logC=log(C)
+      ) %>%
+        mutate(even=year %% 2) %>%
+        group_by(even, week) %>%
+        mutate(
+          meanr=mean(r[year < 2020], na.rm=TRUE),
+          meanlogC=mean(logC[year < 2020], na.rm=TRUE)
+        )
+      
+    } else {
+      tmp <- data.frame(
+        year=truedata_filter$year,
+        week=truedata_filter$week,
+        r=r,
+        logC=log(C)
+      ) %>%
+        group_by(week) %>%
+        mutate(
+          meanr=mean(r[year < 2020], na.rm=TRUE),
+          meanlogC=mean(logC[year < 2020], na.rm=TRUE)
+        )
+    }
     
-    distdata <- distfun(
+    distdata_rC <- distfun(
       mat_perturb = as.matrix(tmp[,c("r", "logC")]),
       mat_unperturb = as.matrix(tmp[,c("meanr", "meanlogC")]),
       time=tmp$year+tmp$week/52,
@@ -65,13 +82,33 @@ for (i in 1:length(name)) {
       out="all"
     )
     
-    maxt <- distdata$time[which.max(distdata$dist)]
+    maxt_rC <- distdata_rC$time[which.max(distdata_rC$dist)]
     
-    lfit <- lm(log(dist)~time, data=filter(distdata, time >= maxt))
+    lfit_rC <- lm(log(dist)~time, data=filter(distdata_rC, time >= maxt_rC))
     
-    tmp$maxt <- maxt
-    tmp$dist <- distdata$dist
-    tmp$return <- -1/coef(lfit)[[2]]
+    takens_perturb <- takens(tmp$logC, d=2, tau=4)
+    takens_unperturb <- takens(tmp$meanlogC, d=2, tau=4)
+    
+    distdata_takens <- distfun(
+      mat_perturb = takens_perturb,
+      mat_unperturb = takens_unperturb,
+      time=tail(tmp$year+tmp$week/52, -4),
+      tbreak=2020,
+      out="all"
+    )
+    
+    maxt_takens <- distdata_takens$time[which.max(distdata_takens$dist)]
+    
+    lfit_takens <- lm(log(dist)~time, data=filter(distdata_takens, time >= maxt_takens))
+    
+    tmp$maxt_rC <- maxt_rC
+    tmp$dist_rC <- distdata_rC$dist
+    tmp$return_rC <- -1/coef(lfit_rC)[[2]]
+    
+    tmp$maxt_takens <- maxt_takens
+    tmp$dist_takens <- c(rep(0, 4), distdata_takens$dist)
+    tmp$return_takens <- -1/coef(lfit_takens)[[2]]
+    
     tmp$key <- realname[i]
     tmp$id <- j
     tmp$whichsamp <- whichsamp[j]
