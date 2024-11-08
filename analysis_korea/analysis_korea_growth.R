@@ -86,6 +86,10 @@ for (i in 1:length(name)) {
     
     lfit_rC <- lm(log(dist)~time, data=filter(distdata_rC, time >= maxt_rC))
     
+    mean_dist_rC <- mean(distdata_rC$dist[distdata_rC$time<2020], na.rm=TRUE)
+    
+    when_rC <- (log(mean_dist_rC)-coef(lfit_rC)[[1]])/coef(lfit_rC)[[2]]
+    
     takens_perturb <- takens(tmp$logC, d=2, tau=4)
     takens_unperturb <- takens(tmp$meanlogC, d=2, tau=4)
     
@@ -101,13 +105,19 @@ for (i in 1:length(name)) {
     
     lfit_takens <- lm(log(dist)~time, data=filter(distdata_takens, time >= maxt_takens))
     
+    mean_dist_takens <- mean(distdata_takens$dist[distdata_takens$time<2020], na.rm=TRUE)
+    
+    when_takens <- (log(mean_dist_takens)-coef(lfit_takens)[[1]])/coef(lfit_takens)[[2]]
+    
     tmp$maxt_rC <- maxt_rC
     tmp$dist_rC <- distdata_rC$dist
     tmp$return_rC <- -1/coef(lfit_rC)[[2]]
+    tmp$when_rC <- when_rC
     
     tmp$maxt_takens <- maxt_takens
     tmp$dist_takens <- c(rep(0, 4), distdata_takens$dist)
     tmp$return_takens <- -1/coef(lfit_takens)[[2]]
+    tmp$when_takens <- when_takens
     
     tmp$key <- realname[i]
     tmp$id <- j
