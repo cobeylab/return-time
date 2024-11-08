@@ -14,6 +14,7 @@ realname <- c("Adenovirus", "Bocavirus", "Human coronavirus", "Human metapneumov
 nsamp <- 200
 
 estlist <- vector('list', length(name))
+predlist <- vector('list', length(name))
 
 set.seed(101)
 for (i in 1:length(name)) {
@@ -38,6 +39,7 @@ for (i in 1:length(name)) {
   whichsamp <- sample(npost, nsamp)
   
   reslist <- vector('list', nsamp)
+  reslist_pred  <- vector('list', nsamp)
   
   for (j in 1:nsamp) {
     dd_samp <- dd[whichsamp[j],]
@@ -86,9 +88,7 @@ for (i in 1:length(name)) {
     
     lfit_rC <- lm(log(dist)~time, data=filter(distdata_rC, time >= maxt_rC))
     
-    mean_dist_rC <- mean(distdata_rC$dist[distdata_rC$time<2020], na.rm=TRUE)
-    
-    when_rC <- (log(mean_dist_rC)-coef(lfit_rC)[[1]])/coef(lfit_rC)[[2]]
+    pp_rC <- predict(lfit_rC, newdata=data.frame(time=seq(maxt_rC, 2040, by=0.1)))
     
     takens_perturb <- takens(tmp$logC, d=2, tau=4)
     takens_unperturb <- takens(tmp$meanlogC, d=2, tau=4)
@@ -105,19 +105,34 @@ for (i in 1:length(name)) {
     
     lfit_takens <- lm(log(dist)~time, data=filter(distdata_takens, time >= maxt_takens))
     
-    mean_dist_takens <- mean(distdata_takens$dist[distdata_takens$time<2020], na.rm=TRUE)
+    pp_takens <- predict(lfit_takens, newdata=data.frame(time=seq(maxt_takens, 2040, by=0.1)))
     
-    when_takens <- (log(mean_dist_takens)-coef(lfit_takens)[[1]])/coef(lfit_takens)[[2]]
+    reslist_pred[[j]] <- bind_rows(
+      data.frame(
+        time=seq(maxt_rC, 2040, by=0.1),
+        pred=exp(pp_rC),
+        method="growth rate"
+      ),
+      data.frame(
+        time=seq(maxt_takens, 2040, by=0.1),
+        pred=exp(pp_takens),
+        method="Takens' theorem"
+      )
+    ) %>%
+      mutate(
+        key=realname[i],
+        id=j
+      )
     
     tmp$maxt_rC <- maxt_rC
     tmp$dist_rC <- distdata_rC$dist
+    tmp$intercept_rC <-  coef(lfit_rC)[[1]]
     tmp$return_rC <- -1/coef(lfit_rC)[[2]]
-    tmp$when_rC <- when_rC
     
     tmp$maxt_takens <- maxt_takens
     tmp$dist_takens <- c(rep(0, 4), distdata_takens$dist)
+    tmp$intercept_takens <- coef(lfit_takens)[[1]]
     tmp$return_takens <- -1/coef(lfit_takens)[[2]]
-    tmp$when_takens <- when_takens
     
     tmp$key <- realname[i]
     tmp$id <- j
@@ -130,9 +145,15 @@ for (i in 1:length(name)) {
     bind_rows
   
   estlist[[i]] <- resdf
+  
+  predlist[[i]] <- reslist_pred %>%
+    bind_rows
 }
 
 analysis_korea_growth <- estlist %>%
   bind_rows
 
-save("analysis_korea_growth", file="analysis_korea_growth.rda")
+analysis_korea_growth_pred <- predlist %>%
+  bind_rows
+
+save("analysis_korea_growth", "analysis_korea_growth_pred", file="analysis_korea_growth.rda")

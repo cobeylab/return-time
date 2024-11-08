@@ -4,7 +4,7 @@ library(ggplot2); theme_set(theme_bw(base_family = "Times"))
 library(egg)
 load("../analysis_korea/analysis_korea_growth.rda")
 
-analysis_korea_return <- analysis_korea_growth %>%
+summ_korea_resilience <- analysis_korea_growth %>%
   group_by(key, id) %>%
   summarize(
     return_rC=unique(return_rC),
@@ -19,9 +19,24 @@ analysis_korea_return <- analysis_korea_growth %>%
                   labels=c("growth rate", "Takens' theorem"))
   )
 
-ggplot(analysis_korea_return) +
-  geom_violin(aes(key, value, fill=method)) +
-  scale_y_continuous("Return time (years)") +
+summ_korea_when <- analysis_korea_growth %>%
+  group_by(key, id) %>%
+  summarize(
+    when_rC=unique(when_rC),
+    when_takens=unique(when_takens)
+  ) %>%
+  gather(
+    method, value, -id, -key
+  ) %>%
+  mutate(
+    method=factor(method,
+                  levels=c("when_rC", "when_takens"),
+                  labels=c("growth rate", "Takens' theorem"))
+  )
+
+ggplot(summ_korea_resilience) +
+  geom_violin(aes(key, 1/value, fill=method)) +
+  scale_y_continuous("Resilience (1/years)") +
   theme(
     axis.text.x = element_text(angle=45, hjust=1),
     legend.position = "top"

@@ -7,7 +7,6 @@ parameters {
   real r[N-1];
   real<lower=0> r_sd;
   real<lower=0> C0;
-  real<lower=0> phi;
 }
 
 transformed parameters {
@@ -31,9 +30,7 @@ model {
   
   C0 ~ cauchy(0, 1);
   
-  phi ~ normal(0, 10);
-  
   for (i in 1:N) {
-    cases[i] ~ neg_binomial_2(C[i], phi);
+    cases[i] ~ poisson(C[i]);
   }
 }

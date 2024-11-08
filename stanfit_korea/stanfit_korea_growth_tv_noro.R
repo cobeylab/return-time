@@ -17,7 +17,7 @@ stanfit_korea_growth_tv_noro <- sampling(model,
                                          seed=101,
                                          chain=4,
                                          cores=4,
-                                         iter=2000)
+                                         iter=4000)
 
 check_hmc_diagnostics(stanfit_korea_growth_tv_noro)
 get_num_divergent(stanfit_korea_growth_tv_noro)
