@@ -29,8 +29,8 @@ save("stanfit_korea_growth_tv_adeno", file="stanfit_korea_growth_tv_adeno.rda")
 
 ss <- summary(stanfit_korea_growth_tv_adeno)
 
-max(ss$summary[which(!is.na(ss$summary[,10])),10]) ## 1.003
-min(ss$summary[which(!is.na(ss$summary[,10])),9]) ## 774
+max(ss$summary[which(!is.na(ss$summary[,10])),10]) ## 1.002193
+min(ss$summary[which(!is.na(ss$summary[,10])),9]) ## 991.3812
 
 plot(data_fit$cases)
 lines(ss$summary[grepl("C\\[", rownames(ss$summary)),6])
@@ -40,3 +40,9 @@ lines(ss$summary[grepl("C\\[", rownames(ss$summary)),8])
 plot(ss$summary[grepl("r\\[", rownames(ss$summary)),6], type="l")
 lines(ss$summary[grepl("r\\[", rownames(ss$summary)),4])
 lines(ss$summary[grepl("r\\[", rownames(ss$summary)),8])
+
+ss$summary[grepl("r_sd", rownames(ss$summary)),]
+ss$summary[grepl("phi", rownames(ss$summary)),]
+
+plot(density(rnbinom(10000, mu=400, size=172)))
+hist(rpois(10000, 400))

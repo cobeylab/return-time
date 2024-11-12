@@ -31,7 +31,7 @@ model {
   
   C0 ~ cauchy(0, 1);
   
-  phi ~ normal(0, 10);
+  phi ~ normal(0, 500);
   
   for (i in 1:N) {
     cases[i] ~ neg_binomial_2(C[i], phi);

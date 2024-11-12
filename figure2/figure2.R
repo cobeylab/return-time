@@ -94,7 +94,7 @@ g4 <- ggplot(ss_perturb_rsv_pitzer) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5)) +
   scale_y_continuous("Infected", expand=c(0, 0), limits=c(0, 0.13)) +
   scale_color_manual(values=c("#224B95", "#EF6351")) +
-  ggtitle("Realistic RSV model") +
+  ggtitle("Stage-structured model") +
   theme(
     panel.grid = element_blank(),
     legend.position = "none"
@@ -165,7 +165,7 @@ g7 <- ggplot(ss_perturb_bh) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5)) +
   scale_y_continuous("Infected", expand=c(0, 0), limits=c(0, 0.2)) +
   scale_color_manual(values=c("#224B95", "#EF6351")) +
-  ggtitle("RSV-hMPV model, RSV") +
+  ggtitle("Two strain model, strain 1") +
   theme(
     panel.grid = element_blank(),
     legend.position = "none"
@@ -221,7 +221,7 @@ g10 <- ggplot(ss_perturb_bh) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5)) +
   scale_y_continuous("Infected", expand=c(0, 0), limits=c(0, 0.2)) +
   scale_color_manual(values=c("#224B95", "#EF6351")) +
-  ggtitle("RSV-hMPV model, hMPV") +
+  ggtitle("Two strain model, strain 2") +
   theme(
     panel.grid = element_blank(),
     legend.position = "none"
@@ -275,7 +275,7 @@ g13 <- ggplot(ss_perturb_bh) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5)) +
   scale_y_continuous("Infected", expand=c(0, 0), limits=c(0, 0.2)) +
   scale_color_manual(values=c("#224B95", "#EF6351")) +
-  ggtitle("RSV-hMPV model, both") +
+  ggtitle("Two strain model, both strains") +
   theme(
     panel.grid = element_blank(),
     legend.position = "none"
@@ -316,4 +316,4 @@ gcomb <- ggarrange(g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12,
           byrow = FALSE,
           labels=LETTERS[1:15])
 
-ggsave("figure_schematic.pdf", gcomb, width=15, height=8)
+ggsave("figure2.pdf", gcomb, width=15, height=8)

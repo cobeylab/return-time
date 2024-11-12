@@ -17,7 +17,10 @@ stanfit_korea_growth_tv_hmpv <- sampling(model,
                                          seed=101,
                                          chain=4,
                                          cores=4,
-                                         iter=4000)
+                                         iter=4000,
+                                         control=list(
+                                           max_treedepth=12
+                                         ))
 
 check_hmc_diagnostics(stanfit_korea_growth_tv_hmpv)
 get_num_divergent(stanfit_korea_growth_tv_hmpv)
