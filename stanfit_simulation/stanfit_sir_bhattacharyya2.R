@@ -8,7 +8,7 @@ data_all <- data_simulation_bhattacharyya2 %>%
 data_fit <- data_all %>%
   filter(year < 2024)
 
-model <- stan_model("../stanmodel/sir_npi.stan")
+model <- stan_model("../stanmodel/sir_npi_norw.stan")
 
 npiwidth <- 1
 npistart <- which(data_fit$year==2020 & data_fit$week==13)
@@ -25,14 +25,14 @@ standata <- list(
   npiwhich=npiwhich,
   week=data_all$week,
   cases=data_fit$cases,
-  mu=1/50/52,
+  mu=1/70/52,
   pop=1e8,
   gamma=1
 )
 
 stanfit_sir_bhattacharyya2 <- sampling(model,
                              data = standata,
-                             seed=102,
+                             seed=103,
                              chain=4,
                              cores=4,
                              iter=2000,

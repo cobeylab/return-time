@@ -8,7 +8,7 @@ data_all <- data_simulation_bhattacharyya1 %>%
 data_fit <- data_all %>%
   filter(year < 2024)
 
-model <- stan_model("../stanmodel/sir_npi.stan")
+model <- stan_model("../stanmodel/sirs_npi.stan")
 
 npiwidth <- 1
 npistart <- which(data_fit$year==2020 & data_fit$week==13)
@@ -30,32 +30,32 @@ standata <- list(
   gamma=1
 )
 
-stanfit_sir_bhattacharyya1 <- sampling(model,
+stanfit_sirs_bhattacharyya1 <- sampling(model,
                              data = standata,
                              seed=103,
                              chain=4,
                              cores=4,
-                             iter=2000,
+                             iter=4000,
                              control=list(
-                               adapt_delta=0.99,
+                               adapt_delta=0.9,
                                max_treedepth=15
                              ))
 
-check_hmc_diagnostics(stanfit_sir_bhattacharyya1)
-get_num_divergent(stanfit_sir_bhattacharyya1)
-get_num_max_treedepth(stanfit_sir_bhattacharyya1)
-get_low_bfmi_chains(stanfit_sir_bhattacharyya1)
-get_bfmi(stanfit_sir_bhattacharyya1)
+check_hmc_diagnostics(stanfit_sirs_bhattacharyya1)
+get_num_divergent(stanfit_sirs_bhattacharyya1)
+get_num_max_treedepth(stanfit_sirs_bhattacharyya1)
+get_low_bfmi_chains(stanfit_sirs_bhattacharyya1)
+get_bfmi(stanfit_sirs_bhattacharyya1)
 
-save("stanfit_sir_bhattacharyya1", file="stanfit_sir_bhattacharyya1.rda")
+save("stanfit_sirs_bhattacharyya1", file="stanfit_sirs_bhattacharyya1.rda")
 
-ss <- summary(stanfit_sir_bhattacharyya1)
+ss <- summary(stanfit_sirs_bhattacharyya1)
 
 plot(data_fit$rel_recruitment)
 lines((1/50/52*1e8)/ss$summary[grepl("S\\[", rownames(ss$summary)),6], col=2)
 
-max(ss$summary[which(!is.na(ss$summary[,10])),10]) ## 1.008
-min(ss$summary[which(!is.na(ss$summary[,10])),9]) ## 555
+max(ss$summary[which(!is.na(ss$summary[,10])),10]) ## 1.012
+min(ss$summary[which(!is.na(ss$summary[,10])),9]) ## 256.7
 
 plot(data_all$cases)
 lines(ss$summary[grepl("C\\[", rownames(ss$summary)),6])

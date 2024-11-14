@@ -2,13 +2,13 @@ library(dplyr)
 library(rstan)
 load("../data_simulation/data_simulation_bhattacharyya.rda")
 
-data_all <- data_simulation_bhattacharyya1 %>%
+data_all <- data_simulation_bhattacharyya_both %>%
   filter(year >= 2014)
 
 data_fit <- data_all %>%
   filter(year < 2024)
 
-model <- stan_model("../stanmodel/sir_npi.stan")
+model <- stan_model("../stanmodel/sirs_npi.stan")
 
 npiwidth <- 1
 npistart <- which(data_fit$year==2020 & data_fit$week==13)
@@ -30,9 +30,9 @@ standata <- list(
   gamma=1
 )
 
-stanfit_sir_bhattacharyya1 <- sampling(model,
+stanfit_sirs_bhattacharyya_both <- sampling(model,
                              data = standata,
-                             seed=103,
+                             seed=101,
                              chain=4,
                              cores=4,
                              iter=2000,
@@ -41,24 +41,21 @@ stanfit_sir_bhattacharyya1 <- sampling(model,
                                max_treedepth=15
                              ))
 
-check_hmc_diagnostics(stanfit_sir_bhattacharyya1)
-get_num_divergent(stanfit_sir_bhattacharyya1)
-get_num_max_treedepth(stanfit_sir_bhattacharyya1)
-get_low_bfmi_chains(stanfit_sir_bhattacharyya1)
-get_bfmi(stanfit_sir_bhattacharyya1)
+check_hmc_diagnostics(stanfit_sirs_bhattacharyya_both)
+get_num_divergent(stanfit_sirs_bhattacharyya_both)
+get_num_max_treedepth(stanfit_sirs_bhattacharyya_both)
+get_low_bfmi_chains(stanfit_sirs_bhattacharyya_both)
+get_bfmi(stanfit_sirs_bhattacharyya_both)
 
-save("stanfit_sir_bhattacharyya1", file="stanfit_sir_bhattacharyya1.rda")
+save("stanfit_sirs_bhattacharyya_both", file="stanfit_sirs_bhattacharyya_both.rda")
 
-ss <- summary(stanfit_sir_bhattacharyya1)
+ss <- summary(stanfit_sirs_bhattacharyya_both)
 
-plot(data_fit$rel_recruitment)
-lines((1/50/52*1e8)/ss$summary[grepl("S\\[", rownames(ss$summary)),6], col=2)
+max(ss$summary[which(!is.na(ss$summary[,10])),10]) ## 1.02
+min(ss$summary[which(!is.na(ss$summary[,10])),9]) ## 118
 
-max(ss$summary[which(!is.na(ss$summary[,10])),10]) ## 1.008
-min(ss$summary[which(!is.na(ss$summary[,10])),9]) ## 555
-
-plot(data_all$cases)
-lines(ss$summary[grepl("C\\[", rownames(ss$summary)),6])
+plot(data_all$cases, type="l")
+lines(ss$summary[grepl("C\\[", rownames(ss$summary)),6], col=2)
 lines(ss$summary[grepl("C\\[", rownames(ss$summary)),4])
 lines(ss$summary[grepl("C\\[", rownames(ss$summary)),8])
 
