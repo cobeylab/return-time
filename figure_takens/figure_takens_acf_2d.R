@@ -5,6 +5,7 @@ library(egg)
 load("../analysis_takens/analysis_korea_takens_acf_2d.rda")
 load("../analysis_takens/analysis_hongkong_takens_acf_2d.rda")
 load("../analysis_takens/analysis_hongkong_piv_takens_acf_2d.rda")
+load("../analysis_takens/analysis_hongkong_noro_takens_acf_2d.rda")
 load("../analysis_takens/analysis_canada_takens_acf_2d.rda")
 
 summ_korea_takens_acf_2d <- analysis_korea_takens_acf_2d %>%
@@ -45,6 +46,17 @@ summ_hongkong_piv_takens_acf_2d <- analysis_hongkong_piv_takens_acf_2d %>%
     key="Parainfluenza virus"
   )
 
+summ_hongkong_noro_takens_acf_2d <- analysis_hongkong_noro_takens_acf_2d %>%
+  group_by(key) %>%
+  summarise(
+    resilience=resilience[1],
+    resilience_lwr=resilience_lwr[1],
+    resilience_upr=resilience_upr[1]
+  ) %>%
+  mutate(
+    country="Hong Kong"
+  )
+
 summ_canada_takens_acf_2d <- analysis_canada_takens_acf_2d %>%
   group_by(key) %>%
   summarise(
@@ -68,6 +80,7 @@ summ_resilience_acf_2d <-
     summ_korea_takens_acf_2d,
     summ_hongkong_takens_acf_2d,
     summ_hongkong_piv_takens_acf_2d,
+    summ_hongkong_noro_takens_acf_2d,
     summ_canada_takens_acf_2d
   )
 
