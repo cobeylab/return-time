@@ -2,27 +2,22 @@ library(rstan)
 library(posterior)
 library(dplyr)
 library(tidyr)
-source("../script/script_data_korea.R")
-source("../script/script_data_korea_int.R")
+source("../script/script_data_hongkong_resp.R")
 source("../R/distfun.R")
 source("../R/takens.R")
 
-name <- c("adeno", "boca", "hcov", "hmpv", "noro", "piv", "rhino", "rsv")
-realname <- c("Adenovirus", "Bocavirus", "Human coronavirus", "Human metapneumovirus",
-              "Norovirus", "Parainfluenza virus", "Rhinovirus", "RSV")
+name <- c("adeno", "hmpv", "rvev", "rsv")
+realname <- c("adeno", "hmpv", "rvev", "rsv")
 
 reslist <- vector('list', length(name))
 
 for (i in 1:length(name)) {
   print(i)
-  if (name[i] != "noro") {
-    truedata <- data_korea_ari_scaled
-  } else {
-    truedata <- data_korea_int_scaled
-  }
+  truedata <- data_hongkong_resp_scaled
   
   tmp <- truedata_filter <- truedata %>%
-    filter(key==realname[i])
+    filter(key==realname[i]) %>%
+    filter(!is.na(cases))
   
   logcases_pre <- log(filter(truedata_filter, year < 2020)$cases+1)
   
@@ -66,7 +61,7 @@ for (i in 1:length(name)) {
   reslist[[i]] <- tmp
 }
 
-analysis_korea_takens_acf_fnn <- reslist %>%
+analysis_hongkong_takens_acf_fnn <- reslist %>%
   bind_rows
 
-save("analysis_korea_takens_acf_fnn", file="analysis_korea_takens_acf_fnn.rda")
+save("analysis_hongkong_takens_acf_fnn", file="analysis_hongkong_takens_acf_fnn.rda")

@@ -2,24 +2,16 @@ library(rstan)
 library(posterior)
 library(dplyr)
 library(tidyr)
-source("../script/script_data_korea.R")
-source("../script/script_data_korea_int.R")
+source("../script/script_data_canada_resp.R")
 source("../R/distfun.R")
 source("../R/takens.R")
 
-name <- c("adeno", "boca", "hcov", "hmpv", "noro", "piv", "rhino", "rsv")
-realname <- c("Adenovirus", "Bocavirus", "Human coronavirus", "Human metapneumovirus",
-              "Norovirus", "Parainfluenza virus", "Rhinovirus", "RSV")
+realname <- c("AdV", "CoV", "Flu A", "Flu B", "HMPV", "PIV", "RSV", "RV/EV")
+reslist <- vector('list', length(realname))
 
-reslist <- vector('list', length(name))
-
-for (i in 1:length(name)) {
+for (i in 1:length(realname)) {
   print(i)
-  if (name[i] != "noro") {
-    truedata <- data_korea_ari_scaled
-  } else {
-    truedata <- data_korea_int_scaled
-  }
+  truedata <- data_canada_resp_scaled
   
   tmp <- truedata_filter <- truedata %>%
     filter(key==realname[i])
@@ -30,7 +22,7 @@ for (i in 1:length(name)) {
   
   tau <- which(head(acfout$acf, -1) > 0 & tail(acfout$acf, -1) < 0)[1]
   
-  n.fnn <- fnn(logcases_pre, dmax=10, tau=tau, R_tol=10)
+  n.fnn <- fnn(logcases_pre, dmax=15, tau=tau, R_tol=10)
   
   d <- which(n.fnn==0)[1]+1
   
@@ -66,7 +58,7 @@ for (i in 1:length(name)) {
   reslist[[i]] <- tmp
 }
 
-analysis_korea_takens_acf_fnn <- reslist %>%
+analysis_canada_takens_acf_fnn <- reslist %>%
   bind_rows
 
-save("analysis_korea_takens_acf_fnn", file="analysis_korea_takens_acf_fnn.rda")
+save("analysis_canada_takens_acf_fnn", file="analysis_canada_takens_acf_fnn.rda")
