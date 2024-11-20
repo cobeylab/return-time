@@ -2,6 +2,7 @@ library(tidyr)
 library(dplyr)
 library(ggplot2); theme_set(theme_bw(base_family = "Times"))
 library(egg)
+library(mgcv)
 load("../analysis_takens_acf_fnn/analysis_korea_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_hongkong_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_hongkong_piv_takens_acf_fnn.rda")
@@ -43,25 +44,56 @@ analysis_all <- bind_rows(
                           "RSV", "Rhinovirus/Enterovirus")),
       time=year+week/52
     )
-)
+) %>%
+  mutate(
+    key=ifelse(key=="Rhinovirus", "Rhinovirus\nRhinovirus/Enterovirus", key),
+    key=ifelse(key=="Rhinovirus/Enterovirus", "Rhinovirus\nRhinovirus/Enterovirus", key)
+  )
 
 analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]), function(x) {
   if (nrow(x) > 0 & x$key[1] != "Influenza B") {
+    # print(x$key[1])
     x_filter <- x %>%
       filter(!is.na(dist_takens),
              dist_takens > 0)
     
-    loess_fit <- loess(log(dist_takens)~time, data=x_filter)
-    pred <- exp(predict(loess_fit))
+    x_pre <- filter(x, year <2020)
+    
+    pre_mean <- mean(log(x_pre$dist_takens), na.rm=TRUE)
+    
+    loess_fit <- mgcv::gam(log(dist_takens)~s(time), data=x_filter)
+    pred <- c(exp(predict(loess_fit)))
     
     time <- x_filter$time
-    wmax <- which.max(pred)
+    ## dt
+    dpred <- c(NA, diff(pred))
     
-    t_max_pred <- x_filter$time[wmax]
-    t_min_pred <- x_filter$time[which.min(pred[(1:length(pred))>wmax])+wmax]
+    deriv_max <- c(NA, (head(dpred, -1) > 0 & tail(dpred, -1) < 0)) & time > 2020 &
+      pred > 0.5 * max(pred)
     
-    tstart <- (t_min_pred-t_max_pred)*1/4+t_max_pred
-    tend <- (t_min_pred-t_max_pred)*3/4+t_max_pred
+    tmax <- tail(which(deriv_max), 1)
+    max_pred <- pred[tmax]
+    
+    deriv_zero <- (c(NA, (head(dpred, -1) < 0 & tail(dpred, -1) > 0))) & 
+      time > time[tmax]
+    
+    if (any(deriv_zero)) {
+      final_pred <- pred[which(deriv_zero)[1]]
+      
+      ratio <- max_pred/final_pred
+      
+      tstart <- time[tail(which(pred > ratio^(9/10) * final_pred), 1)]
+      
+      tend <- time[tail(which(pred > ratio^(1/10) * final_pred  & time <= time[which(deriv_zero)[1]]), 1)]
+    } else {
+      final_pred <- tail(pred, 1)
+      
+      ratio <- max_pred/final_pred
+      
+      tstart <- time[tail(which(pred > ratio^(9/10) * final_pred), 1)]
+      
+      tend <- time[tail(which(pred > ratio^(1/10) * final_pred), 1)]
+    }
     
     x_filter2 <- x_filter %>%
       filter(
@@ -76,6 +108,12 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
                   levels=0.95,
                   interval="prediction")
     
+    when <- time_pred[which(pp[,1] < pre_mean)[1]]
+    
+    when_lwr <- time_pred[which(pp[,2] < pre_mean)[1]]
+    
+    when_upr <- time_pred[which(pp[,3] < pre_mean)[1]]
+    
     data.frame(
       pred=exp(pp[,1]),
       pred_lwr=exp(pp[,2]),
@@ -84,28 +122,40 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
       key=x$key[1],
       country=x$country[1],
       tstart=tstart,
-      tend=tend
+      tend=tend,
+      pre_mean=pre_mean,
+      when=when,
+      when_lwr=when_lwr,
+      when_upr=when_upr,
+      resilience=-coef(lfit)[[2]],
+      resilience_lwr=-confint(lfit)[2,2],
+      resilience_upr=-confint(lfit)[2,1]
     )
   }
 }) %>%
-  bind_rows
-
-analysis_all_filter <- analysis_all %>%
-  group_by(key, country) %>%
-  filter(
-    time >= maxt_takens
+  bind_rows %>%
+  mutate(
+    key=ifelse(key=="Rhinovirus", "Rhinovirus\nRhinovirus/Enterovirus", key),
+    key=ifelse(key=="Rhinovirus/Enterovirus", "Rhinovirus\nRhinovirus/Enterovirus", key)
   )
 
+analysis_all_summ <- analysis_all_lm %>%
+  group_by(key, country) %>%
+  filter(1:n()==1)
+
 ggplot(analysis_all) +
+  geom_hline(data=analysis_all_summ, aes(yintercept=exp(pre_mean)), lty=2) +
   geom_line(aes(time, dist_takens)) +
-  # geom_smooth(aes(time, dist_takens), method="loess") +
+  # geom_smooth(aes(time, dist_takens), method="gam") +
   geom_ribbon(data=analysis_all_lm, aes(time, ymin=pred_lwr, ymax=pred_upr), fill="red", alpha=0.2) +
   geom_line(data=analysis_all_lm, aes(time, pred), col="red") +
   scale_x_continuous("Year",
-                     breaks=seq(2020, 2030, by=2)) +
-  scale_y_log10("Distance from attractor") +
-  coord_cartesian(xlim=c(2020, 2030), ylim=c(1e-1, 20)) +
+                     breaks=seq(2014, 2030, by=2),
+                     expand=c(0, 0)) +
+  scale_y_log10("Distance from attractor", expand=c(0, 0)) +
+  coord_cartesian(xlim=c(2013, 2027), ylim=c(5e-2, 20)) +
   facet_grid(country~key) +
   theme(
+    strip.background = element_blank(),
     axis.text.x = element_text(angle=45, hjust=1)
   )
