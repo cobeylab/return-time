@@ -46,12 +46,11 @@ analysis_all <- bind_rows(
     )
 ) %>%
   mutate(
-    key=ifelse(key=="Rhinovirus", "Rhinovirus\nRhinovirus/Enterovirus", key),
-    key=ifelse(key=="Rhinovirus/Enterovirus", "Rhinovirus\nRhinovirus/Enterovirus", key)
+    key=ifelse(key=="Rhinovirus", "Rhinovirus/Enterovirus", key)
   )
 
 analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]), function(x) {
-  if (nrow(x) > 0 & x$key[1] != "Influenza B") {
+  if (nrow(x) > 0) {
     # print(x$key[1])
     x_filter <- x %>%
       filter(!is.na(dist_takens),
@@ -82,17 +81,17 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
       
       ratio <- max_pred/final_pred
       
-      tstart <- time[tail(which(pred > ratio^(9/10) * final_pred), 1)]
+      tstart <- time[tail(which(pred > ratio^(8/10) * final_pred & time < time[which(deriv_zero)[1]]), 1)]
       
-      tend <- time[tail(which(pred > ratio^(1/10) * final_pred  & time <= time[which(deriv_zero)[1]]), 1)]
+      tend <- time[tail(which(pred > ratio^(0.5/10) * final_pred  & time <= time[which(deriv_zero)[1]]), 1)]
     } else {
       final_pred <- tail(pred, 1)
       
       ratio <- max_pred/final_pred
       
-      tstart <- time[tail(which(pred > ratio^(9/10) * final_pred), 1)]
+      tstart <- time[tail(which(pred > ratio^(8/10) * final_pred), 1)]
       
-      tend <- time[tail(which(pred > ratio^(1/10) * final_pred), 1)]
+      tend <- time[tail(which(pred > ratio^(0.5/10) * final_pred), 1)]
     }
     
     x_filter2 <- x_filter %>%
@@ -102,7 +101,7 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
     
     lfit <- lm(log(dist_takens)~time, data=x_filter2)
     
-    time_pred <- seq(tstart, 2030, by=0.01)
+    time_pred <- seq(tstart, 2100, by=0.01)
     
     pp <- predict(lfit, newdata=data.frame(time=time_pred),
                   levels=0.95,
@@ -135,27 +134,61 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
 }) %>%
   bind_rows %>%
   mutate(
-    key=ifelse(key=="Rhinovirus", "Rhinovirus\nRhinovirus/Enterovirus", key),
-    key=ifelse(key=="Rhinovirus/Enterovirus", "Rhinovirus\nRhinovirus/Enterovirus", key)
+    key=ifelse(key=="Rhinovirus", "Rhinovirus/Enterovirus", key)
   )
 
 analysis_all_summ <- analysis_all_lm %>%
   group_by(key, country) %>%
   filter(1:n()==1)
 
-ggplot(analysis_all) +
+g1 <- ggplot(analysis_all) +
   geom_hline(data=analysis_all_summ, aes(yintercept=exp(pre_mean)), lty=2) +
   geom_line(aes(time, dist_takens)) +
-  # geom_smooth(aes(time, dist_takens), method="gam") +
   geom_ribbon(data=analysis_all_lm, aes(time, ymin=pred_lwr, ymax=pred_upr), fill="red", alpha=0.2) +
   geom_line(data=analysis_all_lm, aes(time, pred), col="red") +
   scale_x_continuous("Year",
                      breaks=seq(2014, 2030, by=2),
                      expand=c(0, 0)) +
-  scale_y_log10("Distance from attractor", expand=c(0, 0)) +
+  scale_y_log10("Nearest neighbor distance from attractor", expand=c(0, 0)) +
   coord_cartesian(xlim=c(2013, 2027), ylim=c(5e-2, 20)) +
   facet_grid(country~key) +
   theme(
     strip.background = element_blank(),
+    panel.grid = element_blank(),
     axis.text.x = element_text(angle=45, hjust=1)
   )
+
+ggsave("figure_takens_acf_fnn_pred.pdf", g1, width=16, height=6)
+
+g2 <- ggplot(analysis_all_summ) +
+  geom_errorbar(aes(key, ymin=resilience_lwr, ymax=resilience_upr, col=country), width=0, 
+                position = position_dodge(width=0.5))+
+  geom_point(aes(key, resilience, col=country, shape=country), 
+             position = position_dodge(width=0.5), size=3) +
+  scale_y_continuous("Resilience (1/year)") +
+  scale_color_viridis_d("Country") +
+  scale_shape_discrete("Country") +
+  theme(
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank(),
+    legend.position = "top"
+  )
+
+g3 <- ggplot(analysis_all_summ) +
+  geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
+                position = position_dodge(width=0.5)) +
+  geom_point(aes(key, when, col=country, shape=country), 
+             position = position_dodge(width=0.5), size=3) +
+  geom_hline(yintercept = 2025, lty=2) +
+  scale_y_continuous("Prediction horizon") +
+  scale_color_viridis_d("Country") +
+  scale_shape_discrete("Country") +
+  theme(
+    axis.text.x = element_text(angle=45, hjust=1),
+    axis.title.x = element_blank(),
+    legend.position = "none"
+  )
+
+gcomb <- ggarrange(g2, g3)
+
+ggsave("figure_takens_acf_fnn_pred2.pdf", gcomb, width=8, height=6)

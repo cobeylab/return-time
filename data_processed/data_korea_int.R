@@ -2,7 +2,7 @@ library(readxl)
 library(dplyr)
 library(tidyr)
 
-korea_raw <- read_xlsx("../data_korea/korea-intestinal-2024-09-04.xlsx", skip=7) %>%
+korea_raw <- read_xlsx("../data_korea/korea-intestinal-2024-11-20.xlsx", skip=7) %>%
   setNames(c("year", "week", "total",
              "Salmonella", "Vibrio", "ETEC", "EIEC", "EPEC",
              "Campylobacter", "Clostridium perfringens",

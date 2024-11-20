@@ -1,5 +1,4 @@
 data_korea_ari <- read.csv("../data_processed/data_korea_ari.csv") %>%
-  dplyr::filter(year+week/52 <= 2024 + 26/52) %>%
   dplyr::mutate(
     week=ifelse(week==53, 52, week)
   ) %>%

@@ -5,11 +5,11 @@ takens <- function(x,
   
   for (i in 1:d) {
     if (i==1) {
-      coord <- head(x, -tau*(d-1))
-    } else if (i==d) {
       coord <- tail(x, -tau*(d-1))
+    } else if (i==d) {
+      coord <- head(x, -tau*(d-1))
     } else {
-      coord <- tail(head(x, -tau*(d-i)), -tau*(i-1))
+      coord <- head(tail(x, -tau*(d-i)), -tau*(i-1))
     }
     
     out[,i] <- coord
@@ -33,11 +33,12 @@ fnn_internal <- function(x,
   
   tmp_takens2 <- takens(x, d=d+1, tau=tau)
   
-  nn_index[nn_index > nrow(tmp_takens2)] <- NA
+  nn_index2 <- tail(nn_index-tau, -tau)
+  nn_index2[nn_index2 < 1] <- NA
   
-  dist_d2 <- sqrt(rowSums((tmp_takens2 - tmp_takens2[head(nn_index,-tau),])^2))
+  dist_d2 <- sqrt(rowSums((tmp_takens2 - tmp_takens2[nn_index2,])^2))
   
-  R <- dist_d2/head(dist_d, -tau)
+  R <- dist_d2/tail(dist_d, -tau)
   
   sum(R > R_tol, na.rm=TRUE)
 }

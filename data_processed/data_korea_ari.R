@@ -2,7 +2,7 @@ library(readxl)
 library(dplyr)
 library(tidyr)
 
-korea_raw <- read_xlsx("../data_korea/korea-ari-2024-07-23.xlsx", skip=28) %>%
+korea_raw <- read_xlsx("../data_korea/korea-ari-2024-11-20.xlsx", skip=28) %>%
   setNames(c("year", "week", "total", 
              "Adenovirus", "Bocavirus", "Parainfluenza virus",
              "RSV", "Rhinovirus", "Human metapneumovirus", "Human coronavirus")) %>%

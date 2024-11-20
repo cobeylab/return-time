@@ -130,7 +130,8 @@ g1 <- ggplot(canada_pred) +
   geom_line(data=filter(canada_pred, year>=2020), aes(year+week/52, cases), col="#224B95", lwd=0.5) +
   geom_point(data=filter(canada_pred, year>=2020), aes(year+week/52, cases), col="#224B95", size=0.7) +
   scale_x_continuous("Year", expand=c(0, 0),
-                     breaks=2013:2024) +
+                     breaks=2013:2024,
+                     limits=c(2013, 2025)) +
   scale_y_continuous("Scaled cases", expand=c(0, 0)) +
   facet_wrap(~key, scale="free", ncol=1) +
   ggtitle("Canada") +
@@ -150,7 +151,8 @@ g2 <- ggplot(hongkong_pred) +
   geom_line(data=filter(hongkong_pred, year>=2020), aes(time, cases), col="#224B95", lwd=0.5) +
   geom_point(data=filter(hongkong_pred, year>=2020), aes(time, cases), col="#224B95", size=0.7) +
   scale_x_continuous("Year", expand=c(0, 0),
-                     breaks=2013:2024) +
+                     breaks=2013:2024,
+                     limits=c(2013, 2025)) +
   scale_y_continuous("Scaled cases", expand=c(0, 0)) +
   facet_wrap(~key, scale="free", nrow=8) +
   ggtitle("Hong Kong") +
@@ -170,7 +172,8 @@ g3 <- ggplot(korea_pred) +
   geom_line(data=filter(korea_pred, year>=2020), aes(year+week/52, cases), col="#224B95", lwd=0.5) +
   geom_point(data=filter(korea_pred, year>=2020), aes(year+week/52, cases), col="#224B95", size=0.7) +
   scale_x_continuous("Year", expand=c(0, 0),
-                     breaks=2015:2024) +
+                     breaks=2015:2024,
+                     limits=c(2015, 2025)) +
   scale_y_continuous("Scaled cases", expand=c(0, 0)) +
   facet_wrap(~key, scale="free", ncol=1) +
   ggtitle("Korea") +
@@ -183,4 +186,4 @@ g3 <- ggplot(korea_pred) +
 
 gcomb <- ggarrange(g1, g2, g3, ncol=3, labels=c("A", "B", "C"))
 
-ggsave("figure1.pdf", gcomb, width=12, height=8)
+ggsave("figure1.pdf", gcomb, width=12, height=10)
