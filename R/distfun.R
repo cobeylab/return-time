@@ -20,3 +20,12 @@ distfun <- function(mat_perturb,
     out
   }
 }
+
+distfun_nn <- function(mat_perturb,
+                       mat_unperturb) {
+  sapply(1:nrow(mat_perturb), function(i) {
+    dd <- sqrt(colSums((mat_perturb[i,] - t(mat_unperturb))^2))
+    
+    min(dd)
+  })  
+}

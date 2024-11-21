@@ -25,12 +25,12 @@ model_sirs <- function(t, y, par) {
   })
 }
 
-simulate_sirs <- function(b_1=2*(365/7+1/50),
+simulate_sirs <- function(b_1=3*(365/7+1/50),
                          theta=0.2,
                          phi=0,
                          mu=1/50,
                          gamma=365/7,
-                         delta=1,
+                         delta=1/2,
                          npifun=npifun_default,
                          yini,
                          tmin=1900,
@@ -56,15 +56,17 @@ simulate_sirs <- function(b_1=2*(365/7+1/50),
   out
 }
 
-eigen_sirs <- function(b_1=2*(365/7+1/50),
+eigen_sirs <- function(b_1=3*(365/7+1/50),
                        mu=1/50,
                        gamma=365/7,
-                       delta=1) {
+                       delta=1/2) {
   R0 <- b_1/(gamma+mu)
   
   S <- 1/R0
   
   I <- (delta * (1-S) + mu - mu * S)/(delta + b_1 * S)
+  
+  I
   
   R <- (1-S-I)
   

@@ -5,8 +5,7 @@ mi <- function(x,
     mi_internal(x, lag=z, bin=bin)
   })
   
-  plot(ii)
-  
+  ii
 }
 
 mi_internal <- function(x, lag,
