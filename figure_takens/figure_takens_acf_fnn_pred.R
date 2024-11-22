@@ -2,7 +2,7 @@ library(tidyr)
 library(dplyr)
 library(ggplot2); theme_set(theme_bw(base_family = "Times"))
 library(egg)
-library(mgcv)
+library(gridExtra)
 load("../analysis_takens_acf_fnn/analysis_korea_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_hongkong_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_hongkong_piv_takens_acf_fnn.rda")
@@ -60,7 +60,7 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
     
     pre_mean <- mean(log(x_pre$dist_takens), na.rm=TRUE)
     
-    loess_fit <- mgcv::gam(log(dist_takens)~s(time), data=x_filter)
+    loess_fit <- loess(log(dist_takens)~time, data=x_filter, span=0.2)
     pred <- c(exp(predict(loess_fit)))
     
     time <- x_filter$time
@@ -142,6 +142,7 @@ analysis_all_summ <- analysis_all_lm %>%
   filter(1:n()==1)
 
 g1 <- ggplot(analysis_all) +
+  geom_vline(xintercept=2013:2027, lty=3, col="gray") +
   geom_hline(data=analysis_all_summ, aes(yintercept=exp(pre_mean)), lty=2) +
   geom_line(aes(time, dist_takens)) +
   geom_ribbon(data=analysis_all_lm, aes(time, ymin=pred_lwr, ymax=pred_upr), fill="red", alpha=0.2) +
@@ -158,8 +159,6 @@ g1 <- ggplot(analysis_all) +
     axis.text.x = element_text(angle=45, hjust=1)
   )
 
-ggsave("figure_takens_acf_fnn_pred.pdf", g1, width=16, height=6)
-
 g2 <- ggplot(analysis_all_summ) +
   geom_errorbar(aes(key, ymin=resilience_lwr, ymax=resilience_upr, col=country), width=0, 
                 position = position_dodge(width=0.5))+
@@ -171,7 +170,8 @@ g2 <- ggplot(analysis_all_summ) +
   theme(
     axis.text.x = element_blank(),
     axis.title.x = element_blank(),
-    legend.position = "top"
+    legend.position = "top",
+    legend.title = element_blank()
   )
 
 g3 <- ggplot(analysis_all_summ) +
@@ -189,6 +189,10 @@ g3 <- ggplot(analysis_all_summ) +
     legend.position = "none"
   )
 
-gcomb <- ggarrange(g2, g3)
+g1a <- ggarrange(g1, labels=c("A"))
+gcomb <- ggarrange(g2, g3,
+                   labels=c("B", "C"))
 
-ggsave("figure_takens_acf_fnn_pred2.pdf", gcomb, width=8, height=6)
+gfinal <- arrangeGrob(g1a, gcomb, nrow=1, widths=c(4, 1))
+
+ggsave("figure_takens_acf_fnn_pred.pdf", gfinal, width=18, height=6)
