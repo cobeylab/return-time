@@ -196,3 +196,8 @@ gcomb <- ggarrange(g2, g3,
 gfinal <- arrangeGrob(g1a, gcomb, nrow=1, widths=c(4, 1))
 
 ggsave("figure_takens_acf_fnn_pred.pdf", gfinal, width=18, height=6)
+
+save("analysis_all",
+     "analysis_all_lm",
+     "analysis_all_summ",
+     file="figure_takens_acf_fnn_pred.rda")

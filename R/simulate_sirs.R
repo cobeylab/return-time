@@ -66,8 +66,6 @@ eigen_sirs <- function(b_1=3*(365/7+1/50),
   
   I <- (delta * (1-S) + mu - mu * S)/(delta + b_1 * S)
   
-  I
-  
   R <- (1-S-I)
   
   ((delta + mu + b_1 * I)/2)
