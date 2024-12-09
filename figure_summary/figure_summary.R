@@ -92,6 +92,13 @@ g1 <- ggplot(summdata) +
 
 g2 <- ggplot(summdata) +
   geom_raster(aes(R0, 1/delta, fill=replenish*100)) +
+  geom_contour(aes(R0, 1/delta, z=resilience),
+               breaks=analysis_all_summ_mean$resilience,
+               col="white") +
+  geom_text_repel(data=analysis_all_summ_mean, aes(3.04, 1/delta, label=key),
+                  direction = "y",
+                  segment.color = NA,
+                  hjust=0) +
   scale_x_continuous("Basic reproduction number", expand=c(0, 0),
                      breaks=c(1.5, 2, 2.5, 3),
                      limits = c(NA,4)) +
