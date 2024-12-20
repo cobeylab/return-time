@@ -112,6 +112,7 @@ g2 <- ggplot(summdata) +
     legend.justification = "left"
   )
 
-gcomb <- ggarrange(g1, g2, nrow=2)
+gcomb <- ggarrange(g1, g2, nrow=1,
+                   labels=c("A", "B"))
 
-ggsave("figure_summary.pdf", gcomb, width=6, height=10)
+ggsave("figure_summary.pdf", gcomb, width=12, height=5)

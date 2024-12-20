@@ -90,7 +90,7 @@
 \begin{flushleft}{
 	\Large
 	\textbf\newline{
-		Predicting pathogen return to regular cycles 
+		Susceptible host dynamics explain pathogen resilience
 	}
 }
 \newline
@@ -173,23 +173,111 @@ Finally, deviation from an exponential decrease in the distance from attractor c
 \section*{Inferring pathogen resilience from real data}
 
 Based on these obsevations, we now set out to infer pathogen resilience from real data.
-To do so, we use Takens' theorem to reconstruct the empirical attractor.
-Briefly, Takens' theorem
+To do so, we first reconstruct an empirical attractor by utilizing Takens' theorem, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding.
+Here, we use delayed copies of logged values of pre-pandemic cases, $C(t)$, to reconstruct the attractor:
+\begin{equation}
+\langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
+\end{equation}
+where the delay $\tau$ and embedding dimension $M$ is determined based on autocorrelations and false nearest neighbors.
+This allows us to measure nearest neighbor distance between the current state of the system and the empirical attractor at any given point in time, from which we can quantify how fast this distance decreases by fitting a linear regression on a log scale.
+Then, the resulting estimate of the slope of linear regression corresponds to pathogen resilience.
+Estimates of distance from attractor and linear regressions fits are presented in \swp{TODO: Supplementary Materials.}
+
+For most pathogens, resilience estimates are consistent across different countries with a few exceptions (Figure 3A).
+For example, resilience estimates for adenovirus for Hong Kong and South Korea are orders of magnitudes lower than the corresponding estimate for Canada.
+Another exception is human metapneumovirus, where the estimated resilience for Hong Kong is considerably higher than in other countries.
+Otherwise, we find that resilience estiamtes range between 1--3/years for most other pathogens, suggesting a rather fast return to their regular outbreak cycles.
 
 \begin{figure}[!th]
-\includegraphics[width=\textwidth]{../figure_takens/figure_takens_acf_fnn_pred.pdf}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../figure3/figure3.pdf}
 \caption{
-\textbf{Quantitative framework for estimating pathogen resilience following NPIs.}
+\textbf{Summary of resilience estimates.}
+(A) Estimated pathogen resilience.
+(B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
+The dashed line in panel B indicates the end of 2024 (current observation time).
+Error bars represent 95\% confidence intervals.
 }
+\end{center}
 \end{figure}
 
+Using resilience estimates, we now predict when each pathogen will return to their original pre-pandemic cycles.
+Specifically, we extend our linear regression fits to empirical estimates of distance from attractor and ask when the predicted regression line will cross a threshold value, which we set to a mean of pre-pandemic distances.
+Surprisingly, we find that most pathogens should have returned to their original cycles by the end of 2024 (Figure 3B).
+While these predictions are consistent with several pathogens (e.g., seasonal coronavirus epidemics in Canada and Korea in Figure 1),
+there are a few inconsistencies.
+For example, we predict that bocavirus epidemics in Korea should have returned by the end of 2023 (Figure 3B), but the observed patterns indicate clear deviation from pre-pandemic cycles (Figure 1).
+These deviations, alongside plateaus in the estimated distance from attractor, suggest that some of these pathogens, such as Bocavirus, may have converged to different attractors.
+
+\section*{Susceptible host dynamics explain variation in pathogen resilience}
+
+So far, we focused on quantifying pathogen resilience from the observed patterns of pathogen re-emergence following COVID-19 interventions.
+But what factors determine how resilient a host-pathogen system is?
+Here, we use a standard Susceptible-Infected-Recovered-Susceptible (SIRS) model to show that susceptible host dynamics explain variation in pathogen resilience.
+To do so, we vary the basic reproduction number $\mathcal R_0$, which represents the average number of secondary infections caused by a newly infected individual in a fully susceptible population, and the duration of immunity and compute intrinsic resilience for each parameter.
 
 \begin{figure}[!th]
-\includegraphics[width=0.5\textwidth]{../figure_summary/figure_summary.pdf}
+\begin{center}
+\includegraphics[width=\textwidth]{../figure_summary/figure_summary.pdf}
 \caption{
-\textbf{Quantitative framework for estimating pathogen resilience following NPIs.}
+\textbf{Linking pathogen resilience to epidemiological parameters and susceptible host dynamics.}
+(A) The heatmap represents intrinsic resilience as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+(B) The heatmap represents per-capita susceptible replenishment rate as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+The standard SIRS model is used to compute intrinsic resilience and per-capita susceptible replenishment rate.
+Lines correspond to a set of parameters that are consistent with mean resilience estimates for each pathogen.
+Pathogens are ranked based on their mean resilience estimates, averaged across different countries.
 }
+\end{center}
 \end{figure}
 
+We find that pathogen resilience increases with higher $\mathcal R_0$ and shorter duration of immunity (Figure 4A).
+These variations can be understood in terms of the susceptible host dynamics, where faster per-capita susceptible replenishment rate causes the system to be more resilient (Figure 4B).
+This rate can be expressed as a ratio between absolute rate at which new susceptibles enter the population and the equilibrium number of susceptible individuals in the population, $\bar{S}$.
+Therefore, both higher $\mathcal R_0$ and shorter duration of immunity can drive faster per-capita susceptible replenishment rate  (Figure 4B), especially because higher $\mathcal R_0$ leads to lower $\bar{S}$.
+
+Finally, we can now rank different pathogens based on their empirical resilience.
+For simplicity, we take the average of resilienc estimates across countries to determine the ranking, which shows that influenza B is least resilient (Figure 4A).
+This observation is consistent with the extinction of influenza B/Yamagata, which indiates the persistence of a pathogen should be associated with its resilience.
+Similarities in resilience ranking between RSV and Human metapneumovirus is also interesting, given the apparent coupling of their dynamics through cross immunity.
+These rankings further allow us to map each pathogen onto a set of parameters that are consistent with its empirical resilience (Figure 4A) and obtain a plausible range of suscetible replenishment rates for each pathogen (Figure 4B).
+
+\section*{Discussion}
+
+The COVID-19 interventions have caused major disruptions to circulation patterns of both respiratory and non-respiratory pathogens, adding challenges to predicting their future dynamics.
+On the other hand, these interventions offer large-scale natural experiments for understanding how different pathogens respond to perturbations.
+In this study, we show that pathogen re-emergence patterns following COVID-19 interventions can be characterized through the lens of ecological resilience.
+Traditionally, ecological resilience measures how fast a system returns to a reference state following a perturbation.
+In the context of respiratory pathogens, resilience measures how fast epidemics return to their endemic cycles after interventions are lifted.
+% Our study demonstrates that this perspective provides unique insights into underlying susceptible host dynamics and allows predictions for when epidemics will return to their endemic cycles.
+
+We use an attractor reconstruction approach to quantify how distance from attractor changes over time for each pathogen.
+By fitting a linear regression to log distances, we can estimate pathogen resilience and further predict when each pathogen will return to their endemic cycles.
+Consistency in resilience estimates across countries is particularly surprising given that each country imposed different intervention measures; this consistency provides robustness to our estimates.
+The ability to predict future epidemic patterns from resilience estimates also offers a new paradigm for epidemic forecasting.
+While this approach cannot predict the exact timing of outbreaks or epidemic patterns, it is nonetheless useful for predicting when epidemics will settle down to regular cycles after a large perturbation, such as COVID-19 interventions.
+
+Our analyses suggest a possibility that several pathogens may have converged to different endemic cycles compared to their pre-pandemic epidemic patterns.
+Key examples include human metapnuemovirus, RSV, and bocavirus in South Korea as well as RSV in Hong Kong.
+These changes may reflect permanent changes in behavior since 2020 or a shift in population-level immunity.
+However, it seems unlikely that permanent changes in behavior would only affect a few pathogens and not others.
+A shift in population-level immunity is plausible, as the emergnence of SARS-CoV-2 and extinction of influenza B/Yamagata likely caused major changes in immune landscapes;
+however, we currently do not know how immunity, or lack thereof, from these pathogens would affect infection from other pathogens.
+Future studies should use detailed mechanistic models, coupled with behavioral and immunological data, to test these hypotheses and better understand post-pandemic dynamics of endemic pathogens.
+
+We show that susceptible host dynamics shape pathogen resilience, where faster replenishment of the susceptible population causes the pathogen to be more resilient.
+For simplicity, we focus on waning immunity and birth as a main driver of the susceptible host dynamics but other mechanisms can also contribute to the replenishment of the susceptible population.
+In particular, pathogen evolution, especially the emergence of antigenically novel strains, can cause effective waning of immunity in the population;
+therefore, we tentatively hypothesize that faster rates of antigenic evolution can also cause a pathogen to be more resilient.
+Future studies should explore the relationship between the rate of evolution and resilience for antigenically evolving pathogens.
+
+Quantifying pathogen resilience also offers novel approaches to validating epidemiological models.
+So far, the majority of model validation in epidemiology is based on the ability of a model to reproduce the observed epidemic dynamics and to predict future dynamics.
+However, there can be plethora of models that meet these criteria.
+For example, two major RSV models have been proposed so far to explain biennial epidemic patterns: (1) a stage- and age-structured model that allows for disease severity to vary with number of past infections and age of infection and (2) a pathogen-interaction model that accounts for cross immunity between RSV and human metapnuemovirus.
+Since both models can accurately reproduce the observed epidemic patterns, standard criteria for model validation do not allow us to distinguish between these two models.
+Instead, we can measure the empirical resilience of each model by simulating various perturbations and.
+
+There are several limiations to our work.
+In particular, our estimates of pathogen resilience and the associated ranking are necessarily crude.
 
 \end{document}
