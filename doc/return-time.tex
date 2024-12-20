@@ -114,7 +114,7 @@ These responses are often characterized in terms of resilience, which captures h
 Both theoretical and empirical efforts to quantify resilience of ecological systems have provided key insights for understanding the dynamics of complex systems and linking these findings to actionable strategies for species conservation.
 % However, despite rich literature on ecological resilience, there have been limited applications to measuring the resilience of host-pathogen systems, especially for human pathogens.
 
-Non-pharmaceutical interventions (NPIs) to slow the spread of COVID-19 disrupted the transmission of other human pathogens, providing large-scale natural experiments for understanding how various host-pathogen systems respond to peturbations.
+Non-pharmaceutical interventions (NPIs) to slow the spread of COVID-19 disrupted the transmission of other human pathogens, providing large-scale natural experiments for understanding how various host-pathogen systems respond to perturbations.
 In particular, as interventions lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries (Figure 1), likely reflecting heterogeneities in NPI patterns and pathogen characteristics.
 Even though more than four years have already passed since the emergence of COVID-19, many pathogens appear to be far from their regular, seasonal patterns, especially in Hong Kong and South Korea (Figure 1).
 These observations pose two fundamental questions for current and future infectious disease dynamics: (1) can we learn something about pathogen characteristics from the patterns of re-emergence? and (2) whether and when other respiratory pathogens would eventually return to their pre-pandemic dynamics?
@@ -125,7 +125,7 @@ These observations pose two fundamental questions for current and future infecti
 \textbf{Observed heterogeneity in responses to COVID-19 pandemic across respiratory pathogens in (A) Canada, (B) Hong Kong, and (C) Korea.}
 Red points and lines represent data before 2020.
 Blue points and lines represent data since 2020.
-Gray lines and shaded regions represent the mean seasonal patterns and corresponding 95\% confidence intervals based on the oberserved outbreak patterns before 2020.
+Gray lines and shaded regions represent the mean seasonal patterns and corresponding 95\% confidence intervals based on the observed outbreak patterns before 2020.
 }
 \end{figure}
 
@@ -134,7 +134,7 @@ Using simulations, we show that pathogen resilience can provide
 
 \section*{Conceptual framework for measuring pathogen resilience}
 
-We begin by introducing a conceptual framework for measuring resilience of a host-pathogen system in the cotext of the COVID-19 pandemic and laying out a few important scenarios to set expectations for future dynamics of real-world pathogens.
+We begin by introducing a conceptual framework for measuring resilience of a host-pathogen system in the context of the COVID-19 pandemic and laying out a few important scenarios to set expectations for future dynamics of real-world pathogens.
 First, consider an intervention that reduce transmission by 50\% for 6 months starting in 2020, which causes epidemic patterns to deviate from its original stable annual cycle for a short period of time and eventually come back (Figure 2A).
 There are many different ways we can characterize this return, but for illustrative purposes, we choose one of the most parsimonious approach: that is, we look at how the susceptible (S) and infected (I) populations change over time and measure the distance on the SI phase plane (Figure 2B).
 In this simple case, while the distance from attractor oscillates, its overall rate of return closely matches the \emph{intrinsic} resilience of the system, which represents the expected rate of return and corresponds to the dominant eigenvalue of the underlying model (Figure 2C).
@@ -150,7 +150,7 @@ In this simple case, while the distance from attractor oscillates, its overall r
 \end{figure}
 
 Alternatively, NPIs can permanently change our behavior and have persisting impact on the pathogen dynamics; 
-as an example, we consider a scenarion in which a 10\% reduction in transmission persists even after the NPIs are lifted (Figure 2D--F).
+as an example, we consider a scenario in which a 10\% reduction in transmission persists even after the NPIs are lifted (Figure 2D--F).
 In such cases, we may not know whether the pathogen will return to its original cycle or a different cycle until many years have passed after the NPIs are lifted, meaning that we cannot measure the distance against the new attractor that the system will be approaching.
 Nonetheless, we can still measure the distance against the original, pre-pandemic attractor and still make useful inferences about the system (Figure 2E).
 In particular, the distance from the attractor initially decreases exponentially (with oscillations) at a rate that is consistent with the intrinsic resilience of the system (accounting for 10\% reduction in transmission) and eventually plateaus (Figure 2F). 
@@ -158,7 +158,7 @@ In particular, the distance from the attractor initially decreases exponentially
 Transient phenomena can also complicate the picture (Figure 2G--I).
 For example, the stage-structured model for RSV initially exhibits a stable annual cycle, but the introduction of NPIs cause the system to exhibit biennial cycles after NPIs are lifted (Figure 2G).
 In this case, the distance from the attractor initially decreases exponentially at a rate that is consistent with intrinsic resilience, but the rate of decrease slows down as the epidemic exhibits a biennial cycle (Figure 2I).
-In classical ecological theory, this behavior is also referred to as a ghost attractor, which causes long transient dyanmics and slow transitions.
+In classical ecological theory, this behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions.
 
 These observations indicate three possibilities.
 First, we can directly estimate the empirical resilience of a host-pathogen system by looking at how fast the system approaches an attractor, provided that we have a reasonable way of reconstructing the attractor and calculating the distance from the reconstructed attractor.
@@ -172,7 +172,7 @@ Finally, deviation from an exponential decrease in the distance from attractor c
 
 \section*{Inferring pathogen resilience from real data}
 
-Based on these obsevations, we now set out to infer pathogen resilience from real data.
+Based on these observations, we now set out to infer pathogen resilience from real data.
 To do so, we first reconstruct an empirical attractor by utilizing Takens' theorem, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding.
 Here, we use delayed copies of logged values of pre-pandemic cases, $C(t)$, to reconstruct the attractor:
 \begin{equation}
@@ -186,7 +186,7 @@ Estimates of distance from attractor and linear regressions fits are presented i
 For most pathogens, resilience estimates are consistent across different countries with a few exceptions (Figure 3A).
 For example, resilience estimates for adenovirus for Hong Kong and South Korea are orders of magnitudes lower than the corresponding estimate for Canada.
 Another exception is human metapneumovirus, where the estimated resilience for Hong Kong is considerably higher than in other countries.
-Otherwise, we find that resilience estiamtes range between 1--3/years for most other pathogens, suggesting a rather fast return to their regular outbreak cycles.
+Otherwise, we find that resilience estimates range between 1--3/years for most other pathogens, suggesting a rather fast return to their regular outbreak cycles.
 
 \begin{figure}[!th]
 \begin{center}
@@ -207,7 +207,7 @@ Surprisingly, we find that most pathogens should have returned to their original
 While these predictions are consistent with several pathogens (e.g., seasonal coronavirus epidemics in Canada and Korea in Figure 1),
 there are a few inconsistencies.
 For example, we predict that bocavirus epidemics in Korea should have returned by the end of 2023 (Figure 3B), but the observed patterns indicate clear deviation from pre-pandemic cycles (Figure 1).
-These deviations, alongside plateaus in the estimated distance from attractor, suggest that some of these pathogens, such as Bocavirus, may have converged to different attractors.
+These deviations, alongside plateaus in the estimated distance from attractor, suggest that some of these pathogens, such as bocavirus, may have converged to different attractors.
 
 \section*{Susceptible host dynamics explain variation in pathogen resilience}
 
@@ -221,8 +221,8 @@ To do so, we vary the basic reproduction number $\mathcal R_0$, which represents
 \includegraphics[width=\textwidth]{../figure_summary/figure_summary.pdf}
 \caption{
 \textbf{Linking pathogen resilience to epidemiological parameters and susceptible host dynamics.}
-(A) The heatmap represents intrinsic resilience as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
-(B) The heatmap represents per-capita susceptible replenishment rate as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+(A) The heat map represents intrinsic resilience as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+(B) The heat map represents per-capita susceptible replenishment rate as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
 The standard SIRS model is used to compute intrinsic resilience and per-capita susceptible replenishment rate.
 Lines correspond to a set of parameters that are consistent with mean resilience estimates for each pathogen.
 Pathogens are ranked based on their mean resilience estimates, averaged across different countries.
@@ -236,10 +236,10 @@ This rate can be expressed as a ratio between absolute rate at which new suscept
 Therefore, both higher $\mathcal R_0$ and shorter duration of immunity can drive faster per-capita susceptible replenishment rate  (Figure 4B), especially because higher $\mathcal R_0$ leads to lower $\bar{S}$.
 
 Finally, we can now rank different pathogens based on their empirical resilience.
-For simplicity, we take the average of resilienc estimates across countries to determine the ranking, which shows that influenza B is least resilient (Figure 4A).
-This observation is consistent with the extinction of influenza B/Yamagata, which indiates the persistence of a pathogen should be associated with its resilience.
+For simplicity, we take the average of resilience estimates across countries to determine the ranking, which shows that influenza B is least resilient (Figure 4A).
+This observation is consistent with the extinction of influenza B/Yamagata, which indicates the persistence of a pathogen should be associated with its resilience.
 Similarities in resilience ranking between RSV and Human metapneumovirus is also interesting, given the apparent coupling of their dynamics through cross immunity.
-These rankings further allow us to map each pathogen onto a set of parameters that are consistent with its empirical resilience (Figure 4A) and obtain a plausible range of suscetible replenishment rates for each pathogen (Figure 4B).
+These rankings further allow us to map each pathogen onto a set of parameters that are consistent with its empirical resilience (Figure 4A) and obtain a plausible range of susceptible replenishment rates for each pathogen (Figure 4B).
 
 \section*{Discussion}
 
@@ -260,7 +260,7 @@ Our analyses suggest a possibility that several pathogens may have converged to 
 Key examples include human metapnuemovirus, RSV, and bocavirus in South Korea as well as RSV in Hong Kong.
 These changes may reflect permanent changes in behavior since 2020 or a shift in population-level immunity.
 However, it seems unlikely that permanent changes in behavior would only affect a few pathogens and not others.
-A shift in population-level immunity is plausible, as the emergnence of SARS-CoV-2 and extinction of influenza B/Yamagata likely caused major changes in immune landscapes;
+A shift in population-level immunity is plausible, as the emergence of SARS-CoV-2 and extinction of influenza B/Yamagata likely caused major changes in immune landscapes;
 however, we currently do not know how immunity, or lack thereof, from these pathogens would affect infection from other pathogens.
 Future studies should use detailed mechanistic models, coupled with behavioral and immunological data, to test these hypotheses and better understand post-pandemic dynamics of endemic pathogens.
 
@@ -278,7 +278,7 @@ Since both models can accurately reproduce the observed epidemic patterns, stand
 Instead, we can measure the empirical resilience of each model by simulating various perturbations and compare them to estimates of empirical resilience from data, using COVID-19 interventions as an opportunity.
 Future studies should further investigate using pathogen resilience for validating epidemic models.
 
-There are several limiations to our work.
+There are several limitations to our work.
 In particular, our estimates of pathogen resilience and the associated ranking are necessarily crude.
 \swp{Limitation TBD.}
 Nonetheless, our study illustrates the utility of quantifying pathogen resilience for understanding how different pathogens respond to perturbations.
