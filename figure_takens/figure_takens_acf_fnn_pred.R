@@ -201,3 +201,50 @@ save("analysis_all",
      "analysis_all_lm",
      "analysis_all_summ",
      file="figure_takens_acf_fnn_pred.rda")
+
+g2b <- ggplot(filter(analysis_all_summ,
+                     key %in% c("Adenovirus", "Human coronavirus",
+                                "Parainfluenza virus",
+                                "Rhinovirus/Enterovirus", "RSV"))) +
+  geom_errorbar(aes(key, ymin=resilience_lwr, ymax=resilience_upr, col=country), width=0, 
+                position = position_dodge(width=0.5))+
+  geom_point(aes(key, resilience, col=country, shape=country), 
+             position = position_dodge(width=0.5), size=3) +
+  scale_y_continuous("Resilience (1/year)") +
+  scale_color_viridis_d("Country") +
+  scale_shape_discrete("Country") +
+  theme(
+    axis.text.x = element_text(angle=45, hjust=1),
+    axis.title.x = element_blank(),
+    legend.position = "top",
+    legend.title = element_blank()
+  )
+
+ggsave("figure_ex.png", g2b, width=4, height=3,
+       dpi=900)
+
+g3b <- ggplot(filter(analysis_all_summ,
+              key %in% c("Adenovirus", "Human coronavirus",
+                         "Parainfluenza virus",
+                         "Rhinovirus/Enterovirus", "RSV"))) +
+  geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
+                position = position_dodge(width=0.5)) +
+  geom_point(aes(key, when, col=country, shape=country), 
+             position = position_dodge(width=0.5), size=3) +
+  geom_hline(yintercept = 2025, lty=2) +
+  scale_y_continuous("Expected return") +
+  scale_color_viridis_d("Country") +
+  scale_shape_discrete("Country") +
+  theme(
+    axis.text.x = element_text(angle=45, hjust=1),
+    axis.title.x = element_blank(),
+    legend.position = "top",
+    legend.title = element_blank()
+  )
+
+ggsave("figure_ex2.png", g3b, width=4, height=3,
+       dpi=900)
+
+gcomb2 <- ggarrange(g2, g3,
+                    labels=c("A", "B"),
+                    nrow=1)
