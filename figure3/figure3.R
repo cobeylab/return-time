@@ -8,6 +8,7 @@ load("../analysis_takens_acf_fnn/analysis_hongkong_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_hongkong_piv_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_hongkong_noro_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_canada_takens_acf_fnn.rda")
+load("../analysis_takens_acf_fnn/analysis_nrevss_takens_acf_fnn.rda")
 
 analysis_all <- bind_rows(
   analysis_korea_takens_acf_fnn %>%
@@ -43,7 +44,19 @@ analysis_all <- bind_rows(
                           "Parainfluenza virus",
                           "RSV", "Rhinovirus/Enterovirus")),
       time=year+week/52
-    )
+    ),
+  analysis_nrevss_takens_acf_fnn %>%
+    mutate(
+      country="US",
+      key=factor(type,
+                 levels=c("Adenovirus", "CoV", "Human metapneumovirus", "Rhinovirus", "PIV", "RSV"),
+                 labels=c("Adenovirus", "Human coronavirus", "Human metapneumovirus",
+                          "Rhinovirus",
+                          "Parainfluenza virus",
+                          "RSV")),
+      time=year+week/52
+    ) %>%
+    select(-type)
 ) %>%
   mutate(
     key=ifelse(key=="Rhinovirus", "Rhinovirus/Enterovirus", key)
@@ -54,7 +67,8 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
     # print(x$key[1])
     x_filter <- x %>%
       filter(!is.na(dist_takens),
-             dist_takens > 0)
+             dist_takens > 0) %>%
+      arrange(year, week)
     
     x_pre <- filter(x, year <2020)
     
