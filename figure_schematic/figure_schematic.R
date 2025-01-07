@@ -167,8 +167,8 @@ g7 <- ggplot(distdata_takens) +
   annotate("rect", xmin=2020, xmax=2024, ymin=0.08, ymax=Inf, fill="gray", alpha=0.4) +
   geom_vline(xintercept = 2015:2030, lty=3, col="gray") +
   geom_point(aes(time, dist), shape=1, size=0.5) +
-  # geom_smooth(data=filter(distdata_takens, time>time[dist==max(dist)]), aes(time, dist), col="#224B95", fill="#224B95",
-  #             method="loess") +
+  geom_smooth(data=filter(distdata_takens, time>time[dist==max(dist)]), aes(time, dist), col="#224B95", fill="#224B95",
+              method="loess") +
   geom_function(fun=function(x) 10*exp(-ee*(x-2022)), lty=2, col="#EF6351", lwd=0.7) +
   scale_x_continuous("Year", limits=c(2015, 2030.5), expand=c(0, 0)) +
   scale_y_log10("Distance from attractor", limits=c(0.08, 14), expand=c(0, 0)) +
