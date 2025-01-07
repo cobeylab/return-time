@@ -1,9 +1,14 @@
 distfun <- function(mat_perturb,
                     mat_unperturb,
                     time, tbreak,
-                    out="comb") {
-  mat_sd <- apply(mat_unperturb, 2, sd)
-
+                    out="comb",
+                    scale=TRUE) {
+  if (scale) {
+    mat_sd <- apply(mat_unperturb, 2, sd)
+  } else {
+    mat_sd <- 1
+  }
+  
   mat_perturb_scale <- t(t(mat_perturb)/mat_sd)
   mat_unperturb_scale <- t(t(mat_unperturb)/mat_sd)
     
