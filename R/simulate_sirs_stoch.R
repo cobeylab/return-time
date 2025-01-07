@@ -1,10 +1,6 @@
 npifun_default <- function(t) {
-  if (t >= 2020.25 & t < 2020.5) {
-    npi <- 0.6
-  } else if (t >= 2020.5 & t < 2021) {
-    npi <- 0.9
-  } else if (t >= 2021 & t < 2021.25) {
-    npi <- 0.8
+  if (t >= 2020 & t < 2020.5) {
+    npi <- 0.5
   } else {
     npi <- 1
   }
@@ -12,21 +8,21 @@ npifun_default <- function(t) {
   return(npi)
 }
 
-simulate_SIRS <- function(R0=3,
-                          omega=1,
-                          theta=0.15,
-                          npifun=npifun_default,
-                          gamma=1/7,
-                          delta=1/52/7/2,
-                          mu=1/365/50,
-                          pop=1e8,
-                          S0=1/3,
-                          I0=1e-5,
-                          rho=0.02,
-                          theta_obs=500,
-                          tstart=1900,
-                          tend=2030,
-                          seed=101) {
+simulate_SIRS_stoch <- function(R0=3,
+                                omega=0,
+                                theta=0.1,
+                                npifun=npifun_default,
+                                gamma=1/7,
+                                delta=1/52/7/2,
+                                mu=1/364/50,
+                                pop=1e8,
+                                S0=1/3,
+                                I0=1e-6,
+                                rho=0.002,
+                                theta_obs=1000,
+                                tstart=1900,
+                                tend=2030,
+                                seed=101) {
   set.seed(seed)
   time <- seq(tstart, tend, by=1/52/7)
   tmax <- length(time)
