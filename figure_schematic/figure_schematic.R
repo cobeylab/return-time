@@ -81,6 +81,7 @@ g1 <- ggplot(npidata) +
   geom_line(aes(time, npi*100)) +
   scale_x_continuous("Year", limits=c(2015, 2030.5), expand=c(0, 0)) +
   scale_y_continuous("% transmission reduction", limits=c(0, 105), expand=c(0, 0)) +
+  ggtitle("A. Non-pharmaceutical interventions") +
   theme(
     axis.title.x = element_blank(),
     axis.text.x = element_blank(),
@@ -97,6 +98,7 @@ g2 <- ggplot(ss_weekly) +
   geom_line(aes(time, cases)) +
   scale_x_continuous("Year", limits=c(2015, 2030.5), expand=c(0, 0)) +
   scale_y_continuous("Cases", expand=c(0, 0)) +
+  ggtitle("B. Observed case time series") +
   theme(
     panel.grid = element_blank(),
     panel.border = element_blank(),
@@ -109,6 +111,7 @@ g3 <- ggplot(takens_data)  +
   geom_line(aes(time, V1, col=time)) +
   scale_x_continuous("Year", limits=c(2015, 2030.5), expand=c(0, 0)) +
   scale_y_continuous(expression(X(t)), expand=c(0, 0)) +
+  ggtitle("C. Delayed copies of logged cases") +
   scale_color_viridis_c() +
   theme(
     panel.grid = element_blank(),
@@ -156,6 +159,7 @@ g6 <- ggplot(takens_data) +
   scale_x_continuous(expression(X(t))) +
   scale_y_continuous(expression(X(t-tau))) +
   scale_color_viridis_c() +
+  ggtitle("D. Delayed embedding") +
   theme(
     panel.grid = element_blank(),
     panel.border = element_blank(),
@@ -167,11 +171,12 @@ g7 <- ggplot(distdata_takens) +
   annotate("rect", xmin=2020, xmax=2024, ymin=0.08, ymax=Inf, fill="gray", alpha=0.4) +
   geom_vline(xintercept = 2015:2030, lty=3, col="gray") +
   geom_point(aes(time, dist), shape=1, size=0.5) +
-  geom_smooth(data=filter(distdata_takens, time>time[dist==max(dist)]), aes(time, dist), col="#224B95", fill="#224B95",
-              method="loess") +
-  geom_function(fun=function(x) 10*exp(-ee*(x-2022)), lty=2, col="#EF6351", lwd=0.7) +
+  # geom_smooth(data=filter(distdata_takens, time>time[dist==max(dist)]), aes(time, dist), col="#224B95", fill="#224B95",
+  #             method="loess") +
+  # geom_function(fun=function(x) 10*exp(-ee*(x-2022)), lty=2, col="#EF6351", lwd=0.7) +
   scale_x_continuous("Year", limits=c(2015, 2030.5), expand=c(0, 0)) +
   scale_y_log10("Distance from attractor", limits=c(0.08, 14), expand=c(0, 0)) +
+  ggtitle("E. Nearest neighbor distance from attractor") +
   theme(
     panel.grid = element_blank(),
     panel.border = element_blank(),
@@ -182,15 +187,13 @@ g7 <- ggplot(distdata_takens) +
 plot(distdata_takens, log="y")
 curve(10*exp(-ee*(x-2023)), add=TRUE)
 
-gcomb1 <- ggarrange(g1, g2,
-          labels=c("A", "B"))
+gcomb1 <- ggarrange(g1, g2)
 
-gcomb2 <- ggarrange(g3, g4, g5, ncol=1,
-          labels=c("C", "", ""))
+gcomb2 <- ggarrange(g3, g4, g5, ncol=1)
 
-gcomb3 <- ggarrange(g6, labels="D")
+gcomb3 <- ggarrange(g6)
 
-gcomb4 <- ggarrange(g7, labels="E")
+gcomb4 <- ggarrange(g7)
 
 lay <- rbind(
   c(1, 2, 3),
@@ -201,3 +204,4 @@ gfinal <- arrangeGrob(gcomb1, gcomb2, gcomb3, gcomb4,
                       layout_matrix = lay)
 
 ggsave("figure_schematic.pdf", gfinal, width=12, height=4)
+
