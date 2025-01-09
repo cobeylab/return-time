@@ -14,7 +14,10 @@ for (i in 1:length(realname)) {
   truedata <- data_canada_resp_scaled
   
   tmp <- truedata_filter <- truedata %>%
-    filter(key==realname[i])
+    filter(key==realname[i]) %>%
+    arrange(
+      year, week
+    )
   
   logcases_pre <- log(filter(truedata_filter, year < 2020)$cases+1)
   

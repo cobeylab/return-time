@@ -22,7 +22,10 @@ for (i in 1:length(realname)) {
   truedata <- data_nrevss_resp_comb_proxy2
   
   tmp <- truedata_filter <- truedata %>%
-    filter(type==realname[i])
+    filter(type==realname[i]) %>%
+    arrange(
+      year, week
+    )
   
   logcases_pre <- log((filter(truedata_filter, year < 2020)$positive+1)/filter(truedata_filter, year < 2020)$tests*filter(truedata_filter, year < 2020)$ili)
   

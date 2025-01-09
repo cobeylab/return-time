@@ -22,7 +22,10 @@ for (i in 1:length(name)) {
   }
   
   tmp <- truedata_filter <- truedata %>%
-    filter(key==realname[i])
+    filter(key==realname[i]) %>%
+    arrange(
+      year, week
+    )
   
   logcases_pre <- log(filter(truedata_filter, year < 2020)$cases+1)
   

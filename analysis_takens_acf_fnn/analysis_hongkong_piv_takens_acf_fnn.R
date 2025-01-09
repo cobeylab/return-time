@@ -10,6 +10,9 @@ tmp <- truedata_filter <- truedata %>%
   group_by(year, week) %>%
   summarize(
     cases=sum(cases)
+  ) %>%
+  arrange(
+    year, week
   )
 
 logcases_pre <- log(filter(truedata_filter, year < 2020)$cases+1)
