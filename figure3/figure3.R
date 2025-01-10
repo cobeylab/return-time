@@ -81,48 +81,28 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
     
     pre_mean <- mean(log(x_pre$dist_takens), na.rm=TRUE)
     
-    loess_fit <- loess(log(dist_takens)~time, data=x_filter, span=0.2)
-    pred <- c(exp(predict(loess_fit)))
-    
+    dist <- x_filter$dist_takens
     time <- x_filter$time
-    ## dt
-    dpred <- c(NA, diff(pred))
     
-    deriv_max <- c(NA, (head(dpred, -1) > 0 & tail(dpred, -1) < 0)) & time > 2020 &
-      pred > 0.5 * max(pred)
+    loesspred <- exp(predict(loess(log(dist)~time, span=0.2)))
     
-    tmax <- tail(which(deriv_max), 1)
-    max_pred <- pred[tmax]
+    maxdist <- max(loesspred)
+    maxdist_time <- time[which.max(loesspred)]
+    meandist <- mean(loesspred[time<2020])
     
-    deriv_zero <- (c(NA, (head(dpred, -1) < 0 & tail(dpred, -1) > 0))) & 
-      time > time[tmax]
+    target_first <- meandist * (maxdist/meandist)^(9/10)
+    target_second <- meandist * (maxdist/meandist)^(1/10)
     
-    if (any(deriv_zero)) {
-      final_pred <- pred[which(deriv_zero)[1]]
-      
-      ratio <- max_pred/final_pred
-      
-      tstart <- time[tail(which(pred > ratio^(8/10) * final_pred & time < time[which(deriv_zero)[1]]), 1)]
-      
-      tend <- time[tail(which(pred > ratio^(0.5/10) * final_pred  & time <= time[which(deriv_zero)[1]]), 1)]
-    } else {
-      final_pred <- tail(pred, 1)
-      
-      ratio <- max_pred/final_pred
-      
-      tstart <- time[tail(which(pred > ratio^(8/10) * final_pred), 1)]
-      
-      tend <- time[tail(which(pred > ratio^(0.5/10) * final_pred), 1)]
-    }
+    time_first <- time[which(time > maxdist_time & loesspred < target_first)[1]]
+    time_last <- time[tail(which(time > maxdist_time & loesspred > target_second), 1)]
     
-    x_filter2 <- x_filter %>%
-      filter(
-        time >= tstart, time <= tend
-      )
+    lfit <- lm(log(dist_takens)~time, data=x_filter %>% filter(time >= time_first, time < time_last))
     
-    lfit <- lm(log(dist_takens)~time, data=x_filter2)
+    est <- -coef(lfit)[[2]]
+    lwr <- -confint(lfit)[2,2]
+    upr <- -confint(lfit)[2,1]
     
-    time_pred <- seq(tstart, 2100, by=0.01)
+    time_pred <- seq(time_first, 2100, by=0.01)
     
     pp <- predict(lfit, newdata=data.frame(time=time_pred),
                   levels=0.95,
@@ -141,9 +121,10 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
       time=time_pred,
       key=x$key[1],
       country=x$country[1],
-      tstart=tstart,
-      tend=tend,
+      tstart=time_first,
+      tend=time_last,
       pre_mean=pre_mean,
+      reldist=mean(tail(dist, 52))/mean(dist[time < 2020]),
       when=when,
       when_lwr=when_lwr,
       when_upr=when_upr,
@@ -166,6 +147,11 @@ analysis_all_summ <- analysis_all_lm %>%
                         "RSV", "Human coronavirus", "Bocavirus", "Norovirus"))
   )
 
+analysis_all_summ_filter <- analysis_all_summ %>%
+  filter(
+    reldist < exp(2)
+  )
+
 g1 <- ggplot(analysis_all) +
   geom_vline(xintercept=2013:2027, lty=3, col="gray") +
   geom_hline(data=analysis_all_summ, aes(yintercept=exp(pre_mean)), lty=2) +
@@ -184,7 +170,7 @@ g1 <- ggplot(analysis_all) +
     axis.text.x = element_text(angle=45, hjust=1)
   )
 
-g2 <- ggplot(analysis_all_summ) +
+g2 <- ggplot(analysis_all_summ_filter) +
   geom_errorbar(aes(key, ymin=resilience_lwr, ymax=resilience_upr, col=country), width=0, 
                 position = position_dodge(width=0.5))+
   geom_point(aes(key, resilience, col=country, shape=country), 
@@ -199,12 +185,12 @@ g2 <- ggplot(analysis_all_summ) +
     legend.title = element_blank()
   )
 
-g3 <- ggplot(analysis_all_summ) +
+g3 <- ggplot(analysis_all_summ_filter) +
   geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
                 position = position_dodge(width=0.5)) +
   geom_point(aes(key, when, col=country, shape=country), 
              position = position_dodge(width=0.5), size=3) +
-  geom_hline(yintercept = 2020:2039, lty=3, col="gray") +
+  # geom_hline(yintercept = 2020:2039, lty=3, col="gray") +
   geom_hline(yintercept = 2025, lty=2) +
   scale_y_continuous("Expected return time") +
   scale_color_viridis_d("Country") +

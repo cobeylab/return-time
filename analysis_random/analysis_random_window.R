@@ -103,8 +103,8 @@ for (i in 1:nsim) {
   meandist <- mean(loesspred[time<2020])
   
   if (maxdist_time <= 2024) {
-    target_first <- meandist * (maxdist/meandist)^(4/5)
-    target_second <- meandist * (maxdist/meandist)^(1/5)
+    target_first <- meandist * (maxdist/meandist)^(9/10)
+    target_second <- meandist * (maxdist/meandist)^(1/10)
     
     time_first <- time[which(time > maxdist_time & loesspred < target_first)[1]]
     time_last <- time[tail(which(time > maxdist_time & loesspred > target_second), 1)]
