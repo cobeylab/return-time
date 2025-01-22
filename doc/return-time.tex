@@ -118,26 +118,32 @@ Both theoretical and empirical efforts to quantify resilience of ecological syst
 However, despite rich literature on ecological resilience, there have been limited applications to measuring the resilience of host-pathogen systems, especially for human pathogens.
 
 Non-pharmaceutical interventions (NPIs) to slow the spread of COVID-19 disrupted the transmission of other human pathogens, providing large-scale natural experiments for understanding how various host-pathogen systems respond to perturbations \citep{baker2020impact,gomez2021uncertain,koltai2022determinants,park2024predicting}.
-In particular, as interventions lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries (Figure 1), likely reflecting heterogeneities in NPI patterns and pathogen characteristics.
-Even though more than four years have already passed since the emergence of COVID-19, many pathogens appear to be far from their regular, seasonal patterns, especially in Hong Kong and South Korea (Figure 1).
-These observations pose two fundamental questions for current and future infectious disease dynamics: (1) can we learn something about pathogen characteristics from re-emergence patterns? and (2) can we predict whether and when other respiratory pathogens will eventually return to their pre-pandemic dynamics?
+In particular, as interventions lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries (Figure 1), likely reflecting differences in NPI patterns, pathogen characteristics, immigration/importantion from other countries, and pre-pandemic pathogen dynamics.
+Even though more than four years have already passed since the emergence of COVID-19, current circulation patterns for many respiratory pathogens appear to be different from their pre-pandemic, seasonal patterns, especially in Hong Kong and Korea:
+some pathogens, such as human metapneumovirus and bocavirus in Korea, are circulating at lower levels, whereas other pathogens, such as RSV in Korea, seem to exhibit different seasonality (Figure 1).
+These observations pose two fundamental questions for current and future infectious disease dynamics: (1) can we learn about underlying pathogen characteristics, such as their transmissibility or duration of immunity, from re-emergence patterns? and (2) can we predict whether and when other respiratory pathogens will eventually return to their pre-pandemic dynamics?
 
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure1/figure1.pdf}
 \caption{
-\textbf{Observed heterogeneity in responses to COVID-19 pandemic across respiratory pathogens in (A) Canada, (B) Hong Kong, and (C) Korea.}
+\textbf{Observed heterogeneity in responses to COVID-19 pandemic across respiratory pathogens in (A) Canada, (B) Hong Kong, (C) Korea, and (D) US.}
 Red points and lines represent data before 2020.
 Blue points and lines represent data since 2020.
 Gray lines and shaded regions represent the mean seasonal patterns and corresponding 95\% confidence intervals based on the observed outbreak patterns before 2020.
 }
-\end{figure}
+\end{figure} 
 
-To address this question, we propose a framework for characterizing resilience of a host-pathogen system based on how fast the system recovers from perturbation.
-We first use simulations to illustrate that we can measure the distance between the current state of the system and the pre-pandemic epidemic pattern, where the rate at which this distance decreases over time corresponds to the empirical resilience of a pathogen.
-We then utilize attractor reconstruction method to characterize post-pandemic re-emergence patterns across a wide array of respiratory pathogens in Canada, Hong Kong, and South Korea and estimate their resilience. 
+To address this question, we propose a framework for characterizing the resilience of a host-pathogen system based on how fast the system recovers from perturbation.
+We begin by laying out a few example scenarios that represent the expected outbreak dynamics following COVID-19 interventions and illustrating how resilience can be measured by comparing the post- and pre-pandemic dynamics of susceptible and infected hosts.
+In practice, the dynamics of susceptible hosts are often unavailable, and traditional susceptible reconstruction approaches often require long-term endemic time series, which cannot be applied due to disruptions in epidemic patterns caused by COVID-19 NPIs.
+Instead, we utilize Takens' embedding theorem to reconstruct empirical attractors from data and further measure the distance from this empirical attractor, which allows us to characterize the rate at which this distance decreases.
+Analyses of pathogen surveillence data for a wide array of respiratory pathogens in Canada, Hong Kong, and Korea suggest ...
 Finally, we show that variation in resilience estimates can be understood in terms of susceptible host dynamics.
+\swp{Revisit.}
  
-\section*{Conceptual framework for measuring pathogen resilience}
+\section*{Conceptual introduction to pathogen resilience}
+
+
 
 We begin by introducing a conceptual framework for measuring resilience of a host-pathogen system in the context of the COVID-19 pandemic and laying out a few important scenarios to set expectations for future dynamics of real-world pathogens.
 First, consider an intervention that reduce transmission by 50\% for 6 months starting in 2020, which causes epidemic patterns to deviate from its original stable annual cycle for a short period of time and eventually come back (Figure 2A).
@@ -196,7 +202,7 @@ Then, the resulting estimate of the slope of linear regression corresponds to pa
 Estimates of distance from attractor and linear regressions fits are presented in \swp{TODO: Supplementary Materials.}
 
 For most pathogens, resilience estimates are consistent across different countries with a few exceptions (Figure 3A).
-For example, resilience estimates for adenovirus for Hong Kong and South Korea are orders of magnitudes lower than the corresponding estimate for Canada.
+For example, resilience estimates for adenovirus for Hong Kong and Korea are orders of magnitudes lower than the corresponding estimate for Canada.
 Another exception is human metapneumovirus, where the estimated resilience for Hong Kong is considerably higher than in other countries.
 Otherwise, we find that resilience estimates range between 1--3/years for most other pathogens, suggesting a rather fast return to their regular outbreak cycles.
 
@@ -269,7 +275,7 @@ The ability to predict future epidemic patterns from resilience estimates also o
 While this approach cannot predict the exact timing of outbreaks or epidemic patterns, it is nonetheless useful for predicting when epidemics will settle down to regular cycles after a large perturbation, such as COVID-19 interventions.
 
 Our analyses suggest a possibility that several pathogens may have converged to different endemic cycles compared to their pre-pandemic epidemic patterns.
-Key examples include human metapnuemovirus, RSV, and bocavirus in South Korea as well as RSV in Hong Kong.
+Key examples include human metapnuemovirus, RSV, and bocavirus in Korea as well as RSV in Hong Kong.
 These changes may reflect permanent changes in behavior since 2020 or a shift in population-level immunity.
 However, it seems unlikely that permanent changes in behavior would only affect a few pathogens and not others.
 A shift in population-level immunity is plausible, as the emergence of SARS-CoV-2 and extinction of influenza B/Yamagata likely caused major changes in immune landscapes;
