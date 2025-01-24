@@ -183,16 +183,18 @@ Instead, pathogen resilience is a property of a specific attractor that a host-p
 
 Finally, transient phenomena can also complicate the picture (Figure 2G--I).
 For example, a stage-structured model for RSV initially exhibits a stable annual cycle, but perturbations from NPIs cause the epidemic to exhibit biennial cycles (Figure 2G).
-In this case, the distance from the attractor initially decreases exponentially at a rate that is consistent with intrinsic resilience, but the rate of decrease slows down as the epidemic exhibits a biennial cycle (Figure 2I).
+Despite this biennial cycle, we see that the system eventually approaches the original pre-pandemic attractor (Figure 2H), suggesting that this biennial cycle is a transient phenomenon.
+The LOESS fit indicates that the distance from the attractor will initially decrease exponentially at a rate that is consistent with the intrinsic resilience of the seasonally unforced system, but the rate of decrease slows down as the epidemic exhibits a biennial cycle (Figure 2I).
 In classical ecological theory, this behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions.
 
 These observations indicate three possibilities.
-First, we can directly estimate the empirical resilience of a host-pathogen system by looking at how fast the system approaches an attractor, provided that we have a reasonable way of reconstructing the attractor and calculating the distance from the reconstructed attractor.
+First, we can directly estimate the empirical resilience of a host-pathogen system by looking at how fast the system approaches a pre-pandemic attractor, provided that we can measure the distance from attractor.
 The empirical approach to estimating pathogen resilience is particularly convenient because it does not require us to know the true underlying model.
-As we show in Supplementary Materials, model misspecification can lead to severe biases in estimation of intrinsic resilience, suggesting that empirical approaches can be more reliable (\swp{TODO}).
-Second, resilience estimates allow us to make phenomenological predictions about the dynamics of a host-pathogen system following a perturbation assuming an exponential decrease in the distance from the attractor;
-this in turn can be used to estimate when the system will reach the attractor of interest. 
-Finally, deviation from an exponential decrease in the distance from attractor can provide information about whether the system has approached an attractor, or a ghost attractor, that is different from the original attractor before perturbation was introduced.
+As we show in Supplementary Materials, estimating the intrinsic resilience from fitting standard compartmental models can lead to biased estimates, especially under model misspecification (\swp{TODO}).
+Second, resilience estimates allow us to make phenomenological predictions about the dynamics of a host-pathogen system following a perturbation:
+assuming that the distance from the attractor will decrease exponentially over time, we can obtain a ballpark estimate for when the system will reach an attractor.
+Finally, deviation from an exponential decrease in the distance from attractor can provide information about whether the system has reached an alternative attractor, or a ghost attractor, that is different from the original, pre-pandemic attractor.
+These alternative attractors may reflect continued perturbations from permanent changes in transmission patterns as well as changes in immune landscapes.
 
 \swp{Multi-strain system to be discussed in the supp after some more investigation.}
 
