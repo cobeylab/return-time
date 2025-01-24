@@ -126,7 +126,7 @@ These observations pose two fundamental questions for current and future infecti
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure1/figure1.pdf}
 \caption{
-\textbf{Observed heterogeneity in responses to COVID-19 pandemic across respiratory pathogens in (A) Canada, (B) Hong Kong, (C) Korea, and (D) US.}
+\textbf{Observed heterogeneity in responses to COVID-19 pandemic across respiratory pathogens and norovirus in (A) Canada, (B) Hong Kong, (C) Korea, and (D) US.}
 Red points and lines represent data before 2020.
 Blue points and lines represent data since 2020.
 Gray lines and shaded regions represent the mean seasonal patterns and corresponding 95\% confidence intervals based on the observed outbreak patterns before 2020.
@@ -201,6 +201,21 @@ These alternative attractors may reflect continued perturbations from permanent 
 \section*{Inferring pathogen resilience from real data}
 
 Based on these observations, we now set out to infer pathogen resilience from real data.
+
+
+\begin{figure}[!ht]
+\includegraphics[width=\textwidth]{../figure_schematic/figure_schematic.pdf}
+\caption{
+\textbf{A schematic diagram explaining how pathogen resilience can be inferred from real data.}
+(A) A realistic example of a synthetic NPI, represented by a relative reduction in transmission.
+(B) The impact of the synthetic NPI on epidemic dynamics simulated using a stochastic SIRS model.
+(C) Generating delayed copies of the logged time series allows us to obtain an embedding.
+(D) Two dimensional representation of an embedding.
+(E) Delayed embedding allows us to calculate the nearest neighbor distance from the empirical attractor, which is determined based on the pre-pandemic time series.
+This distance time series can be used to infer pathogen resilience by fitting a linear regression after choosing an appropriate window for regression.
+}
+\end{figure}
+
 To do so, we first reconstruct an empirical attractor by utilizing Takens' theorem, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding.
 Here, we use delayed copies of logged values of pre-pandemic cases, $C(t)$, to reconstruct the attractor:
 \begin{equation}
