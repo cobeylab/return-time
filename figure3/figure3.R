@@ -3,6 +3,8 @@ library(dplyr)
 library(ggplot2); theme_set(theme_bw(base_family = "Times"))
 library(egg)
 library(gridExtra)
+source("../R/simulate_seir.R")
+
 load("../analysis_takens_acf_fnn/analysis_korea_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_hongkong_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_hongkong_piv_takens_acf_fnn.rda")
@@ -170,7 +172,12 @@ g1 <- ggplot(analysis_all) +
     axis.text.x = element_text(angle=45, hjust=1)
   )
 
+measles_resilience <- -eigen_seir()
+
 g2 <- ggplot(analysis_all_summ_filter) +
+  geom_hline(yintercept=measles_resilience, lty=1, col="gray", lwd=3) +
+  annotate("text", x=-Inf, y=0.3, label="Prevaccination measles",
+           hjust=-0.05, family="Times") +
   geom_errorbar(aes(key, ymin=resilience_lwr, ymax=resilience_upr, col=country), width=0, 
                 position = position_dodge(width=0.5))+
   geom_point(aes(key, resilience, col=country, shape=country), 

@@ -53,22 +53,3 @@ simulate_sir <- function(b_1=17*(365/14+1/50),
   
   out
 }
-
-ss_perturb <- simulate_sir() %>%
-  filter(time >= 2010)
-
-ss_unperturb <- simulate_sir(npifun=function(x)1) %>%
-  filter(time >= 2010)
-
-plot(ss$S, ss$r, log="x", type="l")
-plot(ss_np$I, ss_np$r, log="x", type="l")
-
-mat_perturb <- matrix(c(ss_perturb$r, log(ss_perturb$I)), ncol=2)
-mat_unperturb <- matrix(c(ss_unperturb$r, log(ss_unperturb$I)), ncol=2)
-
-dist <- distfun(mat_perturb, mat_unperturb,
-                ss_perturb$time,
-                2020)
-
-plot(dist, log="y")
-
