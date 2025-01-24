@@ -144,17 +144,15 @@ Finally, we show that variation in resilience estimates can be understood in ter
 \section*{Conceptual introduction to pathogen resilience}
 
 In classical ecological literature, resilience of an ecological system is measured by the rate at which the system returns to its reference state following a perturbation.
-This rate corresponds to the largest real part of the eigenvalues of the linearized system near equilibrium;
-here, we refer to this value as the \emph{intrinsic} resilience of the system, which represents the expected rate of return from perturbated states.
-However, respiratory pathogens often exhibit seasonal variation in transmission, meaning that the \emph{intrinsic} resilience of a host-pathogen system varies across season.
+This rate corresponds to the largest real part of the eigenvalues of the linearized system near equilibrium---here, we refer to this value as the \emph{intrinsic} resilience of the system, which represents the expected rate of return from perturbated states.
+However, respiratory pathogens often exhibit seasonal variation in transmission, meaning that the intrinsic resilience of a host-pathogen system varies across season.
 Nonetheless, we can still measure the \emph{empirical} resilience of a host-pathogen system by looking at how fast the system returns to the pre-pandemic, endemic dynamics after interventions are lifted.
 
 As an example, consider an intervention that reduce transmission by 50\% for 6 months starting in 2020, which causes epidemic patterns to deviate from its original stable annual cycle for a short period of time and eventually come back (Figure 2A).
 To measure the empirical resilience of this system, we first need to be able to measure the distance from its pre-pandemic attractor.
 There are many different ways we can measure the distance from attractor, but for illustrative purposes, we choose one of the most parsimonious approach: that is, we look at how the susceptible (S) and infected (I) populations change over time and measure the distance on the SI phase plane (Figure 2B).
-
-
-In this simple case, while the distance from attractor oscillates, its overall rate of return closely matches the \emph{intrinsic} resilience of the system, which represents the expected rate of return and corresponds to the dominant eigenvalue of the underlying model (Figure 2C).
+In this simple case, the locally estimated scatterplot smoothing (LOESS) fit indicates that the distance from attractor decreases linearly on average (Figure 2C).
+Furthermore, the overall rate of return matches the intrinsic resilience of the seasonally unforced system (Figure 2C).
 
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure2/figure2_simple.pdf}
@@ -168,19 +166,23 @@ Gray regions indicate the duration of interventions.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
 (C, F, I) Changes in logged distance from attractor over time.
 Transparent solid lines represent the logged distance from attractor.
-Non-transparent solid lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor..
+Non-transparent solid lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
 Doted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the system.
 }
 \end{figure}
 
 Alternatively, NPIs can permanently change our behavior and have persisting impact on the pathogen dynamics; 
 as an example, we consider a scenario in which a 10\% reduction in transmission persists even after the NPIs are lifted (Figure 2D--F).
-In such cases, we may not know whether the pathogen will return to its original cycle or a different cycle until many years have passed after the NPIs are lifted, meaning that we cannot measure the distance against the new attractor that the system will be approaching.
-Nonetheless, we can still measure the distance against the original, pre-pandemic attractor and still make useful inferences about the system (Figure 2E).
-In particular, the distance from the attractor initially decreases exponentially (with oscillations) at a rate that is consistent with the intrinsic resilience of the system (accounting for 10\% reduction in transmission) and eventually plateaus (Figure 2F). 
+In such cases, we cannot know whether the pathogen will return to its original cycle or a different cycle until many years have passed after the NPIs are lifted, meaning that we cannot measure the distance against the new attractor that the system will eventually approach.
+Nonetheless, we can still measure the distance against the original, pre-pandemic attractor and ask how the distance changes over time (Figure 2E).
+The LOESS fit suggests that the distance from the attractor will initially decrease exponentially on average (equivalently, linearly on a log scale) and eventually plateau (Figure 2F).
+Here, a permanent 10\% reduction in transmission rate slows down the system, which causes the distance from the attractor to decrease at a slower rate (Figure 2F) than it would have otherwise in the absence of permanent transmission reduction (Figure 2C).
+This example shows that resilience is not necessarily an intrinsic property of a specific pathogen.
+Instead, pathogen resilience is a property of a specific attractor that a host-pathogen system approaches, which depends on both pathogen and host characteristics.
+\swp{Add discussion about observation error, e.g., under-reporting.}
 
-Transient phenomena can also complicate the picture (Figure 2G--I).
-For example, the stage-structured model for RSV initially exhibits a stable annual cycle, but the introduction of NPIs cause the system to exhibit biennial cycles after NPIs are lifted (Figure 2G).
+Finally, transient phenomena can also complicate the picture (Figure 2G--I).
+For example, a stage-structured model for RSV initially exhibits a stable annual cycle, but perturbations from NPIs cause the epidemic to exhibit biennial cycles (Figure 2G).
 In this case, the distance from the attractor initially decreases exponentially at a rate that is consistent with intrinsic resilience, but the rate of decrease slows down as the epidemic exhibits a biennial cycle (Figure 2I).
 In classical ecological theory, this behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions.
 
