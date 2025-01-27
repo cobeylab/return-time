@@ -209,8 +209,16 @@ However, in practice, the impact of NPIs on pathogen transmission is likely more
 These complexities can lead to longer delays between the introduction of NPIs and pathogen re-emergence as well as temporal variation in outbreak sizes (Figure 3B):
 in this example, continued transmission reduction from NPIs limits the size of the first outbreak in 2021 following the emergence, allowing for a larger outbreak in 2022 when NPIs are further relaxed.
 
-Previously, we relied on the dynamics of susceptible and infected hosts to compute the distance from attractor (Figure 2), but information on susceptibles are often not available in practice.
-In addition, 
+Previously, we relied on the dynamics of susceptible and infected hosts to compute the distance from attractor (Figure 2), but information on susceptible hosts are often not available in practice.
+In addition, uncertainties in case counts due to observation error as well as the possibility of complex, multiannual attractor adds challenges to measuring the distance from attractor.
+To address these challenges, we first reconstruct an empirical attractor by utilizing Takens' theorem, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding.
+Here, we use delayed copies of logged values of pre-pandemic cases $C(t)$ (Figure 3C) to reconstruct the attractor:
+\begin{equation}
+\langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
+\end{equation}
+where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respecitvely.
+We then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical attractor.
+
 
 \begin{figure}[!ht]
 \includegraphics[width=\textwidth]{../figure_schematic/figure_schematic_alternative.pdf}
