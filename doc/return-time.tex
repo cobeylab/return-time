@@ -217,8 +217,8 @@ Here, we use delayed copies of logged values of pre-pandemic cases $C(t)$ (Figur
 \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
 \end{equation}
 where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respecitvely.
-We then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical attractor.
-
+We then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical attractor (Figure 3E).
+In princicple, we can quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression corresponds to pathogen resilience.
 
 \begin{figure}[!ht]
 \includegraphics[width=\textwidth]{../figure_schematic/figure_schematic_alternative.pdf}
@@ -233,14 +233,14 @@ This distance time series can be used to infer pathogen resilience by fitting a 
 }
 \end{figure}
 
-To do so, we first reconstruct an empirical attractor by utilizing Takens' theorem, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding.
-Here, we use delayed copies of logged values of pre-pandemic cases, $C(t)$, to reconstruct the attractor:
-\begin{equation}
-\langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
-\end{equation}
-where the delay $\tau$ and embedding dimension $M$ is determined based on autocorrelations and false nearest neighbors.
-This allows us to measure nearest neighbor distance between the current state of the system and the empirical attractor at any given point in time, from which we can quantify how fast this distance decreases by fitting a linear regression on a log scale.
-Then, the resulting estimate of the slope of linear regression corresponds to pathogen resilience.
+A closer observation of the resulting time series of the distance from attractor provides three important insights (Figure 3E).
+First, the relaxation of NPIs in realistic settings can cause a false return of the system, as indicated by a rapid decrease in the distance in early 2022 followed by a rapid increase in distance.
+In other words, we need at least several years of data to be able to properly assess the return of system to an attractor.
+Second, complex changes in the distance from attractor suggests that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
+Finally, temporal variation in the impact of NPIs on pathogen transmission will affect the intrinsic resilience of the system throughout the NPI period, meaning that the estimated resilience from linear regression will likely reflect some sort of average impact of the NPI.
+
+
+
 Estimates of distance from attractor and linear regressions fits are presented in \swp{TODO: Supplementary Materials.}
 
 For most pathogens, resilience estimates are consistent across different countries with a few exceptions (Figure 3A).
