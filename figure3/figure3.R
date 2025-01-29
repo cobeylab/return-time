@@ -174,6 +174,26 @@ g1 <- ggplot(analysis_all) +
 
 measles_resilience <- -eigen_seir()
 
+analysis_all_summ_filter %>%
+  filter(key != "Norovirus", key != "Bocavirus",
+         !(key == "Rhinovirus/Enterovirus" & country=="US")) %>%
+  summarize(
+    mean=mean(resilience),
+    lwr=t.test(resilience)[[4]][1],
+    upr=t.test(resilience)[[4]][2]
+  )
+
+analysis_all_summ_filter %>%
+  filter(key == "Norovirus")
+
+lfit <- lm(resilience~country+key, data=analysis_all_summ_filter)
+
+summary(lfit)
+
+afit <- aov(resilience~country+key, data=analysis_all_summ_filter)
+
+summary(afit)
+
 g2 <- ggplot(analysis_all_summ_filter) +
   geom_hline(yintercept=measles_resilience, lty=1, col="gray", lwd=3) +
   annotate("text", x=-Inf, y=0.3, label="Prevaccination measles",
@@ -193,6 +213,32 @@ g2 <- ggplot(analysis_all_summ_filter) +
   )
 
 g3 <- ggplot(analysis_all_summ_filter) +
+  geom_hline(yintercept=2020:2030, lty=3, alpha=0.4) +
+  geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
+                position = position_dodge(width=0.5)) +
+  geom_point(aes(key, when, col=country, shape=country), 
+             position = position_dodge(width=0.5), size=3) +
+  # geom_hline(yintercept = 2020:2039, lty=3, col="gray") +
+  geom_hline(yintercept = 2025, lty=2) +
+  scale_y_continuous("Expected return time",
+                     breaks=seq(2020, 2030, by=2)) +
+  scale_color_viridis_d("Country") +
+  scale_shape_discrete("Country") +
+  coord_cartesian(ylim=c(2020, 2030)) +
+  theme(
+    axis.text.x = element_text(angle=45, hjust=1),
+    axis.title.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    legend.position = "none"
+  )
+
+gcomb <- ggarrange(g2, g3,
+                   labels=c("A", "B"))
+
+ggsave("figure3.pdf", gcomb, width=6, height=6)
+
+g3b <- ggplot(analysis_all_summ_filter) +
   geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
                 position = position_dodge(width=0.5)) +
   geom_point(aes(key, when, col=country, shape=country), 
@@ -210,7 +256,4 @@ g3 <- ggplot(analysis_all_summ_filter) +
     legend.position = "none"
   )
 
-gcomb <- ggarrange(g2, g3,
-                   labels=c("A", "B"))
-
-ggsave("figure3.pdf", gcomb, width=6, height=6)
+ggsave("figure3_unzoom.pdf", g3b, width=6, height=3)

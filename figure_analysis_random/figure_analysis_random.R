@@ -5,17 +5,17 @@ load("../analysis_random/analysis_random_simple.rda")
 load("../analysis_random/analysis_random_iterative.rda")
 
 analysis_random_all <- bind_rows(
-  analysis_random_iterative %>% mutate(method="Iterative"),
+  # analysis_random_iterative %>% mutate(method="Iterative"),
   analysis_random_simple %>% mutate(method="Naive"),
   analysis_random_window %>% mutate(method="Window-based")
 )
 
 g1 <- ggplot(analysis_random_all) +
-  geom_point(aes(resilience_true, est, col=duration)) +
+  geom_point(aes(resilience_true, est)) +
   geom_smooth(aes(resilience_true, est), method="lm", col="red", fill="red") +
   geom_abline(intercept=0, slope=1, lty=2) +
-  scale_x_continuous("Intrinsic resilience") +
-  scale_y_continuous("Estimated resilience") +
+  scale_x_continuous("Intrinsic resilience (1/year)") +
+  scale_y_continuous("Estimated resilience (1/year)") +
   scale_color_viridis_c("Duration of NPIs") +
   facet_wrap(~method) +
   theme(
@@ -25,10 +25,7 @@ g1 <- ggplot(analysis_random_all) +
 
 ggsave("figure_analysis_random.pdf", g1, width=6, height=4)
 
-analysis_random_all_filter <- analysis_random_all %>%
-  filter(est > 0, duration < 2)
-
-lapply(split(analysis_random_all_filter, analysis_random_all_filter$method),
+lapply(split( analysis_random_all, analysis_random_all$method),
        function(x) {
          cor(x$resilience_true, x$est)
        })
@@ -45,3 +42,19 @@ ggplot(analysis_random_all_filter) +
     panel.grid = element_blank(),
     legend.position = "top"
   )
+
+cor(analysis_random_window$resilience_true, analysis_random_window$est)
+
+g1 <- ggplot(analysis_random_window) +
+  geom_point(aes(resilience_true, est)) +
+  geom_smooth(aes(resilience_true, est), method="lm", col="red", fill="red") +
+  geom_abline(intercept=0, slope=1, lty=2) +
+  scale_x_continuous("Intrinsic resilience (1/year)") +
+  scale_y_continuous("Estimated resilience (1/year)") +
+  scale_color_viridis_c("Duration of NPIs") +
+  theme(
+    panel.grid = element_blank(),
+    legend.position = "top"
+  )
+
+ggsave("figure_analysis_random_window.pdf", g1, width=6, height=6)

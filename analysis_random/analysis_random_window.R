@@ -45,7 +45,7 @@ for (i in 1:nsim) {
     extinction <- all(tail(ss$I, 10)==0)
   }
   
-  ee <- eigen_sirs(b_1=R0*(365/7+1/50),
+  ee <- eigen_sirs(b_1=R0*(365/7+1/50)*npiend,
                    mu=1/50,
                    gamma=365/7,
                    delta=1/immunity)

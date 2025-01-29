@@ -233,20 +233,25 @@ This distance time series can be used to infer pathogen resilience by fitting a 
 }
 \end{figure}
 
-A closer observation of the resulting time series of the distance from attractor provides three important insights (Figure 3E).
-First, the relaxation of NPIs in realistic settings can cause a false return of the system, as indicated by a rapid decrease in the distance in early 2022 followed by a rapid increase in distance.
-In other words, we need at least several years of data to be able to properly assess the return of system to an attractor.
-Second, complex changes in the distance from attractor suggests that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
-Finally, temporal variation in the impact of NPIs on pathogen transmission will affect the intrinsic resilience of the system throughout the NPI period, meaning that the estimated resilience from linear regression will likely reflect some sort of average impact of the NPI.
+Complex changes in the distance from attractor suggest that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
+In Supplementary Materials, we explore an automated window selection criteria for linear regression and test it against randomized, stochastic simulations across a wide range of realistic NPI shapes.
+We find that resilience estimates based on the automated window selection criteria are moderately correlated (0.54) with the intrinsic resilience of the post-NPI attractor.
+In contrast, a naive approach that uses the entire time series, starting from the peak distance, only gives a correlation of 0.21 and consistently underestimates the intrinsic resilience.
 
+% A closer observation of the resulting time series of the distance from attractor provides three important insights (Figure 3E).
+% First, the relaxation of NPIs in realistic settings can cause a false return of the system, as indicated by a rapid decrease in the distance in early 2022 followed by a rapid increase in distance.
+% In other words, we need at least several years of data to be able to properly assess the return of system to an attractor.
+% Second, complex changes in the distance from attractor suggests that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
+% Finally, temporal variation in the impact of NPIs on pathogen transmission will affect the intrinsic resilience of the system throughout the NPI period, meaning that the estimated resilience from linear regression will likely reflect some sort of average impact of the NPIs.
 
-
-Estimates of distance from attractor and linear regressions fits are presented in \swp{TODO: Supplementary Materials.}
-
-For most pathogens, resilience estimates are consistent across different countries with a few exceptions (Figure 3A).
-For example, resilience estimates for adenovirus for Hong Kong and Korea are orders of magnitudes lower than the corresponding estimate for Canada.
-Another exception is human metapneumovirus, where the estimated resilience for Hong Kong is considerably higher than in other countries.
-Otherwise, we find that resilience estimates range between 1--3/years for most other pathogens, suggesting a rather fast return to their regular outbreak cycles.
+Now, we apply this approach to pathogen surveillance data presented in Figure 1.
+For each time series, we apply Takens' theorem independently to reconstruct the empirical attractor and obtain the corresponding time series of distance from attractors (\swp{Supp}).
+Then, we use the automated window selection criteria to fit a linear regression and estimate the empirical resilience for each pathogen in each country.
+For most respiratory pathogens, resilience estimates $0.5/\mathrm{year}$ and $2/\mathrm{year}$ (Figure 4A), with the exception of Rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and Bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
+Excluding these exceptions, the mean resilience of common respiratory pathogens is $0.974/\mathrm{year}$ (95\% CI: $0.784/\mathrm{year}$--$1.16/\mathrm{year}$).
+As a reference, this is $\approx 7$ times higher than the intrinsic resilience of pre-vaccination measles dynamics ($\approx 0.13/\mathrm{year}$).
+Finally, resilence estimates for norovirus appears to be comparable to the intrinsic resilience of measles: $0.119/\mathrm{year}$ (95\%CI: $0.004/\mathrm{year}$--$0.233/\mathrm{year}$) for Korea and $0.385/\mathrm{year}$ (95\% CI: $0.167/\mathrm{year}$--$0.603/\mathrm{year}$).
+A simple ANOVA shows that there are significant differences in resilience estimates across countries ($p<0.036$) and pathogens ($p<0.030$).
 
 \begin{figure}[!th]
 \begin{center}
@@ -254,6 +259,7 @@ Otherwise, we find that resilience estimates range between 1--3/years for most o
 \caption{
 \textbf{Summary of resilience estimates.}
 (A) Estimated pathogen resilience.
+The gray horizontal line represents the intrinsic resilience of pre-vaccination measles dynamics.
 (B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
 The dashed line in panel B indicates the end of 2024 (current observation time).
 Error bars represent 95\% confidence intervals.
@@ -262,12 +268,12 @@ Error bars represent 95\% confidence intervals.
 \end{figure}
 
 Using resilience estimates, we now predict when each pathogen will return to their original pre-pandemic cycles.
-Specifically, we extend our linear regression fits to empirical estimates of distance from attractor and ask when the predicted regression line will cross a threshold value, which we set to a mean of pre-pandemic distances.
-Surprisingly, we find that most pathogens should have returned to their original cycles by the end of 2024 (Figure 3B).
-While these predictions are consistent with several pathogens (e.g., seasonal coronavirus epidemics in Canada and Korea in Figure 1),
-there are a few inconsistencies.
-For example, we predict that bocavirus epidemics in Korea should have returned by the end of 2023 (Figure 3B), but the observed patterns indicate clear deviation from pre-pandemic cycles (Figure 1).
-These deviations, alongside plateaus in the estimated distance from attractor, suggest that some of these pathogens, such as bocavirus, may have converged to different attractors.
+Specifically, we extend our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value, which we set to a mean of pre-pandemic distances.
+We predict that a return to pre-pandemic cycles would be imminent for most pathogens (Figure 4B).
+In addition, we also predict that many pathogens should have already returned to their pre-pandemic dynamics by the end of 2024; 
+but these predictions contradict some of the observed pathogen dynaics.
+For example, we predict that both human metapneumovirus and RSV in Korea should have returned to their attractors by now, but the magnitude and timing of recent epidemics are different from pre-pandemic patterns (Figure 1). 
+These observations suggest the possibility that some common respiratory pathogens may have converged to different attractors.
 
 \section*{Susceptible host dynamics explain variation in pathogen resilience}
 
