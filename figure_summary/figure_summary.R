@@ -5,12 +5,13 @@ library(ggrepel)
 library(egg)
 library(gridExtra)
 source("../R/simulate_sirs.R")
-load("../figure_takens/figure_takens_acf_fnn_pred.rda")
+source("../R/simulate_seir.R")
+load("../figure3/figure3_summ.rda")
 
-R0vec <- seq(1.1, 3,
+R0vec <- seq(1.1, 6,
              length.out=101)
 
-deltavec <- exp(seq(log(1/2.5), log(2), length.out=101))
+deltavec <- exp(seq(log(1/80), log(2), length.out=101))
 
 paramdata <- expand.grid(R0vec, deltavec)
 
@@ -39,7 +40,7 @@ summdata <- apply(paramdata, 1, function(x) {
   bind_rows
 
 resopt <- function(delta, resilience) {
-  R0 <- 3
+  R0 <- 6
   delta <- delta
   mu <- 1/80
   gamma <- 365/7
@@ -54,7 +55,7 @@ resopt <- function(delta, resilience) {
   resilience - (delta + mu + b_1 * I)/2
 }
 
-analysis_all_summ_mean <- analysis_all_summ %>%
+analysis_all_summ_mean <- analysis_all_summ_filter %>%
   group_by(key) %>%
   summarize(
     resilience=mean(resilience)
@@ -62,27 +63,29 @@ analysis_all_summ_mean <- analysis_all_summ %>%
   arrange(resilience) %>%
   group_by(key) %>%
   mutate(
-    delta=uniroot(resopt, interval=c(0.01, 3),
+    delta=uniroot(resopt, interval=c(0.01, 20),
                   resilience=resilience)$root,
-    R0=3
+    R0=10
   )
 
+# measles_resilience <- -eigen_seir()
+
 g1 <- ggplot(summdata) +
-  geom_raster(aes(R0, 1/delta, fill=resilience)) +
-  geom_contour(aes(R0, 1/delta, z=resilience),
-               breaks=analysis_all_summ_mean$resilience,
+  geom_raster(aes(R0, 1/delta, fill=log10(resilience))) +
+  geom_contour(aes(R0, 1/delta, z=log10(resilience)),
+               breaks=log10(analysis_all_summ_mean$resilience),
                col="white") +
-  geom_text_repel(data=analysis_all_summ_mean, aes(3.04, 1/delta, label=key,
-                                                   col=resilience),
+  geom_text_repel(data=analysis_all_summ_mean, aes(6.04, 1/delta, label=key,
+                                                   col=log10(resilience)),
                   direction = "y",
                   segment.color = NA,
                   hjust=0) +
   scale_x_continuous("Basic reproduction number", expand=c(0, 0),
-                     breaks=c(1.5, 2, 2.5, 3),
-                     limits = c(NA,4)) +
+                     breaks=c(2, 4, 6),
+                     limits = c(NA,9)) +
   scale_y_log10("Duration of immunity (years)", expand=c(0, 0)) +
-  scale_fill_viridis_c("Resilience\n(1/years)", limits=range(summdata$resilience)) +
-  scale_color_viridis_c("Resilience\n(1/years)", limits=range(summdata$resilience)) +
+  scale_fill_viridis_c("Resilience\n(1/years)", limits=log10(range(summdata$resilience))) +
+  scale_color_viridis_c("Resilience\n(1/years)", limits=log10(range(summdata$resilience))) +
   theme(
     panel.grid = element_blank(),
     panel.border = element_blank(),
@@ -91,17 +94,17 @@ g1 <- ggplot(summdata) +
   )
 
 g2 <- ggplot(summdata) +
-  geom_raster(aes(R0, 1/delta, fill=replenish*100)) +
-  geom_contour(aes(R0, 1/delta, z=resilience),
-               breaks=analysis_all_summ_mean$resilience,
+  geom_raster(aes(R0, 1/delta, fill=log10(replenish*100))) +
+  geom_contour(aes(R0, 1/delta, z=log10(resilience)),
+               breaks=log10(analysis_all_summ_mean$resilience),
                col="white") +
-  geom_text_repel(data=analysis_all_summ_mean, aes(3.04, 1/delta, label=key),
+  geom_text_repel(data=analysis_all_summ_mean, aes(6.04, 1/delta, label=key),
                   direction = "y",
                   segment.color = NA,
                   hjust=0) +
   scale_x_continuous("Basic reproduction number", expand=c(0, 0),
-                     breaks=c(1.5, 2, 2.5, 3),
-                     limits = c(NA,4)) +
+                     breaks=c(2, 4, 6),
+                     limits = c(NA,9)) +
   scale_y_log10("Duration of immunity (years)", expand=c(0, 0)) +
   scale_fill_viridis_c("Susceptible replenishment rate\n(%/years)",
                        option="A") +

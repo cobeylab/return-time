@@ -279,7 +279,7 @@ These observations suggest the possibility that some common respiratory pathogen
 
 So far, we focused on quantifying pathogen resilience from the observed patterns of pathogen re-emergence following COVID-19 interventions.
 But what factors determine how resilient a host-pathogen system is?
-Here, we use a standard Susceptible-Infected-Recovered-Susceptible (SIRS) model to show that susceptible host dynamics explain variation in pathogen resilience.
+Here, we use a standard Susceptible-Infected-Recovered-Susceptible (SIRS) model to show that susceptible host dynamics are the key determinants of pathogen resilience.
 To do so, we vary the basic reproduction number $\mathcal R_0$, which represents the average number of secondary infections caused by a newly infected individual in a fully susceptible population, and the duration of immunity and compute intrinsic resilience for each parameter.
 
 \begin{figure}[!th]
@@ -296,13 +296,14 @@ Pathogens are ranked based on their mean resilience estimates, averaged across d
 \end{center}
 \end{figure}
 
-We find that pathogen resilience increases with higher $\mathcal R_0$ and shorter duration of immunity (Figure 4A).
+We find an increase in $\mathcal R_0$ and a decrease in duration of immunity correspond to an increase in pathogen resilience (Figure 4A).
 These variations can be understood in terms of the susceptible host dynamics, where faster per-capita susceptible replenishment rate causes the system to be more resilient (Figure 4B).
 This rate can be expressed as a ratio between absolute rate at which new susceptibles enter the population and the equilibrium number of susceptible individuals in the population, $\bar{S}$.
-Therefore, both higher $\mathcal R_0$ and shorter duration of immunity can drive faster per-capita susceptible replenishment rate  (Figure 4B), especially because higher $\mathcal R_0$ leads to lower $\bar{S}$.
+Therefore, both higher $\mathcal R_0$ and shorter duration of immunity can drive faster per-capita susceptible replenishment rate (Figure 4B), especially because higher $\mathcal R_0$ leads to lower $\bar{S}$.
 
-Finally, we can now rank different pathogens based on their empirical resilience.
-For simplicity, we take the average of resilience estimates across countries to determine the ranking, which shows that influenza B is least resilient (Figure 4A).
+Finally, we can now rank different pathogens based on the average values of empirical resilience, which allows us to determine a set of parameters that are consistent with the estimated resilience (Figure 4A).
+
+
 This observation is consistent with the extinction of influenza B/Yamagata, which indicates the persistence of a pathogen should be associated with its resilience.
 Similarities in resilience ranking between RSV and Human metapneumovirus is also interesting, given the apparent coupling of their dynamics through cross immunity.
 These rankings further allow us to map each pathogen onto a set of parameters that are consistent with its empirical resilience (Figure 4A) and obtain a plausible range of susceptible replenishment rates for each pathogen (Figure 4B).

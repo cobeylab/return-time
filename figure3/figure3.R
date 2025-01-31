@@ -237,6 +237,7 @@ gcomb <- ggarrange(g2, g3,
                    labels=c("A", "B"))
 
 ggsave("figure3.pdf", gcomb, width=6, height=6)
+save("analysis_all_summ_filter", file="figure3_summ.rda")
 
 g3b <- ggplot(analysis_all_summ_filter) +
   geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
