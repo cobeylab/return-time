@@ -115,6 +115,21 @@ g2 <- ggplot(summdata) +
     legend.justification = "left"
   )
 
+replenish_range <- lapply(split(analysis_all_summ_mean, analysis_all_summ_mean$key), function(x) {
+  summdata %>%
+    filter(
+      resilience < x$resilience * 1.01 & resilience > x$resilience * 0.99
+    ) %>%
+    mutate(
+      key=x$key[1]
+    )
+}) %>%
+  bind_rows
+
+range(filter(replenish_range, !key %in% c("Bocavirus", "Norovirus"))$replenish)
+
+1/50 * 17
+
 gcomb <- ggarrange(g1, g2, nrow=1,
                    labels=c("A", "B"))
 
