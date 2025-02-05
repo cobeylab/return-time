@@ -16,10 +16,7 @@
 \newcommand{\showcomment}[3]{\textcolor{#1}{\textbf{[#2: }\textsl{#3}\textbf{]}}}
 \newcommand{\nocomment}[3]{}
 
-\newcommand{\jd}[1]{\comment{cyan}{JD}{#1}}
 \newcommand{\swp}[1]{\comment{magenta}{SWP}{#1}}
-\newcommand{\bmb}[1]{\comment{blue}{BMB}{#1}}
-\newcommand{\djde}[1]{\comment{red}{DJDE}{#1}}
 
 \newcommand{\eref}[1]{Eq.~(\ref{eq:#1})}
 \newcommand{\fref}[1]{Fig.~\ref{fig:#1}}
@@ -134,12 +131,14 @@ Gray lines and shaded regions represent the mean seasonal patterns and correspon
 \end{figure} 
 
 To address this question, we propose a framework for characterizing the resilience of a host-pathogen system based on how fast the system recovers from perturbation.
-We begin by laying out a few example scenarios that represent the expected outbreak dynamics following COVID-19 interventions and illustrating how resilience can be measured by comparing the post- and pre-pandemic dynamics of susceptible and infected hosts.
-In practice, the dynamics of susceptible hosts are often unavailable, and traditional susceptible reconstruction approaches often require long-term endemic time series, which cannot be applied due to disruptions in epidemic patterns caused by COVID-19 NPIs.
-Instead, we utilize Takens' embedding theorem to reconstruct empirical attractors from data and further measure the distance from this empirical attractor, which allows us to characterize the rate at which this distance decreases.
-Analyses of pathogen surveillence data for a wide array of respiratory pathogens in Canada, Hong Kong, and Korea suggest ...
-Finally, we show that variation in resilience estimates can be understood in terms of susceptible host dynamics.
-\swp{Revisit.}
+We begin by laying out a few representative scenarios that capture the potential impact of COVID-19 interventions on endemic pathogen dynamics and illustrating how resilience can be measured by comparing the pre- and post-pandemic dynamics of susceptible and infected hosts.
+In practice, information on susceptible hosts are often unavailable, and traditional methods for reconstructing the dynamics of susceptible hosts require long-term endemic time series, which cannot be applied due to disruptions in epidemic patterns caused by COVID-19 interventions.
+Instead, we utilize Takens' embedding theorem to reconstruct empirical attractors from data and further measure the distance from this empirical attractor.
+This reconstruction allows us to characterize the rate at which this distance decreases over time, which correspond to pathogen resilience.
+We apply this framework to analyzing pathogen surveillence data for a wide array of respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and US.
+Finally, we show that susceptible host dynamics are a key determinants of pathogen resilience.
+Our study offers unique insights into understanding the re-emergence patterns of 
+% \swp{Revisit.}
  
 \section*{Conceptual introduction to pathogen resilience}
 
@@ -385,6 +384,8 @@ The dynamics of the SIRS model is described by the following set of differential
 \frac{\dd R}{\dd t} &= \gamma I - (\delta + \mu) R \\
 \end{align}
 where $\mu$ represents the birth/death rate, $\beta(t)$ represents the time-varying transmission rate, and $\gamma$ represents the recovery rate.
+The basic reprodcution number $\mathcal R_0 = \beta(t)/(\gamma + \mu)$ is defined as the average number of secondary infections caused by a single infected individual in a fully susceptible population and measures the intrinsic transmissibility of a pathogen.
+
 For this model, the intrinsic resilience corresponds to:
 \begin{equation}
 -\frac{\mathrm{Re}(\lambda)}{2} = \frac{\delta + \beta I^{\ast} + \mu}{2}.
@@ -393,14 +394,22 @@ Here, $I^{\ast}$ represents the prevalence values at endemic equilibrium:
 \begin{equation}
 I^{\ast} = \frac{(\delta + \mu)(\beta - (\gamma + \mu))}{\beta(\delta + \gamma + \mu)}.
 \end{equation}
+The susceptible replenishment rate is given by:
+\begin{equation}
+\tsub{S}{replenish} = \frac{\mu + \delta R}{S^\ast},
+\end{equation}
+where $S^\ast = 1/\mathcal R_0$ represents the equilibrium proportion of susceptible individuals.
 
-In the limit where $\delta \to 0$, infection provides life-long immunity.
+When infection provides life-long immunity ($\delta \to 0$), the SIRS model becomes the SIR model.
+In this case, the intrinsic resilience is inversely proportional to the 
 
 In illustrating the impact of 
 
 \pagebreak
 
-\section*{Supplementary Materials}
+\section*{Supplementary Text}
+
+\section*{Supplementary Figures}
 
 \pagebreak
 
