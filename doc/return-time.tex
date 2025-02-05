@@ -137,7 +137,7 @@ Instead, we utilize Takens' embedding theorem to reconstruct empirical attractor
 This reconstruction allows us to characterize the rate at which this distance decreases over time, which correspond to pathogen resilience.
 We apply this framework to analyzing pathogen surveillence data for a wide array of respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and US.
 Finally, we show that susceptible host dynamics are a key determinants of pathogen resilience.
-Our study offers unique insights into understanding the re-emergence patterns of 
+Our study offers unique insights into understanding pathogen re-emergence patterns following COVID-19 interventions.
 % \swp{Revisit.}
  
 \section*{Conceptual introduction to pathogen resilience}
@@ -178,13 +178,15 @@ The LOESS fit suggests that the distance from the attractor will initially decre
 Here, a permanent 10\% reduction in transmission rate slows down the system, which causes the distance from the attractor to decrease at a slower rate (Figure 2F) than it would have otherwise in the absence of permanent transmission reduction (Figure 2C).
 This example shows that resilience is not necessarily an intrinsic property of a specific pathogen.
 Instead, pathogen resilience is a property of a specific attractor that a host-pathogen system approaches, which depends on both pathogen and host characteristics.
-\swp{Add discussion about observation error, e.g., under-reporting.}
+% \swp{Add discussion about observation error, e.g., under-reporting.}
 
 Finally, transient phenomena can also complicate the picture (Figure 2G--I).
 For example, a stage-structured model for RSV initially exhibits a stable annual cycle, but perturbations from NPIs cause the epidemic to exhibit biennial cycles (Figure 2G).
 Despite this biennial cycle, we see that the system eventually approaches the original pre-pandemic attractor (Figure 2H), suggesting that this biennial cycle is a transient phenomenon.
 The LOESS fit indicates that the distance from the attractor will initially decrease exponentially at a rate that is consistent with the intrinsic resilience of the seasonally unforced system, but the rate of decrease slows down as the epidemic exhibits a biennial cycle (Figure 2I).
 In classical ecological theory, this behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions.
+
+\swp{Multi-strain system to be discussed in the supp after some more investigation.}
 
 These observations indicate three possibilities.
 First, we can directly estimate the empirical resilience of a host-pathogen system by looking at how fast the system approaches a pre-pandemic attractor, provided that we can measure the distance from attractor.
@@ -194,8 +196,6 @@ Second, resilience estimates allow us to make phenomenological predictions about
 assuming that the distance from the attractor will decrease exponentially over time, we can obtain a ballpark estimate for when the system will reach an attractor.
 Finally, deviation from an exponential decrease in the distance from attractor can provide information about whether the system has reached an alternative attractor, or a ghost attractor, that is different from the original, pre-pandemic attractor.
 These alternative attractors may reflect continued perturbations from permanent changes in transmission patterns as well as changes in immune landscapes.
-
-\swp{Multi-strain system to be discussed in the supp after some more investigation.}
 
 \section*{Inferring pathogen resilience from real data}
 
@@ -220,7 +220,7 @@ We then apply the same delay and embedding dimensions to the entire time series 
 In princicple, we can quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression corresponds to pathogen resilience.
 
 \begin{figure}[!ht]
-\includegraphics[width=\textwidth]{../figure_schematic/figure_schematic_alternative.pdf}
+\includegraphics[width=\textwidth]{../figure3/figure3.pdf}
 \caption{
 \textbf{A schematic diagram explaining how pathogen resilience can be inferred from real data.}
 (A) A realistic example of a synthetic NPI, represented by a relative reduction in transmission.
@@ -254,7 +254,7 @@ A simple ANOVA shows that there are significant differences in resilience estima
 
 \begin{figure}[!th]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{../figure3/figure3.pdf}
+\includegraphics[width=0.8\textwidth]{../figure4/figure4.pdf}
 \caption{
 \textbf{Summary of resilience estimates.}
 (A) Estimated pathogen resilience.
@@ -409,7 +409,27 @@ In illustrating the impact of
 
 \section*{Supplementary Text}
 
+\pagebreak
+
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+
 \section*{Supplementary Figures}
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure_fit/figure_fit.pdf}
+\caption{
+\textbf{Mechanistic model fits to simulated data and inferred intrinsic resilience.}
+(A, D, G, J) Simulated data (red points) and model fits (black lines).
+Shaded regions represent the 95\% credible intervals.
+(B, E, H, K) Assumed reductions in transmission rate due to COVID-19 interventions and inferred values of relative changes in transmission from model fits.
+Red lines represent the true (assumed) values.
+Black lines and shaded regions represent model fits and corresponding 95\% credible intervals.
+(C, F, I, L) 
+}
+\end{figure}
 
 \pagebreak
 
