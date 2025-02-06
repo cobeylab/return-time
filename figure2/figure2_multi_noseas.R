@@ -107,11 +107,10 @@ lfit_SI_bh1 <- lm(log(dist)~time, data=filter(dist_SI_bh1, time>=maxt_SI_bh1))
 
 g3 <- ggplot(filter(dist_SI_bh1, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", alpha=0.2, lwd=1) +
-  geom_vline(xintercept=maxt_SI_bh1, lty=2, col="#224B95") +
   # geom_smooth(data=filter(dist_SI, time>=maxt_SI+1/ee), aes(time, dist), method="lm", col="#224B95") +
   geom_function(fun=function(x) exp(predict(lfit_SI_bh1)[1]) * exp(-ee_bh1*(x-maxt_SI_bh1)),
                 lwd=0.7, lty=3) +
-  geom_smooth(data=filter(dist_SI_bh1, time>=maxt_SI_bh1), aes(time, dist), method="loess", col="#224B95") +
+  geom_smooth(aes(time, dist), method="loess", col="orange") +
   scale_x_continuous("Year", breaks=seq(2020, 2030, 2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
   coord_cartesian(ylim=c(1e-5, 10)) +
@@ -160,12 +159,9 @@ lfit_SI_bh2 <- lm(log(dist)~time, data=filter(dist_SI_bh2, time>=maxt_SI_bh2))
 
 g6 <- ggplot(filter(dist_SI_bh2, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", alpha=0.2, lwd=1) +
-  geom_vline(xintercept=maxt_SI_bh2, lty=2, col="#224B95") +
-  # geom_vline(xintercept=maxt_SI2+1/ee2, lty=2, col="#224B95") +
-  # geom_smooth(data=filter(dist_SI2, time>=maxt_SI2+1/ee2), aes(time, dist), method="lm", col="#224B95") +
   geom_function(fun=function(x) exp(predict(lfit_SI_bh2)[1]) * exp(-ee_bh2*(x-maxt_SI_bh2)),
                 lwd=0.7, lty=3) +
-  geom_smooth(data=filter(dist_SI_bh1, time>=maxt_SI_bh1), aes(time, dist), method="loess", col="#224B95") +
+  geom_smooth(aes(time, dist), method="loess", col="orange") +
   scale_x_continuous("Year", breaks=seq(2020, 2030, 2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
   coord_cartesian(ylim=c(1e-5, 10)) +
@@ -212,10 +208,9 @@ lfit_SI_bh3 <- lm(log(dist)~time, data=filter(dist_SI_bh3, time>=maxt_SI_bh3))
 
 g9 <- ggplot(filter(dist_SI_bh3, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", alpha=0.2, lwd=1) +
-  geom_vline(xintercept=maxt_SI_bh3, lty=2, col="#224B95") +
   geom_function(fun=function(x) exp(predict(lfit_SI_bh3)[1]) * exp(-ee_bh1*(x-maxt_SI_bh3)),
                 lwd=0.7, lty=3) +
-  geom_smooth(data=filter(dist_SI_bh3, time>=maxt_SI_bh3), aes(time, dist), method="loess", col="#224B95") +
+  geom_smooth(aes(time, dist), method="loess", col="orange") +
   scale_x_continuous("Year", breaks=seq(2020, 2030, 2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
   coord_cartesian(ylim=c(1e-5, 10)) +
@@ -229,4 +224,4 @@ gcomb <- ggarrange(g1, g2, g3, g4, g5, g6, g7, g8, g9,
           byrow = FALSE,
           labels=LETTERS[1:9])
 
-ggsave("figure2_multi_noseas.pdf", gcomb, width=15, height=8)
+ggsave("figure2_multi_noseas.pdf", gcomb, width=10, height=8)

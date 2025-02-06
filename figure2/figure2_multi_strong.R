@@ -8,8 +8,8 @@ source("../R/distfun.R")
 
 ss_perturb_bh <- simulate_bhattacharyya(b01=2*52,
                                         b02=4*52,
-                                        theta1=0.2,
-                                        theta2=0.2,
+                                        theta1=0.4,
+                                        theta2=0.4,
                                         phi1=0,
                                         phi2=0,
                                         epsilon12=0.9,
@@ -31,8 +31,8 @@ ss_perturb_bh <- simulate_bhattacharyya(b01=2*52,
 
 ss_unperturb_bh <- simulate_bhattacharyya(b01=2*52,
                                           b02=4*52,
-                                          theta1=0.2,
-                                          theta2=0.2,
+                                          theta1=0.4,
+                                          theta2=0.4,
                                           phi1=0,
                                           phi2=0,
                                           epsilon12=0.9,
@@ -220,4 +220,4 @@ gcomb <- ggarrange(g1, g2, g3, g4, g5, g6, g7, g8, g9,
                    byrow = FALSE,
                    labels=LETTERS[1:9])
 
-ggsave("figure2_multi.pdf", gcomb, width=10, height=8)
+ggsave("figure2_multi_strong.pdf", gcomb, width=10, height=8)

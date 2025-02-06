@@ -164,9 +164,9 @@ Gray regions indicate the duration of interventions.
 (B, E, H) Phase plane representation of the corresponding model.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
 (C, F, I) Changes in logged distance from attractor over time.
-Transparent solid lines represent the logged distance from attractor.
-Non-transparent solid lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
-Doted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the system.
+Blue lines represent the logged distance from attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
 
@@ -185,8 +185,12 @@ For example, a stage-structured model for RSV initially exhibits a stable annual
 Despite this biennial cycle, we see that the system eventually approaches the original pre-pandemic attractor (Figure 2H), suggesting that this biennial cycle is a transient phenomenon.
 The LOESS fit indicates that the distance from the attractor will initially decrease exponentially at a rate that is consistent with the intrinsic resilience of the seasonally unforced system, but the rate of decrease slows down as the epidemic exhibits a biennial cycle (Figure 2I).
 In classical ecological theory, this behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions.
+As we show in Supplementary Figure S1, strong seasonal forcing in transmission can also lead to transient phenomena for a simple SIRS model, causing a slowing down of the system.
 
-\swp{Multi-strain system to be discussed in the supp after some more investigation.}
+In Supplementary Materials, we also explore measuring the resilience of a two-strain host-pathogen system:
+when the dynamics two strains (or two pathogens) are coupled through cross immunity, we would expect the entire system to be characterized by a single resilience value (rather than having two separate resilience for each strain).
+Simulations from a simple two-strain system illustrate that separate analyses of individual strain dynamics (e.g., RSV A vs B) and a joint analysis of total infections (e.g., total RSV infections) yield identiacl resilience estimates, confirming our expectation (Supplementary Figure S2, 3).
+Analogous to a single system, strong seasonal forcing in transmission can cause the system to slow down through transient phenomena (Supplementary Figure S4).
 
 These observations indicate three possibilities.
 First, we can directly estimate the empirical resilience of a host-pathogen system by looking at how fast the system approaches a pre-pandemic attractor, provided that we can measure the distance from attractor.
@@ -419,15 +423,89 @@ In illustrating the impact of
 \section*{Supplementary Figures}
 
 \begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure2/figure2_simple_seas.pdf}
+\caption{
+\textbf{Impact of seasonal transmission on pathogen resilience.}
+(A, D, G) Simulated epidemic trajectories using the SIRS model without seasonal forcing (A), with seasonal forcing of amplitude of 0.2 (D), and with seasonal forcing of amplitude of 0.2 (G).
+Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
+Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
+Gray regions indicate the duration of interventions.
+(B, E, H) Phase plane representation of the corresponding model.
+Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
+(C, F, I) Changes in logged distance from attractor over time.
+Blue lines represent the logged distance from attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
+}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure2/figure2_multi_noseas.pdf}
+\caption{
+\textbf{Conceptual framework for measuring pathogen resilience following NPIs for a multi-strain system without seasonal forcing.}
+(A, D, G) Simulated epidemic trajectories using a multi-strain system without seasonal forcing.
+Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
+Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
+Gray regions indicate the duration of interventions.
+(B, E, H) Phase plane representation of the corresponding model.
+Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
+(C, F, I) Changes in logged distance from attractor over time.
+Blue lines represent the logged distance from attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
+}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure2/figure2_multi.pdf}
+\caption{
+\textbf{Conceptual framework for measuring pathogen resilience following NPIs for a multi-strain system with seasonal forcing.}
+(A, D, G) Simulated epidemic trajectories using a multi-strain system with seasonal forcing (amplitude of 0.2).
+Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
+Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
+Gray regions indicate the duration of interventions.
+(B, E, H) Phase plane representation of the corresponding model.
+Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
+(C, F, I) Changes in logged distance from attractor over time.
+Blue lines represent the logged distance from attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
+}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure2/figure2_multi_strong.pdf}
+\caption{
+\textbf{Conceptual framework for measuring pathogen resilience following NPIs for a multi-strain system with strong seasonal forcing.}
+(A, D, G) Simulated epidemic trajectories using a multi-strain system with seasonal forcing (amplitude of 0.4).
+Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
+Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
+Gray regions indicate the duration of interventions.
+(B, E, H) Phase plane representation of the corresponding model.
+Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
+(C, F, I) Changes in logged distance from attractor over time.
+Blue lines represent the logged distance from attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
+}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure_fit/figure_fit.pdf}
 \caption{
 \textbf{Mechanistic model fits to simulated data and inferred intrinsic resilience.}
-(A, D, G, J) Simulated data (red points) and model fits (black lines).
-Shaded regions represent the 95\% credible intervals.
-(B, E, H, K) Assumed reductions in transmission rate due to COVID-19 interventions and inferred values of relative changes in transmission from model fits.
-Red lines represent the true (assumed) values.
-Black lines and shaded regions represent model fits and corresponding 95\% credible intervals.
-(C, F, I, L) 
+(A, D, G) Simulated epidemic trajectories across various models. 
+Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
+Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
+Gray regions indicate the duration of interventions.
 }
 \end{figure}
 
