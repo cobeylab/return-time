@@ -132,8 +132,8 @@ Gray lines and shaded regions represent the mean seasonal patterns and correspon
 
 To address this question, we propose a framework for characterizing the resilience of a host-pathogen system based on how fast the system recovers from perturbation.
 We begin by laying out a few representative scenarios that capture the potential impact of COVID-19 interventions on endemic pathogen dynamics and illustrating how resilience can be measured by comparing the pre- and post-pandemic dynamics of susceptible and infected hosts.
-In practice, information on susceptible hosts are often unavailable, and traditional methods for reconstructing the dynamics of susceptible hosts require long-term endemic time series, which cannot be applied due to disruptions in epidemic patterns caused by COVID-19 interventions.
-Instead, we utilize Takens' embedding theorem to reconstruct empirical attractors from data and further measure the distance from this empirical attractor.
+In practice, information on susceptible hosts are often unavailable, and traditional methods for reconstructing the dynamics of susceptible hosts require long-term endemic time series \citep{bobashev2000reconstructing,finkenstadt2000time}, which cannot be applied due to disruptions in epidemic patterns caused by COVID-19 interventions.
+Instead, we utilize Takens' embedding theorem to reconstruct empirical attractors from data and further measure the distance from this empirical attractor \citep{takens2006detecting}.
 This reconstruction allows us to characterize the rate at which this distance decreases over time, which correspond to pathogen resilience.
 We apply this framework to analyzing pathogen surveillence data for a wide array of respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and US.
 Finally, we show that susceptible host dynamics are a key determinants of pathogen resilience.
@@ -142,7 +142,7 @@ Our study offers unique insights into understanding pathogen re-emergence patter
  
 \section*{Conceptual introduction to pathogen resilience}
 
-In classical ecological literature, resilience of an ecological system is measured by the rate at which the system returns to its reference state following a perturbation.
+In classical ecological literature, resilience of an ecological system is measured by the rate at which the system returns to its reference state following a perturbation \citep{pimm1979structure, neubert1997alternatives,gunderson2000ecological,dakos2022ecological}.
 This rate corresponds to the largest real part of the eigenvalues of the linearized system near equilibrium---here, we refer to this value as the \emph{intrinsic} resilience of the system, which represents the expected rate of return from perturbated states.
 However, respiratory pathogens often exhibit seasonal variation in transmission, meaning that the intrinsic resilience of a host-pathogen system varies across season.
 Nonetheless, we can still measure the \emph{empirical} resilience of a host-pathogen system by looking at how fast the system returns to the pre-pandemic, endemic dynamics after interventions are lifted.
@@ -184,7 +184,7 @@ Finally, transient phenomena can also complicate the picture (Figure 2G--I).
 For example, a stage-structured model for RSV initially exhibits a stable annual cycle, but perturbations from NPIs cause the epidemic to exhibit biennial cycles (Figure 2G).
 Despite this biennial cycle, we see that the system eventually approaches the original pre-pandemic attractor (Figure 2H), suggesting that this biennial cycle is a transient phenomenon.
 The LOESS fit indicates that the distance from the attractor will initially decrease exponentially at a rate that is consistent with the intrinsic resilience of the seasonally unforced system, but the rate of decrease slows down as the epidemic exhibits a biennial cycle (Figure 2I).
-In classical ecological theory, this behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions.
+In classical ecological theory, this behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions \citep{hastings2018transient}.
 As we show in Supplementary Figure S1, strong seasonal forcing in transmission can also lead to transient phenomena for a simple SIRS model, causing a slowing down of the system.
 
 In Supplementary Materials, we also explore measuring the resilience of a two-strain host-pathogen system:
@@ -195,7 +195,7 @@ Analogous to a single system, strong seasonal forcing in transmission can cause 
 These observations indicate three possibilities.
 First, we can directly estimate the empirical resilience of a host-pathogen system by looking at how fast the system approaches a pre-pandemic attractor, provided that we can measure the distance from attractor.
 The empirical approach to estimating pathogen resilience is particularly convenient because it does not require us to know the true underlying model.
-As we show in Supplementary Materials, estimating the intrinsic resilience from fitting standard compartmental models can lead to biased estimates, especially under model misspecification (\swp{TODO}).
+As we show in Supplementary Figure S5, estimating the intrinsic resilience from fitting standard compartmental models can lead to biased estimates, especially under model misspecification.
 Second, resilience estimates allow us to make phenomenological predictions about the dynamics of a host-pathogen system following a perturbation:
 assuming that the distance from the attractor will decrease exponentially over time, we can obtain a ballpark estimate for when the system will reach an attractor.
 Finally, deviation from an exponential decrease in the distance from attractor can provide information about whether the system has reached an alternative attractor, or a ghost attractor, that is different from the original, pre-pandemic attractor.
@@ -214,12 +214,12 @@ in this example, continued transmission reduction from NPIs limits the size of t
 
 Previously, we relied on the dynamics of susceptible and infected hosts to compute the distance from attractor (Figure 2), but information on susceptible hosts are often not available in practice.
 In addition, uncertainties in case counts due to observation error as well as the possibility of complex, multiannual attractor adds challenges to measuring the distance from attractor.
-To address these challenges, we first reconstruct an empirical attractor by utilizing Takens' theorem, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding.
+To address these challenges, we first reconstruct an empirical attractor by utilizing Takens' theorem, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding \citep{takens2006detecting}.
 Here, we use delayed copies of logged values of pre-pandemic cases $C(t)$ (Figure 3C) to reconstruct the attractor:
 \begin{equation}
 \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
 \end{equation}
-where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respecitvely.
+where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respecitvely \citep{kennel1992determining,tan2023selecting}.
 We then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical attractor (Figure 3E).
 In princicple, we can quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression corresponds to pathogen resilience.
 
@@ -502,10 +502,10 @@ Dotted lines are superimposed as a comparison to have the same slope as the intr
 \includegraphics[width=\textwidth]{../figure_fit/figure_fit.pdf}
 \caption{
 \textbf{Mechanistic model fits to simulated data and inferred intrinsic resilience.}
-(A, D, G) Simulated epidemic trajectories across various models. 
-Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
-Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
-Gray regions indicate the duration of interventions.
+(A, D, G, J) Simulated case time series from corresponding models (red) and SIRS model fits (black).
+(B, E, H, K) Assumed changes in transmission due to COVID-19 interventions (red) and estimated changes from the SIRS model (black).
+Solid lines and shaded regions represent fitted posterior median and 95\% credible intervals.
+(C, F, I, L) True intrinsic reslience of the seasonally unforced system (vertical lines) and the posterior distribution of the inferred intrinsic resilience from the SIRS model (density plots).
 }
 \end{figure}
 
