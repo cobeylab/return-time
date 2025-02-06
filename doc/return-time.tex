@@ -222,6 +222,8 @@ Here, we use delayed copies of logged values of pre-pandemic cases $C(t)$ (Figur
 where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respecitvely \citep{kennel1992determining,tan2023selecting}.
 We then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical attractor (Figure 3E).
 In princicple, we can quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression corresponds to pathogen resilience.
+As we show in Supplementary Figure S6, overall temporal variations in the distance from attractor, especially the observed rate of decrease, appear robust to choices about embedding delays and diemsions; 
+we note that using longer delays and higher dimensions tend to smooth out temporal variations in the distance from attractor.
 
 \begin{figure}[!ht]
 \includegraphics[width=\textwidth]{../figure3/figure3.pdf}
@@ -508,6 +510,18 @@ Solid lines and shaded regions represent fitted posterior median and 95\% credib
 (C, F, I, L) True intrinsic reslience of the seasonally unforced system (vertical lines) and the posterior distribution of the inferred intrinsic resilience from the SIRS model (density plots).
 }
 \end{figure}
+
+
+\pagebreak
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure3/figure3_sens.pdf}
+\caption{
+\textbf{Sensitivity of the distance from attractor to choices about emedding lags and dimensions.}
+Sensitivity analysis for the distance-from-attractor time series shown in Figure 3E in the main text by varying the embedding lag between 10--15 days and embedding dimensions between 2--6 dimensions.
+}
+\end{figure}
+
 
 \pagebreak
 

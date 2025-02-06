@@ -96,8 +96,7 @@ g1 <- ggplot(resdata) +
   facet_grid(d~tau, scale="free") +
   theme(
     panel.grid = element_blank(),
-    panel.border = element_blank(),
-    axis.line = element_line(),
+    strip.background = element_blank(),
     legend.position = "none",
     axis.text.x = element_text(angle=45, hjust=1)
   )
