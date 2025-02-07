@@ -240,8 +240,8 @@ This distance time series can be used to infer pathogen resilience by fitting a 
 
 Complex changes in the distance from attractor suggest that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
 In Supplementary Materials, we explore an automated window selection criteria for linear regression and test it against randomized, stochastic simulations across a wide range of realistic NPI shapes.
-We find that resilience estimates based on the automated window selection criteria are moderately correlated (0.54) with the intrinsic resilience of the post-NPI attractor.
-In contrast, a naive approach that uses the entire time series, starting from the peak distance, only gives a correlation of 0.21 and consistently underestimates the intrinsic resilience.
+We find that resilience estimates based on the automated window selection criteria are moderately correlated (0.54) with the intrinsic resilience of the post-NPI attractor (Supplementary Figure S7).
+In contrast, a naive approach that uses the entire time series, starting from the peak distance, only gives a correlation of 0.21 and consistently underestimates the intrinsic resilience (Supplementary Figure S7).
 
 % A closer observation of the resulting time series of the distance from attractor provides three important insights (Figure 3E).
 % First, the relaxation of NPIs in realistic settings can cause a false return of the system, as indicated by a rapid decrease in the distance in early 2022 followed by a rapid increase in distance.
@@ -250,9 +250,9 @@ In contrast, a naive approach that uses the entire time series, starting from th
 % Finally, temporal variation in the impact of NPIs on pathogen transmission will affect the intrinsic resilience of the system throughout the NPI period, meaning that the estimated resilience from linear regression will likely reflect some sort of average impact of the NPIs.
 
 Now, we apply this approach to pathogen surveillance data presented in Figure 1.
-For each time series, we apply Takens' theorem independently to reconstruct the empirical attractor and obtain the corresponding time series of distance from attractors (\swp{Supp}).
+For each time series, we apply Takens' theorem independently to reconstruct the empirical attractor and obtain the corresponding time series of distance from attractors (Supplementary Figure S8 for the distance time series and linear regression fits).
 Then, we use the automated window selection criteria to fit a linear regression and estimate the empirical resilience for each pathogen in each country.
-For most respiratory pathogens, resilience estimates $0.5/\mathrm{year}$ and $2/\mathrm{year}$ (Figure 4A), with the exception of Rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and Bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
+For most respiratory pathogens, resilience estimates fall between $0.5/\mathrm{year}$ and $2/\mathrm{year}$ (Figure 4A), with the exception of Rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and Bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
 Excluding these exceptions, the mean resilience of common respiratory pathogens is $0.974/\mathrm{year}$ (95\% CI: $0.784/\mathrm{year}$--$1.16/\mathrm{year}$).
 As a reference, this is $\approx 7$ times higher than the intrinsic resilience of pre-vaccination measles dynamics ($\approx 0.13/\mathrm{year}$).
 Finally, resilence estimates for norovirus appears to be comparable to the intrinsic resilience of measles: $0.119/\mathrm{year}$ (95\%CI: $0.004/\mathrm{year}$--$0.233/\mathrm{year}$) for Korea and $0.385/\mathrm{year}$ (95\% CI: $0.167/\mathrm{year}$--$0.603/\mathrm{year}$).
@@ -274,11 +274,18 @@ Error bars represent 95\% confidence intervals.
 
 Using resilience estimates, we now predict when each pathogen will return to their original pre-pandemic cycles.
 Specifically, we extend our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value, which we set to a mean of pre-pandemic distances.
-We predict that a return to pre-pandemic cycles would be imminent for most pathogens (Figure 4B).
+We predict that a return to pre-pandemic cycles would be imminent for most pathogens (Figure 4B; see Supplementary Figure S9 for a zoomed out version).
 In addition, we also predict that many pathogens should have already returned to their pre-pandemic dynamics by the end of 2024; 
 but these predictions contradict some of the observed pathogen dynaics.
 For example, we predict that both human metapneumovirus and RSV in Korea should have returned to their attractors by now, but the magnitude and timing of recent epidemics are different from pre-pandemic patterns (Figure 1). 
 These observations suggest the possibility that some common respiratory pathogens may have converged to different attractors.
+
+In Supplementary Materials, we also consider using a lower threshold for the false nearest neighbor approach when determining the embedding dimension;
+this gives a higher embedding dimension.
+As explained earlier (Supplementary Figure S6), this gives a smoother distance-from-attractor time series (compare Supplementary Figure S10 with S8);
+this also requires us to use longer time series, which prevents us from estimating resilience for some pathogens.
+Overall, resulting estimates of pathogen resilience with higher embedding dimensions still fall between $0.5/\mathrm{year}$ and $2/\mathrm{year}$ for the most part (Supplementary Figure S11).
+A direct comparison between two approaches (i.e., original estimate vs using higher dimensions) shows a strong consistency in resilience estimates (Supplementary Figure S12).
 
 \section*{Susceptible host dynamics explain variation in pathogen resilience}
 
@@ -522,8 +529,89 @@ Sensitivity analysis for the distance-from-attractor time series shown in Figure
 }
 \end{figure}
 
+\pagebreak
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure_analysis_random/figure_analysis_random.pdf}
+\caption{
+\textbf{Impact of fitting window selection on the estimation of empirical resilience.}
+We simulate 500 epidemics using stochastic SIRS model with randomly drawn parameters and randomly generated intervention impacts.
+For each simulation, we reconstruct the empirical attractor based on the approach outlined in Figure 3 and estimate the distance from attractor.
+The naive approach fits a linear regression on a log scale, starting from the maximum distance until the end of the time series.
+The window-based approach tries to select an appropriate window by smoothing the distance estimates and finding a time period when the smoothed time series crosses pre-determined threshold, relatively to the maximum distance;
+then, a linear regression is fitted by using the raw distance within this time period.
+}
+\end{figure}
 
 \pagebreak
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure4/figure4_dist.pdf}
+\caption{
+\textbf{Estimated time series of distance from attractor for each pathogen across Canada, Hong Kong, Korea, and the US.}
+Black lines represent the estimated distance from attractor.
+Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
+Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
+}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure4/figure4_unzoom.pdf}
+\caption{
+\textbf{Predicted timing of when each pathogen will return to their pre-pandemic cycles (zoomed out).}
+The dashed line in panel B indicates the end of 2024 (current observation time).
+Error bars represent 95\% confidence intervals.
+}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure4_th/figure4_dist_th.pdf}
+\caption{
+\textbf{Estimated time series of distance from attractor for each pathogen across Canada, Hong Kong, Korea, and the US using higher embedding dimensions.}
+Black lines represent the estimated distance from attractor.
+Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
+Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
+A lower threshold is used for determining embedding dimensions with the false nearest neighbors approach, thereby yielding a higher embedding dimension.
+}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../figure4_th/figure4_th.pdf}
+\caption{
+\textbf{Summary of resilience estimates using higher embedding dimensions.}
+(A) Estimated pathogen resilience.
+The gray horizontal line represents the intrinsic resilience of pre-vaccination measles dynamics.
+(B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
+The dashed line in panel B indicates the end of 2024 (current observation time).
+Error bars represent 95\% confidence intervals.
+A lower threshold is used for determining embedding dimensions with the false nearest neighbors approach, thereby yielding a higher embedding dimension.
+}
+\end{center}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../figure4_th/figure4_comparison.pdf}
+\caption{
+\textbf{Comparison of resilience estimates.}
+Each point represents a resilience estimate for a specific pathogen at a specific country.
+The x values represent the original resilience estimates presented in Figure 4.
+The y values represent the original resilience estimates presented in Supplementary Figure S11.
+}
+\end{center}
+\end{figure}
+
+\pagebreak
+
 
 \bibliography{return-time.bib}
 

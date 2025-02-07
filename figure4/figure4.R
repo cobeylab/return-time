@@ -158,8 +158,8 @@ g1 <- ggplot(analysis_all) +
   geom_vline(xintercept=2013:2027, lty=3, col="gray") +
   geom_hline(data=analysis_all_summ, aes(yintercept=exp(pre_mean)), lty=2) +
   geom_line(aes(time, dist_takens)) +
-  # geom_ribbon(data=analysis_all_lm, aes(time, ymin=pred_lwr, ymax=pred_upr), fill="red", alpha=0.2) +
-  # geom_line(data=analysis_all_lm, aes(time, pred), col="red") +
+  geom_ribbon(data=analysis_all_lm, aes(time, ymin=pred_lwr, ymax=pred_upr), fill="red", alpha=0.2) +
+  geom_line(data=analysis_all_lm, aes(time, pred), col="red") +
   scale_x_continuous("Year",
                      breaks=seq(2014, 2030, by=2),
                      expand=c(0, 0)) +
@@ -171,6 +171,8 @@ g1 <- ggplot(analysis_all) +
     panel.grid = element_blank(),
     axis.text.x = element_text(angle=45, hjust=1)
   )
+
+ggsave("figure4_dist.pdf", g1, width=12, height=6)
 
 measles_resilience <- -eigen_seir()
 
@@ -236,8 +238,8 @@ g3 <- ggplot(analysis_all_summ_filter) +
 gcomb <- ggarrange(g2, g3,
                    labels=c("A", "B"))
 
-ggsave("figure3.pdf", gcomb, width=6, height=6)
-save("analysis_all_summ_filter", file="figure3_summ.rda")
+ggsave("figure4.pdf", gcomb, width=6, height=6)
+save("analysis_all_summ_filter", file="figure4_summ.rda")
 
 g3b <- ggplot(analysis_all_summ_filter) +
   geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
@@ -257,4 +259,4 @@ g3b <- ggplot(analysis_all_summ_filter) +
     legend.position = "none"
   )
 
-ggsave("figure3_unzoom.pdf", g3b, width=6, height=3)
+ggsave("figure4_unzoom.pdf", g3b, width=6, height=3)
