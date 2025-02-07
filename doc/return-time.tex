@@ -252,7 +252,7 @@ In contrast, a naive approach that uses the entire time series, starting from th
 Now, we apply this approach to pathogen surveillance data presented in Figure 1.
 For each time series, we apply Takens' theorem independently to reconstruct the empirical attractor and obtain the corresponding time series of distance from attractors (Supplementary Figure S8 for the distance time series and linear regression fits).
 Then, we use the automated window selection criteria to fit a linear regression and estimate the empirical resilience for each pathogen in each country.
-For most respiratory pathogens, resilience estimates fall between $0.5/\mathrm{year}$ and $2/\mathrm{year}$ (Figure 4A), with the exception of Rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and Bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
+For most respiratory pathogens, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A), with the exception of Rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and Bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
 Excluding these exceptions, the mean resilience of common respiratory pathogens is $0.974/\mathrm{year}$ (95\% CI: $0.784/\mathrm{year}$--$1.16/\mathrm{year}$).
 As a reference, this is $\approx 7$ times higher than the intrinsic resilience of pre-vaccination measles dynamics ($\approx 0.13/\mathrm{year}$).
 Finally, resilence estimates for norovirus appears to be comparable to the intrinsic resilience of measles: $0.119/\mathrm{year}$ (95\%CI: $0.004/\mathrm{year}$--$0.233/\mathrm{year}$) for Korea and $0.385/\mathrm{year}$ (95\% CI: $0.167/\mathrm{year}$--$0.603/\mathrm{year}$).
@@ -284,7 +284,7 @@ In Supplementary Materials, we also consider using a lower threshold for the fal
 this gives a higher embedding dimension.
 As explained earlier (Supplementary Figure S6), this gives a smoother distance-from-attractor time series (compare Supplementary Figure S10 with S8);
 this also requires us to use longer time series, which prevents us from estimating resilience for some pathogens.
-Overall, resulting estimates of pathogen resilience with higher embedding dimensions still fall between $0.5/\mathrm{year}$ and $2/\mathrm{year}$ for the most part (Supplementary Figure S11).
+Overall, resulting estimates of pathogen resilience with higher embedding dimensions still fall between $0.3/\mathrm{year}$ and $2.1/\mathrm{year}$ for the most part (Supplementary Figure S11).
 A direct comparison between two approaches (i.e., original estimate vs using higher dimensions) shows a strong consistency in resilience estimates (Supplementary Figure S12).
 
 \section*{Susceptible host dynamics explain variation in pathogen resilience}
@@ -320,44 +320,52 @@ However, we note that there is no one-to-one correspondance between susceptible 
 
 \section*{Discussion}
 
-The COVID-19 interventions have caused major disruptions to circulation patterns of both respiratory and non-respiratory pathogens, adding challenges to predicting their future dynamics.
+The COVID-19 interventions have caused major disruptions to circulation patterns of both respiratory and non-respiratory pathogens, adding challenges to predicting their future dynamics \citep{baker2020impact,gomez2021uncertain,koltai2022determinants,park2024predicting}.
 On the other hand, these interventions offer large-scale natural experiments for understanding how different pathogens respond to perturbations.
 In this study, we show that pathogen re-emergence patterns following COVID-19 interventions can be characterized through the lens of ecological resilience.
 Traditionally, ecological resilience measures how fast a system returns to a reference state following a perturbation.
 In the context of respiratory pathogens, resilience measures how fast epidemics return to their endemic cycles after interventions are lifted.
 % Our study demonstrates that this perspective provides unique insights into underlying susceptible host dynamics and allows predictions for when epidemics will return to their endemic cycles.
 
-We use an attractor reconstruction approach to quantify how distance from attractor changes over time for each pathogen.
-By fitting a linear regression to log distances, we can estimate pathogen resilience and further predict when each pathogen will return to their endemic cycles.
-Consistency in resilience estimates across countries is particularly surprising given that each country imposed different intervention measures; this consistency provides robustness to our estimates.
-The ability to predict future epidemic patterns from resilience estimates also offers a new paradigm for epidemic forecasting.
+We use an attractor reconstruction approach to quantify how distance from attractor changes over time for each pathogen \citep{takens2006detecting}.
+We show that the resilience of a host-pathogen system can be estimated by fitting a linear regression to a logged distance-from-attractor time series.
+Overall, we estimate that the resilience for most common respiratory pathogens ranges between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$, which is 3--14 times more resilient than prevaccination measles, indicating potential challenges in controlling common respiratory pathogens.
+
+Our framework allows us to make phenomenological predictions about when each pathogen will return to their endemic cycles.
+The ability to predict future epidemic patterns from resilience estimates offers a new paradigm for epidemic forecasting.
 While this approach cannot predict the exact timing of outbreaks or epidemic patterns, it is nonetheless useful for predicting when epidemics will settle down to regular cycles after a large perturbation, such as COVID-19 interventions.
 
 Our analyses suggest a possibility that several pathogens may have converged to different endemic cycles compared to their pre-pandemic epidemic patterns.
 Key examples include human metapnuemovirus, RSV, and bocavirus in Korea as well as RSV in Hong Kong.
-These changes may reflect permanent changes in behavior since 2020 or a shift in population-level immunity.
-However, it seems unlikely that permanent changes in behavior would only affect a few pathogens and not others.
+These changes may reflect changes in surveillance or actual shift in the dynamics, caused by permanent changes in behavior or population-level immunity.
+While it seems unlikely that permanent changes in behavior would only affect a few pathogens and not others, we cannot rule out this possibility given heterogeneity in the age of infection across different respiratory pathogens \swp{CITE}.
 A shift in population-level immunity is plausible, as the emergence of SARS-CoV-2 and extinction of influenza B/Yamagata likely caused major changes in immune landscapes;
-however, we currently do not know how immunity, or lack thereof, from these pathogens would affect infection from other pathogens.
+interactions among co-circulating pathogens, such as cross immunity between RSV and HMPV \citep{bhattacharyya2015cross}, may have also contributed to changes in population-level immunity.
+However, we currently do not know how immunity, or lack thereof, from these pathogens would affect infection from other pathogens.
 Future studies should use detailed mechanistic models, coupled with behavioral and immunological data, to test these hypotheses and better understand post-pandemic dynamics of endemic pathogens.
 
 We show that susceptible host dynamics shape pathogen resilience, where faster replenishment of the susceptible population causes the pathogen to be more resilient.
 For simplicity, we focus on waning immunity and birth as a main driver of the susceptible host dynamics but other mechanisms can also contribute to the replenishment of the susceptible population.
 In particular, pathogen evolution, especially the emergence of antigenically novel strains, can cause effective waning of immunity in the population;
-therefore, we tentatively hypothesize that faster rates of antigenic evolution can also cause a pathogen to be more resilient.
+therefore, we hypothesize that faster rates of antigenic evolution can also cause a pathogen to be more resilient.
 Future studies should explore the relationship between the rate of evolution and resilience for antigenically evolving pathogens.
 
-Quantifying pathogen resilience also offers novel approaches to validating epidemiological models.
-So far, the majority of model validation in epidemiology is based on the ability of a model to reproduce the observed epidemic dynamics and to predict future dynamics.
+Quantifying pathogen resilience also offers novel approaches to validating population-level epidemiological models.
+So far, the majority of model validation in epidemiology is based on the ability of a model to reproduce the observed epidemic dynamics and to predict future dynamics \citep{grenfell2002dynamics,bhattacharyya2015cross,pitzer2015environmental,dean2018human,pons2018serotype}.
 However, there can be plethora of models that meet these criteria.
-For example, two major RSV models have been proposed so far to explain biennial epidemic patterns: (1) a stage- and age-structured model that allows for disease severity to vary with number of past infections and age of infection and (2) a pathogen-interaction model that accounts for cross immunity between RSV and human metapnuemovirus.
-Since both models can accurately reproduce the observed epidemic patterns, standard criteria for model validation do not allow us to distinguish between these two models.
+For example, two major RSV models have been proposed so far to explain biennial epidemic patterns: (1) a stage- and age-structured model that allows for disease severity to vary with number of past infections and age of infection \citep{pitzer2015environmental} and (2) a pathogen-interaction model that accounts for cross immunity between RSV and human metapnuemovirus \citep{bhattacharyya2015cross}.
+Since both models can accurately reproduce the observed epidemic patterns, standard criteria for model validation do not allow us to distinguish between these two models from population-level data alone.
 Instead, we can measure the empirical resilience of each model by simulating various perturbations and compare them to estimates of empirical resilience from data, using COVID-19 interventions as an opportunity.
 Future studies should further investigate using pathogen resilience for validating epidemic models.
 
 There are several limitations to our work.
-In particular, our estimates of pathogen resilience and the associated ranking are necessarily crude.
-\swp{Limitation TBD.}
+First of all, we did not extensively explore other approaches to reconstructing the attractor.
+Recent studies showed that more sophisticated approaches, such as using non-uniform embedding, can provide more robust reconstruction for noisy data \citep{tan2023selecting}.
+In the context of causal inference, choices about embedding can have major impact on the resulting inference \citep{cobey2016limits}.
+Our resilience estimates are likely overly confident given a lack of uncertainties in attractor reconstruction as well as the simplicity of our statistical framework.
+Nonetheless, as illustrated in our sensitivity analyses (Supplementary Figure S6, S10--S12), inferences about pathogen resilience appear to be robust to decisions about embedding lags and dimensions---this is because tracking the rate at which the system approaches the attractor is likely a much simpler problem than making inferences about causal directionality.
+Our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust to these predictions, given how rapid many respiratory pathogens returned to their original cycles following COVID-19 interventions.
+
 Nonetheless, our study illustrates the utility of quantifying pathogen resilience for understanding how different pathogens respond to perturbations.
 
 \swp{Conclusion paragraph TBD.}

@@ -187,6 +187,8 @@ analysis_all_summ_filter_th %>%
   filter(key != "Norovirus", key != "Bocavirus",
          !(key == "Rhinovirus/Enterovirus" & country=="US")) %>%
   summarize(
+    min=min(resilience),
+    max=max(resilience),
     mean=mean(resilience),
     lwr=t.test(resilience)[[4]][1],
     upr=t.test(resilience)[[4]][2]
