@@ -115,7 +115,7 @@ Both theoretical and empirical efforts to quantify resilience of ecological syst
 However, despite rich literature on ecological resilience, there have been limited applications to measuring the resilience of host-pathogen systems, especially for human pathogens.
 
 Non-pharmaceutical interventions (NPIs) to slow the spread of COVID-19 disrupted the transmission of other human pathogens, providing large-scale natural experiments for understanding how various host-pathogen systems respond to perturbations \citep{baker2020impact,gomez2021uncertain,koltai2022determinants,park2024predicting}.
-In particular, as interventions lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries (Figure 1), likely reflecting differences in NPI patterns, pathogen characteristics, immigration/importantion from other countries, and pre-pandemic pathogen dynamics \citep{chow2023effects}.
+In particular, as interventions lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries (Figure 1), likely reflecting differences in NPI patterns, pathogen characteristics, immigration/importation from other countries, and pre-pandemic pathogen dynamics \citep{chow2023effects}.
 Even though more than four years have already passed since the emergence of COVID-19, current circulation patterns for many respiratory pathogens appear to be different from their pre-pandemic, seasonal patterns, especially in Hong Kong and Korea:
 some pathogens, such as human metapneumovirus and bocavirus in Korea, are circulating at lower levels, whereas other pathogens, such as RSV in Korea, seem to exhibit different seasonality (Figure 1).
 These observations pose two fundamental questions for current and future infectious disease dynamics: (1) can we learn about underlying pathogen characteristics, such as their transmissibility or duration of immunity, from re-emergence patterns? and (2) can we predict whether and when other respiratory pathogens will eventually return to their pre-pandemic dynamics?
@@ -135,7 +135,7 @@ We begin by laying out a few representative scenarios that capture the potential
 In practice, information on susceptible hosts are often unavailable, and traditional methods for reconstructing the dynamics of susceptible hosts require long-term endemic time series \citep{bobashev2000reconstructing,finkenstadt2000time}, which cannot be applied due to disruptions in epidemic patterns caused by COVID-19 interventions.
 Instead, we utilize Takens' embedding theorem to reconstruct empirical attractors from data and further measure the distance from this empirical attractor \citep{takens2006detecting}.
 This reconstruction allows us to characterize the rate at which this distance decreases over time, which correspond to pathogen resilience.
-We apply this framework to analyzing pathogen surveillence data for a wide array of respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and US.
+We apply this framework to analyzing pathogen surveillance data for a wide array of respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and US.
 Finally, we show that susceptible host dynamics are a key determinants of pathogen resilience.
 Our study offers unique insights into understanding pathogen re-emergence patterns following COVID-19 interventions.
 % \swp{Revisit.}
@@ -143,7 +143,7 @@ Our study offers unique insights into understanding pathogen re-emergence patter
 \section*{Conceptual introduction to pathogen resilience}
 
 In classical ecological literature, resilience of an ecological system is measured by the rate at which the system returns to its reference state following a perturbation \citep{pimm1979structure, neubert1997alternatives,gunderson2000ecological,dakos2022ecological}.
-This rate corresponds to the largest real part of the eigenvalues of the linearized system near equilibrium---here, we refer to this value as the \emph{intrinsic} resilience of the system, which represents the expected rate of return from perturbated states.
+This rate corresponds to the largest real part of the eigenvalues of the linearized system near equilibrium---here, we refer to this value as the \emph{intrinsic} resilience of the system, which represents the expected rate of return from perturbed states.
 However, respiratory pathogens often exhibit seasonal variation in transmission, meaning that the intrinsic resilience of a host-pathogen system varies across season.
 Nonetheless, we can still measure the \emph{empirical} resilience of a host-pathogen system by looking at how fast the system returns to the pre-pandemic, endemic dynamics after interventions are lifted.
 
@@ -189,7 +189,7 @@ As we show in Supplementary Figure S1, strong seasonal forcing in transmission c
 
 In Supplementary Materials, we also explore measuring the resilience of a two-strain host-pathogen system:
 when the dynamics two strains (or two pathogens) are coupled through cross immunity, we would expect the entire system to be characterized by a single resilience value (rather than having two separate resilience for each strain).
-Simulations from a simple two-strain system illustrate that separate analyses of individual strain dynamics (e.g., RSV A vs B) and a joint analysis of total infections (e.g., total RSV infections) yield identiacl resilience estimates, confirming our expectation (Supplementary Figure S2, 3).
+Simulations from a simple two-strain system illustrate that separate analyses of individual strain dynamics (e.g., RSV A vs B) and a joint analysis of total infections (e.g., total RSV infections) yield identical resilience estimates, confirming our expectation (Supplementary Figure S2, 3).
 Analogous to a single system, strong seasonal forcing in transmission can cause the system to slow down through transient phenomena (Supplementary Figure S4).
 
 These observations indicate three possibilities.
@@ -219,10 +219,10 @@ Here, we use delayed copies of logged values of pre-pandemic cases $C(t)$ (Figur
 \begin{equation}
 \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
 \end{equation}
-where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respecitvely \citep{kennel1992determining,tan2023selecting}.
+where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respectively \citep{kennel1992determining,tan2023selecting}.
 We then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical attractor (Figure 3E).
-In princicple, we can quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression corresponds to pathogen resilience.
-As we show in Supplementary Figure S6, overall temporal variations in the distance from attractor, especially the observed rate of decrease, appear robust to choices about embedding delays and diemsions; 
+In principle, we can quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression corresponds to pathogen resilience.
+As we show in Supplementary Figure S6, overall temporal variations in the distance from attractor, especially the observed rate of decrease, appear robust to choices about embedding delays and dimensions; 
 we note that using longer delays and higher dimensions tend to smooth out temporal variations in the distance from attractor.
 
 \begin{figure}[!ht]
@@ -255,7 +255,7 @@ Then, we use the automated window selection criteria to fit a linear regression 
 For most respiratory pathogens, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A), with the exception of Rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and Bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
 Excluding these exceptions, the mean resilience of common respiratory pathogens is $0.974/\mathrm{year}$ (95\% CI: $0.784/\mathrm{year}$--$1.16/\mathrm{year}$).
 As a reference, this is $\approx 7$ times higher than the intrinsic resilience of pre-vaccination measles dynamics ($\approx 0.13/\mathrm{year}$).
-Finally, resilence estimates for norovirus appears to be comparable to the intrinsic resilience of measles: $0.119/\mathrm{year}$ (95\%CI: $0.004/\mathrm{year}$--$0.233/\mathrm{year}$) for Korea and $0.385/\mathrm{year}$ (95\% CI: $0.167/\mathrm{year}$--$0.603/\mathrm{year}$).
+Finally, resilience estimates for norovirus appears to be comparable to the intrinsic resilience of measles: $0.119/\mathrm{year}$ (95\%CI: $0.004/\mathrm{year}$--$0.233/\mathrm{year}$) for Korea and $0.385/\mathrm{year}$ (95\% CI: $0.167/\mathrm{year}$--$0.603/\mathrm{year}$).
 A simple ANOVA shows that there are significant differences in resilience estimates across countries ($p<0.036$) and pathogens ($p<0.030$).
 
 \begin{figure}[!th]
@@ -276,7 +276,7 @@ Using resilience estimates, we now predict when each pathogen will return to the
 Specifically, we extend our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value, which we set to a mean of pre-pandemic distances.
 We predict that a return to pre-pandemic cycles would be imminent for most pathogens (Figure 4B; see Supplementary Figure S9 for a zoomed out version).
 In addition, we also predict that many pathogens should have already returned to their pre-pandemic dynamics by the end of 2024; 
-but these predictions contradict some of the observed pathogen dynaics.
+but these predictions contradict some of the observed pathogen dynamics.
 For example, we predict that both human metapneumovirus and RSV in Korea should have returned to their attractors by now, but the magnitude and timing of recent epidemics are different from pre-pandemic patterns (Figure 1). 
 These observations suggest the possibility that some common respiratory pathogens may have converged to different attractors.
 
@@ -316,7 +316,7 @@ Therefore, both higher $\mathcal R_0$ and shorter duration of immunity can drive
 Finally, we can now rank different pathogens based on the average values of empirical resilience, which allows us to determine a set of parameters that are consistent with the estimated resilience (Figure 5A).
 Across all pathogens we consider, except for bocavirus and norovirus, we estimate that the average duration of immunity is likely to be short ($<6$ years) across a plausible range of $\mathcal R_0$.
 These rankings further allow us to map each pathogen onto a set of parameters that are consistent with its empirical resilience (Figure 5A) and obtain a plausible range of susceptible replenishment rates for each pathogen (Figure 5B).
-However, we note that there is no one-to-one correspondance between susceptible replenishment rates and pathogen resilience, leading to a wide uncertainty in the estimates for susceptible replenishment rates (Figure 5B).
+However, we note that there is no one-to-one correspondence between susceptible replenishment rates and pathogen resilience, leading to a wide uncertainty in the estimates for susceptible replenishment rates (Figure 5B).
 
 \section*{Discussion}
 
@@ -378,9 +378,11 @@ More broadly, a detailed understanding of the determinants of pathogen resilienc
 
 We gathered time series on respiratory infections from four different countries: Canada, Hong Kong, Korea, and United States (US).
 As a reference, we also included time series data on norovirus infections for available countries---in contrast to respiratory pathogens, we expect gastrointestinal viruses, such as norovirus, to be less affected by COVID-19 intervention measures.
+For all time series, we rounded every year to 52 weeks by taking the average number of cases and tests between the 52nd and 53rd week.
 
 Weekly time series of respiratory infection cases in Canada come from the Respiratory Virus Detection Surveillance System, which collect data from select laboratories across Canada.
 We extracted the data from \url{https://www.canada.ca/en/public-health/services/surveillance/respiratory-virus-detections-canada.html}.
+To account for changes in testing patterns, we calculated a 2 year moving average for the number of tests for each pathogen 
 
 Weekly time series of respiratory infection cases in Hong Kong came from the Centre for Health Protection, Department of Health. 
 We extracted the data from \url{https://www.chp.gov.hk/en/statistics/data/10/641/642/2274.html}.
@@ -397,7 +399,7 @@ Finally, weekly time series of respiratory infection cases in the US comes from 
 \subsection*{Mathematical modeling}
 
 Throughout the paper, we use a series of mathematical models to illustrate the concept of pathogen resilience and to understand the determinants of pathogen resilience.
-In general, the intrinsic resilience for a given system is given by the largest real part of the eigenvalues of the lineared system at endemic equilibrium.
+In general, the intrinsic resilience for a given system is given by the largest real part of the eigenvalues of the linearized system at endemic equilibrium.
 Here, we focus on the SIRS model and present the details of other models in Supplementary Materials.
 The SIRS (Susceptible-Infected-Recovered-Susceptible) model is the simplest model that allows for waning of immunity, where recovered (immune) individuals are assumed to become fully susceptible after an average of $1/\delta$ time period.
 The dynamics of the SIRS model is described by the following set of differential equations:
@@ -407,7 +409,7 @@ The dynamics of the SIRS model is described by the following set of differential
 \frac{\dd R}{\dd t} &= \gamma I - (\delta + \mu) R \\
 \end{align}
 where $\mu$ represents the birth/death rate, $\beta(t)$ represents the time-varying transmission rate, and $\gamma$ represents the recovery rate.
-The basic reprodcution number $\mathcal R_0 = \beta(t)/(\gamma + \mu)$ is defined as the average number of secondary infections caused by a single infected individual in a fully susceptible population and measures the intrinsic transmissibility of a pathogen.
+The basic reproduction number $\mathcal R_0 = \beta(t)/(\gamma + \mu)$ is defined as the average number of secondary infections caused by a single infected individual in a fully susceptible population and measures the intrinsic transmissibility of a pathogen.
 
 For this model, the intrinsic resilience corresponds to:
 \begin{equation}
@@ -524,7 +526,7 @@ Dotted lines are superimposed as a comparison to have the same slope as the intr
 (A, D, G, J) Simulated case time series from corresponding models (red) and SIRS model fits (black).
 (B, E, H, K) Assumed changes in transmission due to COVID-19 interventions (red) and estimated changes from the SIRS model (black).
 Solid lines and shaded regions represent fitted posterior median and 95\% credible intervals.
-(C, F, I, L) True intrinsic reslience of the seasonally unforced system (vertical lines) and the posterior distribution of the inferred intrinsic resilience from the SIRS model (density plots).
+(C, F, I, L) True intrinsic resilience of the seasonally unforced system (vertical lines) and the posterior distribution of the inferred intrinsic resilience from the SIRS model (density plots).
 }
 \end{figure}
 
