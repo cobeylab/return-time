@@ -379,22 +379,48 @@ More broadly, a detailed understanding of the determinants of pathogen resilienc
 We gathered time series on respiratory infections from four different countries: Canada, Hong Kong, Korea, and United States (US).
 As a reference, we also included time series data on norovirus infections for available countries---in contrast to respiratory pathogens, we expect gastrointestinal viruses, such as norovirus, to be less affected by COVID-19 intervention measures.
 For all time series, we rounded every year to 52 weeks by taking the average number of cases and tests between the 52nd and 53rd week.
+We also rescale all time series to account for changes in testing patterns, which are then used for the actual analysis.
 
-Weekly time series of respiratory infection cases in Canada come from the Respiratory Virus Detection Surveillance System, which collect data from select laboratories across Canada.
-We extracted the data from \url{https://www.canada.ca/en/public-health/services/surveillance/respiratory-virus-detections-canada.html}.
-To account for changes in testing patterns, we calculated a 2 year moving average for the number of tests for each pathogen 
+Weekly time series of respiratory infection cases in Canada comes from the Respiratory Virus Detection Surveillance System, which collect data from select laboratories across Canada.
+We extract the data from \url{https://www.canada.ca/en/public-health/services/surveillance/respiratory-virus-detections-canada.html}.
+To account for an increase in testing from 2013 to 2024, we calculate a 2 year moving average for the number of tests for each pathogen, which we use as a proxy for testing effort.
+Then, we divide the smoothed testing patterns by the smoothed value at the final week such that the testing effort has a maximum of 1.
+We then divide weekly cases by the testing effort to obtain a scaled case time series.
+A similar approach was used earlier for the analysis of RSV time series in the US \citep{pitzer2015environmental}.
 
-Weekly time series of respiratory infection cases in Hong Kong came from the Centre for Health Protection, Department of Health. 
-We extracted the data from \url{https://www.chp.gov.hk/en/statistics/data/10/641/642/2274.html}.
+Weekly time series of respiratory infection cases in Hong Kong comes from the Centre for Health Protection, Department of Health. 
+We extract the data from \url{https://www.chp.gov.hk/en/statistics/data/10/641/642/2274.html}.
+We also apply the same scaling procedure to the time series as we did for Canada.
+For Hong Kong, we only adjust for testing efforts up to the end of 2019 because there was a major reduction in testing for common respiratory pathogens since 2020.
 
-Weekly time series of respiratory infection cases in Korea came from Korea Disease Control and Prevention Agency.
-We extracted the data from \url{https://dportal.kdca.go.kr/pot/is/st/ari.do}.
+Weekly time series of acute respiratory infection cases in Korea comes from Korea Disease Control and Prevention Agency.
+We extract the data from \url{https://dportal.kdca.go.kr/pot/is/st/ari.do}.
+While we do not have information on testing, the reported number of respiratory infections consistently increased from 2013 to the end of 2019, which we interpreted as changes in testing patterns.
+Since we do not have testing numbers, we used the weekly sum of all acute respiratory viral infection cases as a proxy for testing, which were further smoothed with moving averaged and scaled to have a maximum of 1.
+For Korea, we also only adjust for testing efforts up to the end of 2019.
 
 Finally, weekly time series of respiratory infection cases in the US comes from the National Respiratory and Enteric Virus Surveillance System.
+In the US, there has been a large increase in testing against some respiratory pathogens, especially RSV, which could not be corrected for through simple scaling.
+Instead, we derive an incidence proxy by multiplying the test positivity with influenza-like illness positivity, which is taken from \url{https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html}.
+This method of estimatnig an incidence proxy has been recently applied in the analysis of seasonal coronaviruses \citep{kissler2020projecting} and Mycoplasma pneumoniae infections \citep{park2024predicting}.
+Detailed assumptions and justifications are provided in \citep{goldstein2011predicting}.
 
-\subsection*{Empirical attractor reconstruction}
+\subsection*{Estimating pathogen resilience}
 
-\subsection*{Linear regression}
+In order to measure pathogen resilience from surveillance data, we first reconstruct the empirical pre-pandeic attractor of the system using Takens' embedding theorem \citep{takens2006detecting}.
+Specifically, for a given pathogen, we take the pre-pandemic (before 2020) case time series $C(t)$ and reconstruct the attractor using delayed embedding with a uniform delay of $\tau$ and dimension $M$:
+\begin{equation}
+X_{\tau,m}(t) = \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle.
+\end{equation}
+Here, the delay $\tau$ is determined by looking at the autocorrelation of the logged pre-pandemic time series and asking when the autocorrelation crosses 0 for the first time \citep{tan2023selecting};
+a typical delay for for an annual outbreak is around 13 weeks.
+
+Then, for a given delay $\tau$, we determine the embedding dimension $M$ using the false nearest neighbors approach \citep{kennel1992determining,tan2023selecting}.
+To do so, we start with an embedding dimension $e$ and construct a set of points $X_{\tau,e}$.
+Then, for each point $X_{\tau,e}(t)$, we determine the nearest neighbor from the set $X_{\tau,e}$, which we denote $X_{\tau,e}(\tsub{t}{nn})$ for $t \neq \tsub{t}{nn}$.
+Then, if the distance between these two points on $e+1$ dimension, $D_{\tau,e+1}(t) = ||X_{\tau,e+1}(\tsub{t}{nn})-X_{\tau,e+1}(t)||_2$, is larger than their distance on $e$ dimension, $D_{\tau,e}(t) = ||X_{\tau,e}(\tsub{t}{nn})-X_{\tau,e}(t)||_2$, these two points are deemed to be false nearest neighbors.
+To determine the appropriate embedding dimension, we choose a threshold $R$
+
 
 \subsection*{Mathematical modeling}
 
