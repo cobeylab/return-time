@@ -416,10 +416,15 @@ Here, the delay $\tau$ is determined by looking at the autocorrelation of the lo
 a typical delay for for an annual outbreak is around 13 weeks.
 
 Then, for a given delay $\tau$, we determine the embedding dimension $M$ using the false nearest neighbors approach \citep{kennel1992determining,tan2023selecting}.
-To do so, we start with an embedding dimension $e$ and construct a set of points $X_{\tau,e}$.
-Then, for each point $X_{\tau,e}(t)$, we determine the nearest neighbor from the set $X_{\tau,e}$, which we denote $X_{\tau,e}(\tsub{t}{nn})$ for $t \neq \tsub{t}{nn}$.
-Then, if the distance between these two points on $e+1$ dimension, $D_{\tau,e+1}(t) = ||X_{\tau,e+1}(\tsub{t}{nn})-X_{\tau,e+1}(t)||_2$, is larger than their distance on $e$ dimension, $D_{\tau,e}(t) = ||X_{\tau,e}(\tsub{t}{nn})-X_{\tau,e}(t)||_2$, these two points are deemed to be false nearest neighbors.
-To determine the appropriate embedding dimension, we choose a threshold $R$
+To do so, we start with an embedding dimension $e$ and construct a set of points $A_{\tau,e}= \{X_{\tau,e}(t) | t < 2020\}$.
+Then, for each point $X_{\tau,e}(t)$, we determine the nearest neighbor from the set $A_{\tau,e}$, which we denote $X_{\tau,e}(\tsub{t}{nn})$ for $t \neq \tsub{t}{nn}$.
+Then, if the distance between these two points on $e+1$ dimension, $D_{\tau,e+1}(t) = ||X_{\tau,e+1}(\tsub{t}{nn})-X_{\tau,e+1}(t)||_2$, is larger than their distance on $e$ dimension, $D_{\tau,e}(t) = ||X_{\tau,e}(\tsub{t}{nn})-X_{\tau,e}(t)||_2$, these two points are deemed to be false nearest neighbors;
+specifically, we use a threshold $R$ for the ratio between two distances $D_{\tau,e+1}(t)/D_{\tau,e}(t)$ to determine false nearest neighbors.
+In the main text, we determine embedding dimension based as the first dimension without any false nearest neighbors for $R=10$.
+In Supplementary Matereials, we impose $R=5$ to select for higher dimensions.
+Once we determine the embedding lag $\tau$ and dimension $M$, we apply the embedding to the entire time series and calculate the nearest neighbor distance against the attractor $A_{\tau,M}$ to obtain a time series of distance from attractor $D_{\tau,M}(t)$.
+
+From a time series of distance from attractor, we estimate pathogen resilience by fitting a linear regression to an appropriate window.
 
 
 \subsection*{Mathematical modeling}
@@ -437,6 +442,30 @@ The dynamics of the SIRS model is described by the following set of differential
 where $\mu$ represents the birth/death rate, $\beta(t)$ represents the time-varying transmission rate, and $\gamma$ represents the recovery rate.
 The basic reproduction number $\mathcal R_0 = \beta(t)/(\gamma + \mu)$ is defined as the average number of secondary infections caused by a single infected individual in a fully susceptible population and measures the intrinsic transmissibility of a pathogen.
 
+When we first introduce the idea of pathogen resilience (Figure 2), we impose sinusoidal changes to the transmission rate to account for seasonal transmission:
+\begin{equation}
+\beta(t) = b_1 (1 + \theta \cos(2 \pi (t-\phi))) \alpha(t),
+\end{equation}
+where $b_1$ represents the baseline transmission rate, $\theta$ represents the seasonal amplitude, and $\phi$ represents the seasonal offset term.
+Here, we also introduce an extra multiplicative term $\alpha(t)$ to account for the impact of COVID-19 interventions, where $\alpha(t) < 1$ indicates transmission reduction.
+Figure 2A and 2B are generated assuming $b_1 = 3 \times (365/7+1/50)/\mathrm{years}$, $\theta=0.2$, $\phi=0$, $\mu=1/50/\mathrm{years}$, $\gamma=365/7/\mathrm{years}$, and $\delta=1/2/\mathrm{years}$,
+In Figure 2A, we impose a 50\% transmission reduction for 6 months from 2020:
+\begin{equation}
+\alpha(t) = \begin{cases}
+0.5 & 2020 \leq t< 2020.5\\
+1 & \textrm{otherwise}
+\end{cases}
+\end{equation}
+In Figure 2B, we impose a 50\% transmission reduction for 6 months from 2020 and a permanent 10\% reduction onward:
+\begin{equation}
+\alpha(t) = \begin{cases}
+1 & t < 2020\\
+0.5 & 2020 \leq t < 2020.5\\
+0.9 & 2020.5 \leq t
+\end{cases}
+\end{equation}
+In both scenarios, we simulate the SIRS model from the following initial conditions ($S(0) = 1/\mathcal R_0$, $I(0) = 1\times 10^{-6}$, and $R(0) = 1 - S(0) - I(0)$) from 1900 until 2030.
+
 For this model, the intrinsic resilience corresponds to:
 \begin{equation}
 -\frac{\mathrm{Re}(\lambda)}{2} = \frac{\delta + \beta I^{\ast} + \mu}{2}.
@@ -453,8 +482,6 @@ where $S^\ast = 1/\mathcal R_0$ represents the equilibrium proportion of suscept
 
 When infection provides life-long immunity ($\delta \to 0$), the SIRS model becomes the SIR model.
 In this case, the intrinsic resilience is inversely proportional to the 
-
-In illustrating the impact of 
 
 \pagebreak
 
