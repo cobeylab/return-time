@@ -403,12 +403,12 @@ For Korea, we also only adjust for testing efforts up to the end of 2019.
 Finally, weekly time series of respiratory infection cases in the US comes from the National Respiratory and Enteric Virus Surveillance System.
 In the US, there has been a large increase in testing against some respiratory pathogens, especially RSV, which could not be corrected for through simple scaling.
 Instead, we derive an incidence proxy by multiplying the test positivity with influenza-like illness positivity, which is taken from \url{https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html}.
-This method of estimatnig an incidence proxy has been recently applied in the analysis of seasonal coronaviruses \citep{kissler2020projecting} and Mycoplasma pneumoniae infections \citep{park2024predicting}.
+This method of estimating an incidence proxy has been recently applied in the analysis of seasonal coronaviruses \citep{kissler2020projecting} and Mycoplasma pneumoniae infections \citep{park2024predicting}.
 Detailed assumptions and justifications are provided in \citep{goldstein2011predicting}.
 
 \subsection*{Estimating pathogen resilience}
 
-In order to measure pathogen resilience from surveillance data, we first reconstruct the empirical pre-pandeic attractor of the system using Takens' embedding theorem \citep{takens2006detecting}.
+In order to measure pathogen resilience from surveillance data, we first reconstruct the empirical pre-pandemic attractor of the system using Takens' embedding theorem \citep{takens2006detecting}.
 Specifically, for a given pathogen, we take the pre-pandemic (before 2020) case time series $C(t)$ and reconstruct the attractor using delayed embedding with a uniform delay of $\tau$ and dimension $M$:
 \begin{equation}
 X_{\tau,m}(t) = \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle.
@@ -422,7 +422,7 @@ Then, for each point $X_{\tau,e}(t)$, we determine the nearest neighbor from the
 Then, if the distance between these two points on $e+1$ dimension, $D_{\tau,e+1}(t) = ||X_{\tau,e+1}(\tsub{t}{nn})-X_{\tau,e+1}(t)||_2$, is larger than their distance on $e$ dimension, $D_{\tau,e}(t) = ||X_{\tau,e}(\tsub{t}{nn})-X_{\tau,e}(t)||_2$, these two points are deemed to be false nearest neighbors;
 specifically, we use a threshold $R$ for the ratio between two distances $D_{\tau,e+1}(t)/D_{\tau,e}(t)$ to determine false nearest neighbors.
 In the main text, we determine embedding dimension based as the first dimension without any false nearest neighbors for $R=10$.
-In Supplementary Matereials, we impose $R=5$ to select for higher dimensions.
+In Supplementary Materials, we impose $R=5$ to select for higher dimensions.
 Once we determine the embedding lag $\tau$ and dimension $M$, we apply the embedding to the entire time series and calculate the nearest neighbor distance against the attractor $A_{\tau,M}$ to obtain a time series of distance from attractor $D_{\tau,M}(t)$.
 
 From a time series of distance from attractor, we estimate pathogen resilience by fitting a linear regression to an appropriate window.
@@ -521,7 +521,7 @@ In doing so, we fix all other parameters: $\mu=1/80/\mathrm{years}$ and $\gamma=
 \subsection*{Resilience of a stage-structured system.}
 
 In Figure 2G--I, we use a more realistic, stage-structured model to illustrate how transient phenomena can cause the system to slow down.
-Specifically, we use the stage-structured RSV model proposed by \citep{pitzer2015environmental}, which assumes that subseqeunt reinfections cause an individual to become less susceptible and transmissible than previous infections.
+Specifically, we use the stage-structured RSV model proposed by \citep{pitzer2015environmental}, which assumes that subsequent reinfections cause an individual to become less susceptible and transmissible than previous infections.
 The model dynamics can be described as follows:
 \begin{align}
 \frac{\dd M}{\dd t} &= \mu - (\omega + \mu) M\\
@@ -557,7 +557,7 @@ We assume a 50\% transmission reduction for 6 months from 2020:
 \end{cases}
 \end{equation}
 The model is simulated from 1900 to 2030 using the following initial conditions: $M=0$, $S_0=1/\mathcal R_0-I_1$, $I_1=1\times 10^{-6}$, $S1=1-1/\mathcal R_0$, $I_2=0$, $S_2=0$, $I_3=0$, $S_3=0$, and $I_4=0$.
-For the phase plane analysis (Figure 2H) and distance analysus (Figure 2I), we rely on the average susceptibility,
+For the phase plane analysis (Figure 2H) and distance analysis (Figure 2I), we rely on the average susceptibility,
 \begin{equation}
 \bar{S} = S_0 + \sigma_1 S_1 + \sigma_2 S_2 + \sigma_3 S_3,
 \end{equation}
@@ -623,7 +623,7 @@ In the first two scenarios (see panels A--C for strain 1 and panels D--F for str
 \bar{S}_2 &= S + \epsilon_{21} R_1\\
 \hat{I}_2 &= I_2 + J_2
 \end{align}
-In the third scenario (panels G--I), we consider the dynamnics of total susceptible and infected population:
+In the third scenario (panels G--I), we consider the dynamics of total susceptible and infected population:
 \begin{align}
 \hat{S} &= S + R_2 + R_1\\
 \hat{I} &= I_1 + J_1 + I_2 + J_2\\
@@ -779,7 +779,7 @@ Finally, the Observation model is specified as follows:
 \end{align}
 where $\rho$ represents the reporting probability and $\phi$ represents the negative binomial overdispersion parameter.
 
-The model is fitted to four separate time series: (1) incidence time series from the SIRS model, (2) incidence time series for strain 1 from the two-strain model, (3) incidence time series for strain 2 from the two-strain modelm, and (4) combined incidence time series for strains 1 and 2 from the two-strain model.
+The model is fitted to four separate time series: (1) incidence time series from the SIRS model, (2) incidence time series for strain 1 from the two-strain model, (3) incidence time series for strain 2 from the two-strain model, and (4) combined incidence time series for strains 1 and 2 from the two-strain model.
 The model was fitted using rstan \citep{carpenter2017stan,rstan}.
 The resulting posterior distribution was used to calculate the intrinsic resilience of the seasonally unforced system with the same parameters;
 eigenvalues of the discrete-time SIR model were computed by numerically finding the equilibrium and calculating the Jacobian matrix.
