@@ -667,8 +667,8 @@ We assume $\rho = 0.002$ (i.e., 0.2\% probability) and $k = 1000$.
 
 The stochastic two-strain model can be written as follows:
 \begin{align}
-\beta_1(t) &= b_1 \left(1 + \theta_1 \cos\left(2 \pi (t - \phi_1)\right)\right) \alpha(t)\\
-\beta_2(t) &= b_2 \left(1 + \theta_2 \cos\left(2 \pi (t - \phi_2)\right)\right) \alpha(t)\\
+\beta_1(t) &= b_1 \left(1 + \theta_1 \cos\left(\frac{2 \pi (t - \phi_1)}{364}\right)\right) \alpha(t)\\
+\beta_2(t) &= b_2 \left(1 + \theta_2 \cos\left(\frac{2 \pi (t - \phi_2)}{364}\right)\right) \alpha(t)\\
 \textrm{FOI}_1(t) &= \beta_1(t) (I_1(t- \Delta t) + J_1(t- \Delta t))/N\\
 \textrm{FOI}_2(t) &= \beta_2(t) (I_2(t- \Delta t) + J_2(t- \Delta t))/N\\
 B(t) &\sim \mathrm{Poisson}(\mu N)\\
@@ -701,9 +701,32 @@ J_1(t) &= J_1(t-\Delta t) - \Delta J_1(t) + N_{R_2J_1}(t) \\
 J_2(t) &= J_2(t-\Delta t) - \Delta J_2(t) + N_{R_1J_2}(t) \\
 R(t) &= R(t-\Delta t) - \Delta R(t) + N_{J_1 R}(t) + N_{J_2 R}(t) 
 \end{align}
+We simulate the model on a daily scale with previously estimated parameters for the RSV-HMPV interaction \citep{bhattacharyya2015cross}:
+$b_1=1.7/\mathrm{weeks}$, $b_1=1.95/\mathrm{weeks}$, $\theta_1 = 0.4$, $\theta_2 = 0.3$, $\phi_1=0.005 \times 7/364$, $\phi_2=4.99 \times 7/364$, $\epsilon_{12}=0.92$, $\epsilon_{21}=0.45$, $\gamma_1=1/10/\mathrm{days}$, $\gamma_2=1/10/\mathrm{days}$, $\rho_1=1/364/\mathrm{days}$, $\rho_2=1/364/\mathrm{days}$, $\mu=1/(70\times 364)/\mathrm{days}$, and $N = 1 \times 10^8$.
+The model is simulated from 1900 to 2030 assuming $S(0) = N - 200$, $I_1(0) = 100$, $I_2(0) = 100$, $R_1(0) = 0$, $R_2(0) = 0$, $J_1(0) = 0$, $J_2(0) = 0$, and $R(0) = 0$.
+The observed incidence for each strain is then simulated as follows:
+\begin{align}
+C_1(t) &= \mathrm{Beta-Binom}(N_{SI_1}(t) + N_{R_2J_1}, \rho, k),\\ 
+C_2(t) &= \mathrm{Beta-Binom}(N_{SI_2}(t) + N_{R_1J_2}, \rho, k),
+\end{align}
+where $\rho$ represents the reporting probability and $k$ represents the overdispersion parameter of beta-binomial distribution.
+We assume $\rho = 0.002$ (i.e., 0.2\% probability) and $k = 500$.
+We also consider the total incidence: $\tsub{C}{total}(t) = C_1(t) + C_2(t)$.
 
+For both models, we consider a more realistic challenges in intervention effects $\alpha(t)$ to challenge our ability to estimate the intervention effects.
+Thus, we assume a 40\% transmission reduction for 3 months from March 2020, followed by a 10\% transmission reduction for 6 months, 20\% transmission reduction for 3 months, and a final return to normal levels:
+\begin{equation}
+\alpha(t) = \begin{cases}
+1 & t < 2020.25\\
+0.6 & 2020.25 \leq t < 2020.5\\
+0.9 & 2020.5 \leq t < 2021\\
+0.8 & 2021 \leq t < 2021.25\\
+1 & 2021.25 \leq t
+\end{cases}.
+\end{equation}
+For all simulations, we truncate the time series from the beginning of 2014 to the end of 2023 and aggregate them into weekly cases.
 
-
+To infer intrinsic resilience from time series, we fit a simple discrete time, deterministic SIRS model
 
 \pagebreak
 
