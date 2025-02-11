@@ -241,8 +241,8 @@ This distance time series can be used to infer pathogen resilience by fitting a 
 
 Complex changes in the distance from attractor suggest that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
 In Supplementary Materials, we explore an automated window selection criteria for linear regression and test it against randomized, stochastic simulations across a wide range of realistic NPI shapes.
-We find that resilience estimates based on the automated window selection criteria are moderately correlated (0.54) with the intrinsic resilience of the post-NPI attractor (Supplementary Figure S7).
-In contrast, a naive approach that uses the entire time series, starting from the peak distance, only gives a correlation of 0.21 and consistently underestimates the intrinsic resilience (Supplementary Figure S7).
+We find that resilience estimates based on the automated window selection criteria are moderately correlated (0.48) with the intrinsic resilience of the post-NPI attractor (Supplementary Figure S7).
+In contrast, a naive approach that uses the entire time series, starting from the peak distance, only gives a correlation of 0.09 and consistently underestimates the intrinsic resilience (Supplementary Figure S7).
 
 % A closer observation of the resulting time series of the distance from attractor provides three important insights (Figure 3E).
 % First, the relaxation of NPIs in realistic settings can cause a false return of the system, as indicated by a rapid decrease in the distance in early 2022 followed by a rapid increase in distance.
@@ -787,7 +787,32 @@ eigenvalues of the discrete-time SIR model were computed by numerically finding 
 \subsection*{Validations for window-selection criteria}
 
 We use stochastic SIRS simulations to validate the window-selection criteria that we use for the linear regression for estimating empirical resilience.
-
+For each simulation, we begin by generating a random intervention $\alpha(t)$ from random set of parameters.
+First, we draw the duration of intervention $\tsub{\tau}{npi}$ from a uniform distribution between 0.5 and 3.5 years.
+Then, we draw independent normal variables $z_i$ of length $\lfloor 364 \tsub{\tau}{npi} \rfloor$ with a standard deviation of 0.02 and take a reverse cumulative sum to obtain a realistic shape for the intervention:
+\begin{equation}
+x_n = 1 + \sum_{i=n}^{\lfloor 364 \tsub{\tau}{npi}\rfloor} z_i, \quad n = 1, \dots, \lfloor 364 \tsub{\tau}{npi}\rfloor.
+\end{equation}
+We repeat this random generation process until less than 10\% of $x_n$ exceeds 1.
+Then, we set any values that are above 1 or below 0 as 1 and 0, respectively.
+Then, we randomly draw the minimum transmission during intervention $\tsub{\alpha}{min}$ from a uniform distribution between 0.5 and 0.7 and scale $x_n$ to have a minimum of $\tsub{\alpha}{min}$:
+\begin{equation}
+x_{\textrm{scale},n} =  \tsub{\alpha}{min} + (1- \tsub{\alpha}{min}) \times \frac{x_n-\min x_n}{1- \min x_n}.
+\end{equation}
+This allows us to simulate a realistically shaped interventions:
+\begin{equation}
+\alpha(t) = \begin{cases}
+1 & t < 2020\\
+x_{\textrm{scale},364(t-2020)} & 2020 \leq t < 2020 + \tsub{\tau}{npi}\\
+1 & \tsub{\tau}{npi} \leq t
+\end{cases}.
+\end{equation}
+Given this intervention function, we draw $\mathcal R_0$ from a uniform distribution between 1.5 and 3 and the mean duration of immunity $1/\delta$ from a uniform distribution between 0.5 and 2.
+Then, we simulate the stochastic SIRS model from $S(0) = 10^8/\mathcal R_0$ and $I(0) = 100$ from 1990 to 2025 and truncate the time series to 2014--2025;
+if the epidemic becomes extinct before the end of simulation, we discard that simulation and start over from the intervention generation step.
+We then apply the window selection criteria described in the main text to compute the empirical resilience and compare it against the intrinsic resilience of the seasonally unforced system.
+We also compare this with the naive approach that uses the entire distance-from-attractor time series, starting from the maximum distance.
+We repeat this procedure 500 times and quantify the correlation between empirical and intrinsic resilience estimates across two approaches.
 
 \pagebreak
 

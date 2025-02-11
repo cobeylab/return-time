@@ -18,13 +18,11 @@ for (i in 1:nsim) {
   while (extinction) {
     duration <- runif(1, 0.5, 3.5)
     npimin <- runif(1, 0.5, 0.7)
-    npiend <- runif(1, 0.8, 1)
     R0 <- runif(1, 1.5, 3)
     immunity <- runif(1, 0.5, 2)
     
     npifun_random <- npifun_random_generate(duration=duration,
                                             npimin=npimin,
-                                            npiend=npiend,
                                             seed=i)
     
     npidata <- data.frame(
@@ -45,7 +43,7 @@ for (i in 1:nsim) {
     extinction <- all(tail(ss$I, 10)==0)
   }
   
-  ee <- eigen_sirs(b_1=R0*(365/7+1/50)*npiend,
+  ee <- eigen_sirs(b_1=R0*(365/7+1/50),
                    mu=1/50,
                    gamma=365/7,
                    delta=1/immunity)
@@ -118,7 +116,6 @@ for (i in 1:nsim) {
     reslist[[i]] <- data.frame(
       duration=duration,
       npimin=npimin,
-      npiend=npiend,
       R0=R0,
       immunity=immunity,
       resilience_true=ee,

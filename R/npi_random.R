@@ -27,7 +27,7 @@ npifun_random_generate <- function(duration=2,
     if (t < 2020) {
       return(1)
     } else if (t >= 2020+floor(duration * 364)/364) {
-      return(1)
+      return(npiend)
     } else {
       return(npi[match(round(t, 3), round(time,3))])
     }  
