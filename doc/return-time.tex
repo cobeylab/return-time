@@ -425,7 +425,23 @@ In Supplementary Matereials, we impose $R=5$ to select for higher dimensions.
 Once we determine the embedding lag $\tau$ and dimension $M$, we apply the embedding to the entire time series and calculate the nearest neighbor distance against the attractor $A_{\tau,M}$ to obtain a time series of distance from attractor $D_{\tau,M}(t)$.
 
 From a time series of distance from attractor, we estimate pathogen resilience by fitting a linear regression to an appropriate window.
-
+To automatically select the fitting window, we begin by smoothing the distance time series using locally estimated scatterplot smoothing (LOESS) to obtain $\hat{D}_{\tau,M}(t)$, where the smoothing is performed on a log scale and exponentiated afterwards.
+Then, we determine threshold values ($\tsub{T}{start}$ and $\tsub{T}{end}$) for the smoothed distances and choose the fitting window based on when $\hat{D}_{\tau,M}(t)$ crosses these threshold values for the first time.
+These thresholds are determined by first calculating maximum distance,
+\begin{equation}
+\max \hat{D} = \max \hat{D}_{\tau,M}(t),
+\end{equation}
+and mean pre-pandemic distance,
+\begin{equation}
+\tsub{\hat{D}}{mean} = \frac{1}{N_{t<2020}} \sum_{t < 2020} \hat{D}_{\tau,M}(t),
+\end{equation}
+as a reference, and then dividing their ratios into 10 equal bins:
+\begin{align}
+\tsub{T}{start} &= \tsub{\hat{D}}{mean} \times \left(\frac{\max \hat{D}}{\tsub{\hat{D}}{mean}} \right)^{9/10}\\
+\tsub{T}{end} &= \tsub{\hat{D}}{mean} \times \left(\frac{\max \hat{D}}{\tsub{\hat{D}}{mean}} \right)^{1/10}
+\end{align}
+This allows us to discard the initial period during which the distance increases (from the introduction of intervention measures) and the final period during which the distance plateaus (as the system reaches an attractor).
+The fitting window is determined based on when the smoothed distance $\hat{D}_{\tau,M}(t)$ crosses these threshold values for the first time; then, we fit a linear regression to logged (unsmoothed) distances $\log D_{\tau,M}(t)$ using that window.
 
 \subsection*{Mathematical modeling}
 
@@ -466,7 +482,16 @@ In Figure 2B, we impose a 50\% transmission reduction for 6 months from 2020 and
 \end{equation}
 In both scenarios, we simulate the SIRS model from the following initial conditions ($S(0) = 1/\mathcal R_0$, $I(0) = 1\times 10^{-6}$, and $R(0) = 1 - S(0) - I(0)$) from 1900 until 2030.
 
-For this model, the intrinsic resilience corresponds to:
+To measure the empirical resilience of the SIR model (Figure 2C and 2F), we compute the normalized distance between post-intervention susceptible and logged infected proportions and their corresponding pre-intervention values at the same time of year:
+\begin{equation}
+\sqrt{\left(\frac{S(t) - \tsub{S}{pre}(t)}{\sigma_S}\right)^2 + \left(\frac{\log I(t) - \log \tsub{I}{pre}(t)}{\sigma_{\log I}}\right)^2},
+\end{equation}
+where $\sigma_S$ and $\sigma_{\log I}$ represent the standard deviation in the pre-intervention susceptible and logged infected proportions.
+We normalize the differences in susceptible and logged infected proportions to allow both quantities to equally contribute to the changes in distance from attractor.
+In Supplementary Materials, we also compare the how the degree of seasonal transmission affects empirical resilience by varying $\theta$ from 0 to 0.4; when we assume no seasonality ($\theta = 0$), we do not normalize the distance because the standard deviation of pre-intervention dynamics are zero. 
+
+Finally, we use the SIRS model to understand how underlying epidemiological parameters affect pathogen resilience and link this relationship to underlying susceptible host dynamics.
+For the simple SIRS model without seasonal transmission ($\theta = 0$), the intrinsic resilience corresponds to:
 \begin{equation}
 -\frac{\mathrm{Re}(\lambda)}{2} = \frac{\delta + \beta I^{\ast} + \mu}{2}.
 \end{equation}
@@ -479,20 +504,119 @@ The susceptible replenishment rate is given by:
 \tsub{S}{replenish} = \frac{\mu + \delta R}{S^\ast},
 \end{equation}
 where $S^\ast = 1/\mathcal R_0$ represents the equilibrium proportion of susceptible individuals.
-
-When infection provides life-long immunity ($\delta \to 0$), the SIRS model becomes the SIR model.
-In this case, the intrinsic resilience is inversely proportional to the 
-
-\pagebreak
-
-\section*{Supplementary Text}
+We vary the basic reproduction number $\mathcal R_0$ between 1.1 to 6 and the average duration of immunity $1/\delta$ between 2 to 80 years, and compute these two quantities.
+In doing so, we fix all other parameters: $\mu=1/80/\mathrm{years}$ and $\gamma=365/7/\mathrm{years}$.
 
 \pagebreak
+
 
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\theequation}{S\arabic{equation}}
+
+\section*{Supplementary Text}
+
+\subsection*{Resilience of a stage-structured system.}
+
+In Figure 2G--I, we use a more realistic, stage-structured model to illustrate how transient phenomena can cause the system to slow down.
+Specifically, we use the stage-structured RSV model proposed by \citep{pitzer2015environmental}, which assumes that subseqeunt reinfections cause an individual to become less susceptible and transmissible than previous infections.
+The model dynamics can be described as follows:
+\begin{align}
+\frac{\dd M}{\dd t} &= \mu - (\omega + \mu) M\\
+\frac{\dd S_0}{\dd t} &= \omega M - (\lambda(t) + \mu) S_0\\
+\frac{\dd I_1}{\dd t} &= \lambda(t) S_0 - (\gamma_1 + \mu) I_1\\
+\frac{\dd S_1}{\dd t} &= \gamma_1 I_1 - (\sigma_1 \lambda(t) + \mu) S_1\\
+\frac{\dd I_2}{\dd t} &= \sigma_1 \lambda(t) S_1 - (\gamma_2 + \mu) I_2\\
+\frac{\dd S_2}{\dd t} &= \gamma_2 I_2 - (\sigma_2 \lambda(t) + \mu) S_2\\
+\frac{\dd I_3}{\dd t} &= \sigma_2 \lambda(t) S_2 - (\gamma_3 + \mu) I_3\\
+\frac{\dd S_3}{\dd t} &= \gamma_3 I_3 - (\sigma_3 \lambda(t) + \mu) S_3 + \gamma_4 I_4\\
+\frac{\dd I_4}{\dd t} &= \sigma_3 \lambda(t) S_3 - (\gamma_4 + \mu) I_4\\
+\end{align}
+where $M$ represents the proportion of individuals who are maternally immune;
+$S_i$ represents the proportion of individuals who are susceptible after $i$ prior infections;
+$I_i$ represents the proportion of individuals who are currently (re)-infected with their $i$-th infection;
+$\mu$ represents the birth and death rates;
+$1/\omega$ represents the mean duration of maternal immunity;
+$1/\gamma_i$ represents the mean duration of infection;
+$\lambda(t)$ represents the force of infection;
+and $\sigma_i$ represents the reduction in susceptibility for reinfection.
+The force of infection is modeled using a sinusoidal function:
+\begin{align}
+\beta(t) &= b_1 (1 + \theta \cos(2 \pi (t-\phi))) \alpha(t)\\
+\lambda(t) &= \beta (I_1 + \rho_1 I_2 + \rho_2 (I_3 + I_4)), 
+\end{align}
+where $b_1$ represents the baseline transmission rate; $\theta$ represents the seasonal amplitude; $\phi$ represents the seasonal offset term; $\alpha(t)$ represents the intervention effect; and $\rho_i$ represents the impact of immunity on transmission reduction.
+We use the following parameters to simulate the impact of interventions on epidemic dynamics \citep{pitzer2015environmental}: $b_1 = 9 \times (365/10+1/80)/\mathrm{years}$, $\theta = 0.2$, $\phi = -0.1$, $\omega=365/112/\mathrm{years}$, $\gamma_1=365/10/\mathrm{years}$, $\gamma_2=365/7/\mathrm{years}$, $\gamma_3=365/5/\mathrm{years}$, $\sigma_1 = 0.76$, $\sigma_2 = 0.6$, $\sigma_3 = 0.4$, $\rho_1 = 0.75$, $\rho_2 = 0.51$, and $\mu = 1/80/\mathrm{years}$.
+We assume a 50\% transmission reduction for 6 months from 2020:
+\begin{equation}
+\alpha(t) = \begin{cases}
+0.5 & 2020 \leq t< 2020.5\\
+1 & \textrm{otherwise}
+\end{cases}
+\end{equation}
+The model is simulated from 1900 to 2030 using the following initial conditions: $M=0$, $S_0=1/\mathcal R_0-I_1$, $I_1=1\times 10^{-6}$, $S1=1-1/\mathcal R_0$, $I_2=0$, $S_2=0$, $I_3=0$, $S_3=0$, and $I_4=0$.
+For the phase plane analysis (Figure 2H) and distance analysus (Figure 2I), we rely on the average susceptibility,
+\begin{equation}
+\bar{S} = S_0 + \sigma_1 S_1 + \sigma_2 S_2 + \sigma_3 S_3,
+\end{equation}
+and total prevalence,
+\begin{equation}
+\tsub{I}{total} = I_1 + I_2 + I_3 + I_4.
+\end{equation}
+
+\subsection*{Resilience of a multistrain system.}
+
+We use a simple two-strain model to show that a multistrain host-pathogen system that is coupled through cross immunity can be described by a single resilience value.
+The model dynamics can be described as follows \citep{bhattacharyya2015cross}: 
+\begin{align}
+\frac{\dd S}{\dd t} &= \mu - \mu S - (\lambda_1 + \lambda_2) S + \rho_1 R_1 + \rho_2 R_2 \\
+\frac{\dd I_1}{\dd t} &= \lambda_1 S - (\gamma_1 + mu) I_1 \\
+\frac{\dd I_2}{\dd t} &= \lambda_2 S - (\gamma_2 + mu) I_2 \\
+\frac{\dd R_1}{\dd t} &= \gamma_1 I_1 - \lambda_2 \epsilon_{21} R_1 - \rho_1 R_1 + \rho_2 R - \mu R_1\\
+\frac{\dd R_2}{\dd t} &= \gamma_2 I_2 - \lambda_1 \epsilon_{12} R_2 - \rho_2 R_2 + \rho_1 R - \mu R_2\\
+\frac{\dd J_1}{\dd t} &= \lambda_1 \epsilon_{12} R_2 - (\gamma_1 + mu) J_1\\
+\frac{\dd J_2}{\dd t} &= \lambda_2 \epsilon_{21} R_1 - (\gamma_2 + mu) J_2\\
+\frac{\dd R}{\dd t} &= \gamma_1 J_1 + \gamma_2 J_2 - \rho_1 R - \rho_2 R - \mu R
+\end{align}
+where $S$ represents the proportion of individuals who are fully susceptible to infections by both strains;
+$I_1$ represents the proportion of individuals who are infected with strain 1 without prior immunity;
+$I_2$ represents the proportion of individuals who are infected with strain 2 without prior immunity;
+$R_1$ represents the proportion of individuals who are fully immune against strain 1 and partially susceptible to reinfection by strain 2;
+$R_2$ represents the proportion of individuals who are fully immune against strain 2 and partially susceptible to reinfection by strain 1;
+$J_1$ represents the proportion of individuals who are infected with strain 1 with prior immunity against strain 2;
+$J_2$ represents the proportion of individuals who are infected with strain 2 with prior immunity against strain 1;
+$R$ represents the proportion of individuals who are immune to infections from both strains;
+$\mu$ represents the birth/death rate;
+$\lambda_1$ and $\lambda_2$ represent the force of infection from strains 1 and 2, respectively;
+$\rho_1$ and $\rho_2$ represent the waning immunity rate;
+$\gamma_1$ and $\gamma_2$ represent the recovery rate;
+$\epsilon_{21}$ and $\epsilon_{12}$ represent the susceptibility to reinfection with strains 2 and 1, respectively, given prior immunity from infection with strains 1 and 2, respectively. 
+The force of infection is modeled as follows:
+\begin{align}
+\beta_1 &= b_1 (1 + \theta_1 \sin(2 \pi (t-\phi_1))) \alpha(t)\\
+\beta_2 &= b_2 (1 + \theta_2 \sin(2 \pi (t-\phi_2))) \alpha(t)\\
+\lambda_1 &= \beta_1 (I_1 + J_1)\\
+\lambda_2 &= \beta_2 (I_2 + J_2)
+\end{align}
+In Supplementary Figures S2--S4, we assume the following parameters:
+$b_1 = 2 \times 52/\mathrm{years}$, $b_2 = 4 \times 52/\mathrm{years}$, $\phi_1 = \phi_2 = 0$, $\epsilon_{12} = 0.9$, $\epsilon_{21} = 0.5$,
+$\gamma_1 = \gamma_2 = 52/\mathrm{years}$, $\rho_1 = \rho_2 = 1/\mathrm{years}$, and $\mu=1/70/\mathrm{years}$.
+For all simulations, we assume a 50\% transmission reduction for 6 months from 2020:
+\begin{equation}
+\alpha(t) = \begin{cases}
+0.5 & 2020 \leq t< 2020.5\\
+1 & \textrm{otherwise}
+\end{cases}
+\end{equation}
+The seasonal amplitude $\theta$ is varied from 0 to 0.4.
+All simulations are ran from 1900 to 2030 from the following initial conditions: 
+$S(0) = 1 - 2\times 10^{-6}$, $I_1(0) = 1 \times 10^{-6}$, $I_2(0) = 1 \times 10^{-6}$, $R_1(0) = 0$, $R_2(0) = 0$, $J_1(0) = 0$, $J_2(0) = 0$, and $R(0) = 0$.
+
+For this, we consider three different scenarios for measuring pathogen resilience: (1) we only have information about strain 1, (2) we only have information about strain 2, and (3) we are unable to distinguish the differences between strains.
+In the first two scenarios (see panels A--C for strain 1 and panels D--F for strain 2), 
+
+\pagebreak
 
 \section*{Supplementary Figures}
 
