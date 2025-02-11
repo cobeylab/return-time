@@ -726,7 +726,68 @@ Thus, we assume a 40\% transmission reduction for 3 months from March 2020, foll
 \end{equation}
 For all simulations, we truncate the time series from the beginning of 2014 to the end of 2023 and aggregate them into weekly cases.
 
-To infer intrinsic resilience from time series, we fit a simple discrete time, deterministic SIRS model
+To infer intrinsic resilience from time series, we fit a simple discrete time, deterministic SIRS model \citep{park2024predicting}:
+\begin{align}
+\Delta t &= 1\,\mathrm{week}\\
+\textrm{FOI}(t) &= \beta(t) (I(t- \Delta t)+\omega)/N\\
+\Delta S(t) &= \left[1- \exp(-(\textrm{FOI}(t) + \mu) \Delta t )\right] S(t-\Delta t)\\
+N_{SI}(t) &= \frac{\textrm{FOI}(t)\Delta S(t)}{\textrm{FOI}(t) + \mu} \\
+\Delta I(t) &= \left[1- \exp(-(\gamma + \mu) \Delta t )\right] I(t-\Delta t)\\
+N_{IR}(t) &= \frac{\gamma \Delta I(t)}{\gamma + \mu} \\
+\Delta R(t) &= \left[1- \exp(-(\nu + \mu) \Delta t )\right] R(t-\Delta t)\\
+N_{RS}(t) &= \frac{\nu \Delta R(t)}{\nu + \mu} \\
+S(t) &= S(t-\Delta t) + \mu S - \Delta S(t) + N_{RS}(t)  \\
+I(t) &= I(t-\Delta t) - \Delta I(t) + N_{SI}(t)  \\
+R(t) &= R(t-\Delta t) - \Delta R(t) + N_{IR}(t)
+\end{align}
+where we include an extra term $\omega$ to account for external infections.
+Although actual simulations do not include any external infections, we found that including this term generally helped with model convergence in previous analyses \citep{park2024predicting}.
+The transmission rate is divided into a seasonal term $\tsub{\beta}{seas}(t)$ (repeated every year) and intervention term $\alpha(t)$, which are estimated jointly:
+\begin{align}
+\beta(t) &= \tsub{\beta}{seas}(t) \alpha(t),
+\end{align}
+where $\alpha < 1$ corresponds to reduction in transmission due to intervention effects.
+To constrain the smoothness of $\tsub{\beta}{seas}(t)$, we impose cyclic, random-walk priors:
+\begin{align}
+\tsub{\beta}{seas}(t) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(t-1), \sigma) \qquad t = 2 \dots 52\\
+\tsub{\beta}{seas}(1) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(52), \sigma)
+\end{align}
+\swp{I noticed that I forgot to put a prior on $\sigma$ so need to re-do this but won't change the results.}
+We fix $\alpha(t)=1$ for all $t < 2020$ and estimate $\alpha$ assuming a normal prior:
+\begin{equation}
+\alpha \sim \mathrm{Normal}(1, 0.25).
+\end{equation}
+We assume weakly informative priors on $\omega$ and $\tau$:
+\begin{align}
+\omega \sim \mathrm{Normal}(0, 200)
+\tau \sim \mathrm{Normal}(104, 26)
+\end{align}
+We assume that the true birth/death rates, population sizes, and recovery rates are known.
+We note, however, that assuming $\gamma=1/\mathrm{week}$ actually correspond to a mean infectious period of 1.6 weeks, which is much longer than the true value; this approximation allows us to test whether we can still robustly estimate the intrinsic resilience given parameters mis-specification.
+Initial conditions are estimated with following priors:
+\begin{align}
+S(0) &= N s(0)\\
+I(0) &= N i(0)\\
+s(0) &\sim \textrm{Uniform}(0, 1)\\
+i(0) &\sim \textrm{Half-Normal}(0, 0.001)
+\end{align}
+Finally, the Observation model is specified as follows:
+\begin{align}
+\textrm{Cases}(t) &\sim \textrm{Negative-Binomial}(\rho N_{SI}(t), \phi)\\
+\rho &\sim \textrm{Half-Normal}(0, 0.02)\\
+\phi &\sim \textrm{Half-Normal}(0, 10)
+\end{align}
+where $\rho$ represents the reporting probability and $\phi$ represents the negative binomial overdispersion parameter.
+
+The model is fitted to four separate time series: (1) incidence time series from the SIRS model, (2) incidence time series for strain 1 from the two-strain model, (3) incidence time series for strain 2 from the two-strain modelm, and (4) combined incidence time series for strains 1 and 2 from the two-strain model.
+The model was fitted using rstan \citep{carpenter2017stan,rstan}.
+The resulting posterior distribution was used to calculate the intrinsic resilience of the seasonally unforced system with the same parameters;
+eigenvalues of the discrete-time SIR model were computed by numerically finding the equilibrium and calculating the Jacobian matrix.
+
+\subsection*{Validations for window-selection criteria}
+
+We use stochastic SIRS simulations to validate the window-selection criteria that we use for the linear regression for estimating empirical resilience.
+
 
 \pagebreak
 
