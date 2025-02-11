@@ -32,6 +32,7 @@
 \usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage[utf8]{inputenc} % make sure fancy dashes etc. don't get dropped
+\allowdisplaybreaks
 
 \usepackage{lineno}
 \linenumbers
@@ -564,6 +565,7 @@ and total prevalence,
 \begin{equation}
 \tsub{I}{total} = I_1 + I_2 + I_3 + I_4.
 \end{equation}
+These quantities are used to compute the normalized distance from the attractor, as described in the main text.
 
 \subsection*{Resilience of a multistrain system.}
 
@@ -575,8 +577,8 @@ The model dynamics can be described as follows \citep{bhattacharyya2015cross}:
 \frac{\dd I_2}{\dd t} &= \lambda_2 S - (\gamma_2 + mu) I_2 \\
 \frac{\dd R_1}{\dd t} &= \gamma_1 I_1 - \lambda_2 \epsilon_{21} R_1 - \rho_1 R_1 + \rho_2 R - \mu R_1\\
 \frac{\dd R_2}{\dd t} &= \gamma_2 I_2 - \lambda_1 \epsilon_{12} R_2 - \rho_2 R_2 + \rho_1 R - \mu R_2\\
-\frac{\dd J_1}{\dd t} &= \lambda_1 \epsilon_{12} R_2 - (\gamma_1 + mu) J_1\\
-\frac{\dd J_2}{\dd t} &= \lambda_2 \epsilon_{21} R_1 - (\gamma_2 + mu) J_2\\
+\frac{\dd J_1}{\dd t} &= \lambda_1 \epsilon_{12} R_2 - (\gamma_1 + \mu) J_1\\
+\frac{\dd J_2}{\dd t} &= \lambda_2 \epsilon_{21} R_1 - (\gamma_2 + \mu) J_2\\
 \frac{\dd R}{\dd t} &= \gamma_1 J_1 + \gamma_2 J_2 - \rho_1 R - \rho_2 R - \mu R
 \end{align}
 where $S$ represents the proportion of individuals who are fully susceptible to infections by both strains;
@@ -614,7 +616,94 @@ All simulations are ran from 1900 to 2030 from the following initial conditions:
 $S(0) = 1 - 2\times 10^{-6}$, $I_1(0) = 1 \times 10^{-6}$, $I_2(0) = 1 \times 10^{-6}$, $R_1(0) = 0$, $R_2(0) = 0$, $J_1(0) = 0$, $J_2(0) = 0$, and $R(0) = 0$.
 
 For this, we consider three different scenarios for measuring pathogen resilience: (1) we only have information about strain 1, (2) we only have information about strain 2, and (3) we are unable to distinguish the differences between strains.
-In the first two scenarios (see panels A--C for strain 1 and panels D--F for strain 2), 
+In the first two scenarios (see panels A--C for strain 1 and panels D--F for strain 2), we consider the dynamics of average susceptibility for each strain and total prevalence:
+\begin{align}
+\bar{S}_1 &= S + \epsilon_{12} R_2\\
+\hat{I}_1 &= I_1 + J_1\\
+\bar{S}_2 &= S + \epsilon_{21} R_1\\
+\hat{I}_2 &= I_2 + J_2
+\end{align}
+In the third scenario (panels G--I), we consider the dynamnics of total susceptible and infected population:
+\begin{align}
+\hat{S} &= S + R_2 + R_1\\
+\hat{I} &= I_1 + J_1 + I_2 + J_2\\
+\end{align}
+These quantities are used to compute the normalized distance from the attractor, as described in the main text.
+
+\subsection*{Estimating intrinsic resilience using mechanistic model}
+
+We test whether we can reliably estimate the intrinsic resilience of a system by fitting a mechanistic model.
+Specifically, we simulate case time series from stochastic SIRS and two-strain models and fit a simple, deterministic SIRS model using a Bayesian framework.
+
+First, we describe the simulation set up.
+The stochastic SIRS model can be written as follows:
+\begin{align}
+\beta(t) &= \mathcal R_0 \left(1 + \theta \cos\left(\frac{2 \pi t}{364}\right)\right) \alpha(t)  (1-\exp(-\gamma))\\
+\textrm{FOI}(t) &= \beta(t) I(t- \Delta t)/N\\
+B(t) &\sim \mathrm{Poisson}(\mu N)\\
+\Delta S(t) &\sim \mathrm{Binom}\left(S(t-\Delta t), 1- \exp(-(\textrm{FOI}(t) + \mu) \Delta t )\right) \\
+N_{SI}(t) &\sim \mathrm{Binom}\left(\Delta S(t), \frac{\textrm{FOI}(t)}{\textrm{FOI}(t) + \mu} \right)\\
+\Delta I(t) &\sim \mathrm{Binom}\left(I(t-\Delta t), 1- \exp(-(\gamma + \mu) \Delta t )\right) \\
+N_{IR}(t) &\sim \mathrm{Binom}\left(\Delta I(t), \frac{\gamma}{\gamma + \mu} \right)\\
+\Delta R(t) &\sim \mathrm{Binom}\left(R(t-\Delta t), 1- \exp(-(\delta+ \mu) \Delta t )\right) \\
+N_{RS}(t) &\sim \mathrm{Binom}\left(\Delta R(t), \frac{\delta}{\delta + \mu} \right)\\
+S(t) &= S(t-\Delta t) + N_{RS}(t) + B(t) - \Delta S(t)\\
+I(t) &= I(t-\Delta t) + N_{SI}(t) - \Delta I(t)\\
+R(t) &= R(t-\Delta t) + N_{IR}(t) - \Delta R(t)
+\end{align}
+where $\textrm{FOI}$ represent the force of infection;
+$N_{ij}$ represent the number of individuals moving from compartment $i$ to $j$ on a given day; 
+and $B(t)$ represents the number of new births.
+We simulate the model on a daily scale---assuming 364 days in a year so that it can be evenly grouped into 52 weeks---with the following parameters:
+$\mathcal R_0 = 3$, $\theta = 0.1$, $\gamma = 1/7/\mathrm{days}$, $\delta = 1/(364\times 2)/\mathrm{days}$,
+$\mu =1/(364\times 50)/\mathrm{days}$, and $N = 1 \times 10^{8}$.
+The model is simulated from 1900 to 2030 assuming $S(0) = N/3$, $I(0) = 100$, and $R(0) = N - S(0) - I(0)$.
+The observed incidence from the model is then simulated as follows:
+\begin{equation}
+C(t) = \mathrm{Beta-Binom}(N_{SI}(t), \rho, k), 
+\end{equation}
+where $\rho$ represents the reporting probability and $k$ represents the overdispersion parameter of beta-binomial distribution.
+We assume $\rho = 0.002$ (i.e., 0.2\% probability) and $k = 1000$.
+
+The stochastic two-strain model can be written as follows:
+\begin{align}
+\beta_1(t) &= b_1 \left(1 + \theta_1 \cos\left(2 \pi (t - \phi_1)\right)\right) \alpha(t)\\
+\beta_2(t) &= b_2 \left(1 + \theta_2 \cos\left(2 \pi (t - \phi_2)\right)\right) \alpha(t)\\
+\textrm{FOI}_1(t) &= \beta_1(t) (I_1(t- \Delta t) + J_1(t- \Delta t))/N\\
+\textrm{FOI}_2(t) &= \beta_2(t) (I_2(t- \Delta t) + J_2(t- \Delta t))/N\\
+B(t) &\sim \mathrm{Poisson}(\mu N)\\
+\Delta S(t) &\sim \mathrm{Binom}\left(S(t-\Delta t), 1- \exp(-(\textrm{FOI}_1(t)+\textrm{FOI}_2(t) + \mu) \Delta t )\right) \\
+N_{SI_1}(t) &\sim \mathrm{Binom}\left(\Delta S(t), \frac{\textrm{FOI}_1(t)}{\textrm{FOI}_1(t) + \textrm{FOI}_2(t) + \mu} \right)\\
+N_{SI_2}(t) &\sim \mathrm{Binom}\left(\Delta S(t), \frac{\textrm{FOI}_2(t)}{\textrm{FOI}_1(t) + \textrm{FOI}_2(t) + \mu} \right)\\
+\Delta I_1(t) &\sim \mathrm{Binom}\left(I_1(t-\Delta t), 1- \exp(-(\gamma_1 + \mu) \Delta t )\right) \\
+N_{I_1R_1}(t) &\sim \mathrm{Binom}\left(\Delta I_1(t), \frac{\gamma_1}{\gamma_1 + \mu} \right)\\
+\Delta I_2(t) &\sim \mathrm{Binom}\left(I_2(t-\Delta t), 1- \exp(-(\gamma_2 + \mu) \Delta t )\right) \\
+N_{I_2R_2}(t) &\sim \mathrm{Binom}\left(\Delta I_2(t), \frac{\gamma_2}{\gamma_2 + \mu} \right)\\
+\Delta R_1(t) &\sim \mathrm{Binom}\left(R_1(t-\Delta t), 1- \exp(-(\epsilon_{21} \textrm{FOI}_2(t) + \rho_1 + \mu) \Delta t )\right) \\
+N_{R_1S}(t) &\sim \mathrm{Binom}\left(\Delta R_1(t), \frac{\rho_1}{\epsilon_{21} \textrm{FOI}_2(t) + \rho_1 + \mu} \right)\\
+N_{R_1J_2}(t) &\sim \mathrm{Binom}\left(\Delta R_1(t), \frac{\epsilon_{21} \textrm{FOI}_2(t)}{\epsilon_{21} \textrm{FOI}_2(t) + \rho_1 + \mu} \right)\\
+\Delta R_2(t) &\sim \mathrm{Binom}\left(R_2(t-\Delta t), 1- \exp(-(\epsilon_{12} \textrm{FOI}_1(t) + \rho_2 + \mu) \Delta t )\right) \\
+N_{R_2S}(t) &\sim \mathrm{Binom}\left(\Delta R_2(t), \frac{\rho_2}{\epsilon_{12} \textrm{FOI}_1(t) + \rho_2 + \mu} \right)\\
+N_{R_2J_1}(t) &\sim \mathrm{Binom}\left(\Delta R_2(t), \frac{\epsilon_{12} \textrm{FOI}_1(t)}{\epsilon_{12} \textrm{FOI}_1(t) + \rho_2 + \mu} \right)\\
+\Delta J_1(t) &\sim \mathrm{Binom}\left(J_1(t-\Delta t), 1- \exp(-(\gamma_1 + \mu) \Delta t )\right) \\
+N_{J_1R}(t) &\sim \mathrm{Binom}\left(\Delta J_1(t), \frac{\gamma_1}{\gamma_1 + \mu} \right)\\
+\Delta J_2(t) &\sim \mathrm{Binom}\left(J_2(t-\Delta t), 1- \exp(-(\gamma_2 + \mu) \Delta t )\right) \\
+N_{J_2R}(t) &\sim \mathrm{Binom}\left(\Delta J_2(t), \frac{\gamma_2}{\gamma_2 + \mu} \right)\\
+\Delta R(t) &\sim \mathrm{Binom}\left(R(t-\Delta t), 1- \exp(-(\rho_1 + \rho_2 + \mu) \Delta t )\right) \\
+N_{RR_1}(t) &\sim \mathrm{Binom}\left(\Delta R(t), \frac{\rho_1}{\rho_1 + \rho_2 + \mu} \right)\\
+N_{RR_2}(t) &\sim \mathrm{Binom}\left(\Delta R(t), \frac{\rho_2}{\rho_1 + \rho_2 + \mu} \right)\\
+S(t) &= S(t-\Delta t) - \Delta S(t) + B(t) + N_{R_1S}(t) + N_{R_2S}(t)\\
+I_1(t) &= I_1(t-\Delta t) - \Delta I_1(t) + N_{SI_1}(t) \\
+I_2(t) &= I_2(t-\Delta t) - \Delta I_2(t) + N_{SI_2}(t) \\
+R_1(t) &= R_1(t-\Delta t) - \Delta R_1(t) + N_{I_1R_1}(t) + N_{RR_1}(t)\\
+R_2(t) &= R_2(t-\Delta t) - \Delta R_2(t) + N_{I_2R_2}(t) + N_{RR_2}(t)\\
+J_1(t) &= J_1(t-\Delta t) - \Delta J_1(t) + N_{R_2J_1}(t) \\
+J_2(t) &= J_2(t-\Delta t) - \Delta J_2(t) + N_{R_1J_2}(t) \\
+R(t) &= R(t-\Delta t) - \Delta R(t) + N_{J_1 R}(t) + N_{J_2 R}(t) 
+\end{align}
+
+
+
 
 \pagebreak
 
