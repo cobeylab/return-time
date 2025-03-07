@@ -137,14 +137,14 @@ These two concepts have subtle but important differences:
 for example, it took more than 3 years for human metapneumovirus to rebound in Hong Kong but the observed epidemic patterns in 2024 are similar to pre-pandemic seasonal means, suggesting a rapid return to pre-pandemic dynamics following a perturbation (Figure 1).
 Measuring this rate of return is particularly useful because it allows us to quantify the ecological resilience of a host-pathogen system \citep{pimm1979structure, neubert1997alternatives,gunderson2000ecological,dakos2022ecological}.
 
-To address this question, we propose a framework for characterizing the resilience of a host-pathogen system based on how fast the system recovers from perturbation.
-We begin by laying out a few representative scenarios that capture the potential impact of COVID-19 interventions on endemic pathogen dynamics and illustrating how resilience can be measured by comparing the pre- and post-pandemic dynamics of susceptible and infected hosts.
-In practice, information on susceptible hosts are often unavailable, and traditional methods for reconstructing the dynamics of susceptible hosts require long-term endemic time series \citep{bobashev2000reconstructing,finkenstadt2000time}, which cannot be applied due to disruptions in epidemic patterns caused by COVID-19 interventions.
-Instead, we utilize Takens' embedding theorem to reconstruct empirical attractors from data and further measure the distance from this empirical attractor \citep{takens2006detecting}.
-This reconstruction allows us to characterize the rate at which this distance decreases over time, which correspond to pathogen resilience.
-We apply this framework to analyzing pathogen surveillance data for a wide array of respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and US.
-Finally, we show that susceptible host dynamics are a key determinants of pathogen resilience.
-Our study offers unique insights into understanding pathogen re-emergence patterns following COVID-19 interventions.
+In this study, we lay out theoretical and statistical approaches to characterizing the resilience of a host-pathogen system based on how fast the system recovers from perturbation.
+We begin by laying out a few representative scenarios that capture the potential impact of COVID-19 interventions on endemic pathogen dynamics and illustrate how resilience can be measured by comparing the pre- and post-pandemic dynamics of susceptible and infected hosts.
+In practice, information on susceptible hosts is often unavailable, making this theoretical approach infeasible.
+Instead, we utilize a mathematical technique to reconstruct empirical attractors from the data \citep{takens2006detecting}, which allows us to measure the rate at which the host-pathogen system appraoches this empirical attractor after a perturbation;
+this rate corresponds to the resilience of the host-pathogen system.
+We use this method to analyze pathogen surveillance data for respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and US.
+Finally, we show that susceptible host dynamics explain variation in pathogen resilience.
+% Our study offers unique insights into understanding pathogen re-emergence patterns following COVID-19 interventions.
 % \swp{Revisit.}
  
 \section*{Conceptual introduction to pathogen resilience}
