@@ -122,7 +122,9 @@ Therefore, comparing the differential impact of the pandemic NPIs across pathoge
 \textbf{Observed heterogeneity in responses to COVID-19 pandemic across respiratory pathogens and norovirus in (A) Canada, (B) Hong Kong, (C) Korea, and (D) US.}
 Red points and lines represent data before 2020.
 Blue points and lines represent data since 2020.
-Gray lines and shaded regions represent the mean seasonal patterns and corresponding 95\% confidence intervals based on the observed outbreak patterns before 2020.
+Gray lines and shaded regions represent the mean seasonal patterns and corresponding 95\% confidence intervals around the mean.
+Mean seasonal patterns were calculated by aggregating cases before 2020 into 52 weekly bins and taking the average in each week.
+Cases were scaled to account for changes in testing patterns (Materials and Methods).
 }
 \end{figure} 
 
@@ -154,55 +156,58 @@ This rate corresponds to the largest real part of the eigenvalues of the lineari
 However, respiratory pathogens often exhibit seasonal variation in transmission, meaning that the intrinsic resilience of a host-pathogen system varies across season.
 Nonetheless, we can still measure the \emph{empirical} resilience of a host-pathogen system by looking at how fast the system returns to the pre-pandemic, endemic dynamics after interventions are lifted.
 
-As an example, consider an intervention that reduce transmission by 50\% for 6 months starting in 2020, which causes epidemic patterns to deviate from its original stable annual cycle for a short period of time and eventually come back (Figure 2A).
-To measure the empirical resilience of this system, we first need to be able to measure the distance from its pre-pandemic attractor.
-There are many different ways we can measure the distance from attractor, but for illustrative purposes, we choose one of the most parsimonious approach: that is, we look at how the susceptible (S) and infected (I) populations change over time and measure the distance on the SI phase plane (Figure 2B).
-In this simple case, the locally estimated scatterplot smoothing (LOESS) fit indicates that the distance from attractor decreases linearly on average (Figure 2C).
-Furthermore, the overall rate of return matches the intrinsic resilience of the seasonally unforced system (Figure 2C).
+As an example, we begin with a simple Susceptible-Infected-Recovered-Susceptible (SIRS) model with seasonally forced transmission and demography (i.e., birth and death).
+The SIRS model is the simplest model that allows for waning of immunity and is commonly used for modeling the dynamics of respiratory pathogens \citep{dushoff2004dynamical}.
+First, consider an intervention that reduce transmission by 50\% for 6 months starting in 2020, which causes epidemic patterns to deviate from its original stable annual cycle for a short period of time and eventually come back (Figure 2A).
+To measure the resilience of this system empirically, we first need to be able to measure the distance from its pre-pandemic attractor.
+There are many ways we can measure the distance from attractor, but for illustrative purposes, we choose one of the most parsimonious approach: that is, we look at how the susceptible (S) and infected (I) populations change over time and measure the distance on the SI phase plane (Figure 2B).
+In this simple case, the locally estimated scatterplot smoothing (LOESS) fit indicates that the distance from attractor decreases exponentially (linearly on a log scale) on average (Figure 2C).
+Furthermore, the overall rate of return approximates the intrinsic resilience of the seasonally unforced system (Figure 2C).
 
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure2/figure2_simple.pdf}
 \caption{
-\textbf{Conceptual framework for measuring pathogen resilience following NPIs across different scenarios.}
+\textbf{A simple method to measure pathogen resilience following NPIs across different scenarios.}
 (A, D, G) Simulated epidemic trajectories across various models. 
 Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
 Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
 Gray regions indicate the duration of interventions.
-(B, E, H) Phase plane representation of the corresponding model.
+(B, E, H) Phase plane representation of the epidemic dynamics from corresponding models.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
-(C, F, I) Changes in logged distance from attractor over time.
-Blue lines represent the logged distance from attractor.
+(C, F, I) Changes in logged distance from the attractor over time.
+Blue lines represent the logged distance from the attractor.
 Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
-Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
+Dotted lines show the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
 
-Alternatively, NPIs can permanently change our behavior and have persisting impact on the pathogen dynamics; 
+Alternatively, NPIs can have a lasting impact on the pathogen dynamics; 
 as an example, we consider a scenario in which a 10\% reduction in transmission persists even after the NPIs are lifted (Figure 2D--F).
-In such cases, we cannot know whether the pathogen will return to its original cycle or a different cycle until many years have passed after the NPIs are lifted, meaning that we cannot measure the distance against the new attractor that the system will eventually approach.
-Nonetheless, we can still measure the distance against the original, pre-pandemic attractor and ask how the distance changes over time (Figure 2E).
-The LOESS fit suggests that the distance from the attractor will initially decrease exponentially on average (equivalently, linearly on a log scale) and eventually plateau (Figure 2F).
-Here, a permanent 10\% reduction in transmission rate slows down the system, which causes the distance from the attractor to decrease at a slower rate (Figure 2F) than it would have otherwise in the absence of permanent transmission reduction (Figure 2C).
+In such cases in practice, we cannot know whether the pathogen will return to its original cycle or a different cycle until many years have passed, and we cannot measure the distance to the new unknown attractor that the system might eventually approach.
+Nonetheless, we can still measure the distance from the pre-pandemic attractor and ask how the distance changes over time (Figure 2E).
+The LOESS fit suggests that the distance from the pre-pandemic attractor will initially decrease exponentially on average (equivalently, linearly on a log scale) and eventually plateau (Figure 2F).
+Here, a permanent 10\% reduction in transmission rate slows the system, which causes the distance from the pre-pandemic attractor initially to decrease at a slower rate (Figure 2F) than it would have otherwise (Figure 2C) before plateauing at a fixed distance between the two attractors.
 This example shows that resilience is not necessarily an intrinsic property of a specific pathogen.
 Instead, pathogen resilience is a property of a specific attractor that a host-pathogen system approaches, which depends on both pathogen and host characteristics.
 % \swp{Add discussion about observation error, e.g., under-reporting.}
 
-Finally, transient phenomena can also complicate the picture (Figure 2G--I).
-For example, a stage-structured model for RSV initially exhibits a stable annual cycle, but perturbations from NPIs cause the epidemic to exhibit biennial cycles (Figure 2G).
-Despite this biennial cycle, we see that the system eventually approaches the original pre-pandemic attractor (Figure 2H), suggesting that this biennial cycle is a transient phenomenon.
-The LOESS fit indicates that the distance from the attractor will initially decrease exponentially at a rate that is consistent with the intrinsic resilience of the seasonally unforced system, but the rate of decrease slows down as the epidemic exhibits a biennial cycle (Figure 2I).
-In classical ecological theory, this behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions \citep{hastings2018transient}.
-As we show in Supplementary Figure S1, strong seasonal forcing in transmission can also lead to transient phenomena for a simple SIRS model, causing a slowing down of the system.
+Finally, transient phenomena can further complicate the picture (Figure 2G--I).
+For example, a stage-structured model initially exhibits a stable annual cycle, but perturbations from NPIs cause the epidemic to shift to biennial cycles (Figure 2G).
+The system eventually approaches the original pre-pandemic attractor (Figure 2H), suggesting that this biennial cycle is a transient phenomenon.
+The LOESS fit indicates that the distance from the attractor initially decreases exponentially at a rate that is consistent with the intrinsic resilience of the seasonally unforced stage-structured system, but the rate of decrease decelerates with the damped oscillations (Figure 2I).
+This behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions \citep{hastings2018transient}.
+Strong seasonal forcing in transmission can also lead to transient phenomena for a simple SIRS model, causing a slow return to pre-perturbation dynamics (Supplementary Figure S1).
 
-In Supplementary Materials, we also explore measuring the resilience of a two-strain host-pathogen system:
+We also explore measuring the resilience of a two-strain host-pathogen system:
 when the dynamics two strains (or two pathogens) are coupled through cross immunity, we would expect the entire system to be characterized by a single resilience value (rather than having two separate resilience for each strain).
-Simulations from a simple two-strain system illustrate that separate analyses of individual strain dynamics (e.g., RSV A vs B) and a joint analysis of total infections (e.g., total RSV infections) yield identical resilience estimates, confirming our expectation (Supplementary Figure S2, 3).
+Simulations from a simple two-strain system illustrate that separate analyses of individual strain dynamics (e.g., RSV A vs B) and a joint analysis of total infections (e.g., total RSV infections) (Supplementary Figure S2, 3). 
+\swp{This is expected because the phase portaits of each of the coupled strains are projections of the shared attractor, according to Takens Theorem. (Is this precisely correct?)}
 Analogous to a single system, strong seasonal forcing in transmission can cause the system to slow down through transient phenomena (Supplementary Figure S4).
 
 These observations indicate three possibilities.
 First, we can directly estimate the empirical resilience of a host-pathogen system by looking at how fast the system approaches a pre-pandemic attractor, provided that we can measure the distance from attractor.
-The empirical approach to estimating pathogen resilience is particularly convenient because it does not require us to know the true underlying model.
-As we show in Supplementary Figure S5, estimating the intrinsic resilience from fitting standard compartmental models can lead to biased estimates, especially under model misspecification.
+The empirical approach to estimating pathogen resilience is particularly convenient because it does not require us to know the true underlying model;
+estimating the intrinsic resilience from fitting misspecified models can lead to biased estimates (Supplementary Figure S5).
 Second, resilience estimates allow us to make phenomenological predictions about the dynamics of a host-pathogen system following a perturbation:
 assuming that the distance from the attractor will decrease exponentially over time, we can obtain a ballpark estimate for when the system will reach an attractor.
 Finally, deviation from an exponential decrease in the distance from attractor can provide information about whether the system has reached an alternative attractor, or a ghost attractor, that is different from the original, pre-pandemic attractor.
@@ -210,8 +215,7 @@ These alternative attractors may reflect continued perturbations from permanent 
 
 \section*{Inferring pathogen resilience from real data}
 
-Based on these observations, we now set out to infer pathogen resilience from real data.
-Here, we briefly lay out our approach to estimating pathogen resilience from real data (Figure 3).
+Based on these observations, we now lay out our approach to estimating pathogen resilience from real data (Figure 3).
 We then test this approach against simulations and apply it to real data.
 
 So far, we focused on simple examples that assume a constant transmission reduction.
@@ -219,36 +223,36 @@ However, in practice, the impact of NPIs on pathogen transmission is likely more
 These complexities can lead to longer delays between the introduction of NPIs and pathogen re-emergence as well as temporal variation in outbreak sizes (Figure 3B):
 in this example, continued transmission reduction from NPIs limits the size of the first outbreak in 2021 following the emergence, allowing for a larger outbreak in 2022 when NPIs are further relaxed.
 
-Previously, we relied on the dynamics of susceptible and infected hosts to compute the distance from attractor (Figure 2), but information on susceptible hosts are often not available in practice.
-In addition, uncertainties in case counts due to observation error as well as the possibility of complex, multiannual attractor adds challenges to measuring the distance from attractor.
+Previously, we relied on the dynamics of susceptible and infected hosts to compute the distance from attractor (Figure 2), but information on susceptible hosts is rarely available in practice.
+In addition, uncertainties in case counts due to observation error as well as the possibility of complex, multiannual attractor add challenges to measuring the distance from attractor.
 To address these challenges, we first reconstruct an empirical attractor by utilizing Takens' theorem, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding \citep{takens2006detecting}.
 Here, we use delayed copies of logged values of pre-pandemic cases $C(t)$ (Figure 3C) to reconstruct the attractor:
 \begin{equation}
 \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
 \end{equation}
 where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respectively \citep{kennel1992determining,tan2023selecting}.
-We then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical attractor (Figure 3E).
+We then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical pre-pandemic attractor (Figure 3E).
 In principle, we can quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression corresponds to pathogen resilience.
-As we show in Supplementary Figure S6, overall temporal variations in the distance from attractor, especially the observed rate of decrease, appear robust to choices about embedding delays and dimensions; 
-we note that using longer delays and higher dimensions tend to smooth out temporal variations in the distance from attractor.
+Overall temporal variations in the distance from attractor, especially the observed rate of decrease, appear robust to choices about embedding delays and dimensions; 
+using longer delays and higher dimensions tends to smooth out temporal variations in the distance from attractor (Supplementary Figure S6).
 
 \begin{figure}[!ht]
 \includegraphics[width=\textwidth]{../figure3/figure3.pdf}
 \caption{
-\textbf{A schematic diagram explaining how pathogen resilience can be inferred from real data.}
+\textbf{A schematic diagram explaining the inference of pathogen resilience from synthetic data.}
 (A) A realistic example of a synthetic NPI, represented by a relative reduction in transmission.
-(B) The impact of the synthetic NPI on epidemic dynamics simulated using a stochastic SIRS model.
+(B) The impact of the synthetic NPI on epidemic dynamics simulated using a SIRS model with demographic stochasticity.
 (C) Generating delayed copies of the logged time series allows us to obtain an embedding.
 (D) Two dimensional representation of an embedding.
 (E) Delayed embedding allows us to calculate the nearest neighbor distance from the empirical attractor, which is determined based on the pre-pandemic time series.
-This distance time series can be used to infer pathogen resilience by fitting a linear regression after choosing an appropriate window for regression.
+This distance time series can be used to infer pathogen resilience after choosing an appropriate window for linear regression.
 }
 \end{figure}
 
-Complex changes in the distance from attractor suggest that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
-In Supplementary Materials, we explore an automated window selection criteria for linear regression and test it against randomized, stochastic simulations across a wide range of realistic NPI shapes.
-We find that resilience estimates based on the automated window selection criteria are moderately correlated (0.48) with the intrinsic resilience of the post-NPI attractor (Supplementary Figure S7).
-In contrast, a naive approach that uses the entire time series, starting from the peak distance, only gives a correlation of 0.09 and consistently underestimates the intrinsic resilience (Supplementary Figure S7).
+Complex changes in the distance from attractor suggest that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression (Figure 3E).
+In Supplementary Materials, we explore an automated window selection criterion for linear regression and test it against randomized, stochastic simulations across a wide range of realistic NPI shapes.
+We find that resilience estimates based on the automated window selection criterion are moderately correlated ($\rho=0.48$) with the intrinsic resilience of the post-NPI attractor (Supplementary Figure S7).
+In contrast, a naive approach that uses the entire time series, starting from the peak distance, only gives a correlation coefficient of $\rho=0.09$ and consistently underestimates the intrinsic resilience (Supplementary Figure S7).
 
 % A closer observation of the resulting time series of the distance from attractor provides three important insights (Figure 3E).
 % First, the relaxation of NPIs in realistic settings can cause a false return of the system, as indicated by a rapid decrease in the distance in early 2022 followed by a rapid increase in distance.
@@ -257,9 +261,9 @@ In contrast, a naive approach that uses the entire time series, starting from th
 % Finally, temporal variation in the impact of NPIs on pathogen transmission will affect the intrinsic resilience of the system throughout the NPI period, meaning that the estimated resilience from linear regression will likely reflect some sort of average impact of the NPIs.
 
 Now, we apply this approach to pathogen surveillance data presented in Figure 1.
-For each time series, we apply Takens' theorem independently to reconstruct the empirical attractor and obtain the corresponding time series of distance from attractors (Supplementary Figure S8 for the distance time series and linear regression fits).
-Then, we use the automated window selection criteria to fit a linear regression and estimate the empirical resilience for each pathogen in each country.
-For most respiratory pathogens, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A), with the exception of Rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and Bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
+For each time series, we apply Takens' theorem independently to reconstruct the empirical attractor and obtain the corresponding time series of distances from attractors (Supplementary Figure S8 for the distance time series and linear regression fits).
+Then, we use the automated window selection criterion to fit a linear regression and estimate the empirical resilience for each pathogen in each country.
+For most respiratory pathogens, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A), with the exception of rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
 Excluding these exceptions, the mean resilience of common respiratory pathogens is $0.974/\mathrm{year}$ (95\% CI: $0.784/\mathrm{year}$--$1.16/\mathrm{year}$).
 As a reference, this is $\approx 7$ times higher than the intrinsic resilience of pre-vaccination measles dynamics ($\approx 0.13/\mathrm{year}$).
 Finally, resilience estimates for norovirus appears to be comparable to the intrinsic resilience of measles: $0.119/\mathrm{year}$ (95\%CI: $0.004/\mathrm{year}$--$0.233/\mathrm{year}$) for Korea and $0.385/\mathrm{year}$ (95\% CI: $0.167/\mathrm{year}$--$0.603/\mathrm{year}$).
