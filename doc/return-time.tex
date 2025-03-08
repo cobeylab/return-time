@@ -362,19 +362,19 @@ Future studies should explore the relationship between the rate of evolution and
 
 Quantifying pathogen resilience also offers novel approaches to validating population-level epidemiological models.
 So far, most of model validation in infectious disease ecology is based on the ability of a model to reproduce the observed epidemic dynamics and to predict future dynamics \citep{grenfell2002dynamics,bhattacharyya2015cross,pitzer2015environmental,dean2018human,pons2018serotype}.
-However, many models that meet these criteria.
-For example, two major RSV models have been proposed so far to explain biennial epidemic patterns: (1) a stage- and age-structured model that allows for disease severity to vary with number of past infections and age of infection \citep{pitzer2015environmental} and (2) a pathogen-interaction model that accounts for cross immunity between RSV and human metapnuemovirus \citep{bhattacharyya2015cross}.
+However, many models can perform similarly under these criteria.
+For example, two major RSV models have been proposed to explain biennial epidemic patterns: (1) a stage- and age-structured model that allows disease severity to vary with number of past infections and age of infection \citep{pitzer2015environmental} and (2) a pathogen-interaction model that accounts for cross immunity between RSV and human metapnuemovirus \citep{bhattacharyya2015cross}.
 Since both models can accurately reproduce the observed epidemic patterns, standard criteria for model validation do not allow us to distinguish between these two models from population-level data alone.
 Instead, we can measure the empirical resilience of each model by simulating various perturbations and compare them to estimates of empirical resilience from data, using COVID-19 interventions as an opportunity.
-Future studies should further investigate using pathogen resilience for validating epidemic models.
+% Future studies should further investigate using pathogen resilience for validating epidemic models.
 
 There are several limitations to our work.
-First of all, we did not extensively explore other approaches to reconstructing the attractor.
+First, we did not extensively explore other approaches to reconstructing the attractor.
 Recent studies showed that more sophisticated approaches, such as using non-uniform embedding, can provide more robust reconstruction for noisy data \citep{tan2023selecting}.
 In the context of causal inference, choices about embedding can have major impact on the resulting inference \citep{cobey2016limits}.
 Our resilience estimates are likely overly confident given a lack of uncertainties in attractor reconstruction as well as the simplicity of our statistical framework.
-Short pre-pandemic time series also contributes to the crudeness of our estimates.
-Nonetheless, as illustrated in our sensitivity analyses (Supplementary Figure S6, S10--S12), inferences about pathogen resilience appear to be robust to decisions about embedding lags and dimensions---this is because tracking the rate at which the system approaches the attractor is likely a much simpler problem than making inferences about causal directionality.
+Short pre-pandemic time series also contribute to the crudeness of our estimates.
+Nonetheless, as illustrated in our sensitivity analyses (Supplementary Figure S6, S10--S12), inferences about pathogen resilience in our SIRS model appear to be robust to decisions about embedding lags and dimensions---this is because tracking the rate at which the system approaches the attractor is likely a much simpler problem than making inferences about causal directionality.
 Our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust to these predictions, given how rapid many respiratory pathogens returned to their original cycles following COVID-19 interventions.
 % Despite these limitations, our study illustrates the utility of quantifying pathogen resilience for understanding how different pathogens respond to perturbations.
 
@@ -386,13 +386,13 @@ More broadly, a detailed understanding of the determinants of pathogen resilienc
 
 \subsection*{Data}
 
-We gathered time series on respiratory infections from four different countries: Canada, Hong Kong, Korea, and United States (US).
-As a reference, we also included time series data on norovirus infections for available countries---in contrast to respiratory pathogens, we expect gastrointestinal viruses, such as norovirus, to be less affected by COVID-19 intervention measures.
+We gathered time series on respiratory infections from Canada, Hong Kong, Korea, and United States (US).
+As a reference, we also included time series data on norovirus infections for available countries---in contrast to respiratory pathogens, we expect gastrointestinal viruses, such as norovirus, to be differently affected by COVID-19 intervention measures.
 For all time series, we rounded every year to 52 weeks by taking the average number of cases and tests between the 52nd and 53rd week.
 We also rescale all time series to account for changes in testing patterns, which are then used for the actual analysis.
 
 Weekly time series of respiratory infection cases in Canada comes from the Respiratory Virus Detection Surveillance System, which collect data from select laboratories across Canada.
-We extract the data from \url{https://www.canada.ca/en/public-health/services/surveillance/respiratory-virus-detections-canada.html}.
+We extracted the data from \url{https://www.canada.ca/en/public-health/services/surveillance/respiratory-virus-detections-canada.html}.
 To account for an increase in testing from 2013 to 2024, we calculate a 2 year moving average for the number of tests for each pathogen, which we use as a proxy for testing effort.
 Then, we divide the smoothed testing patterns by the smoothed value at the final week such that the testing effort has a maximum of 1.
 We then divide weekly cases by the testing effort to obtain a scaled case time series.
@@ -422,7 +422,7 @@ Specifically, for a given pathogen, we take the pre-pandemic (before 2020) case 
 \begin{equation}
 X_{\tau,m}(t) = \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle.
 \end{equation}
-Here, the delay $\tau$ is determined by looking at the autocorrelation of the logged pre-pandemic time series and asking when the autocorrelation crosses 0 for the first time \citep{tan2023selecting};
+Here, the delay $\tau$ is determined by calculating the autocorrelation of the logged pre-pandemic time series and asking when the autocorrelation crosses 0 for the first time \citep{tan2023selecting};
 a typical delay for for an annual outbreak is around 13 weeks.
 
 Then, for a given delay $\tau$, we determine the embedding dimension $M$ using the false nearest neighbors approach \citep{kennel1992determining,tan2023selecting}.
@@ -430,11 +430,11 @@ To do so, we start with an embedding dimension $e$ and construct a set of points
 Then, for each point $X_{\tau,e}(t)$, we determine the nearest neighbor from the set $A_{\tau,e}$, which we denote $X_{\tau,e}(\tsub{t}{nn})$ for $t \neq \tsub{t}{nn}$.
 Then, if the distance between these two points on $e+1$ dimension, $D_{\tau,e+1}(t) = ||X_{\tau,e+1}(\tsub{t}{nn})-X_{\tau,e+1}(t)||_2$, is larger than their distance on $e$ dimension, $D_{\tau,e}(t) = ||X_{\tau,e}(\tsub{t}{nn})-X_{\tau,e}(t)||_2$, these two points are deemed to be false nearest neighbors;
 specifically, we use a threshold $R$ for the ratio between two distances $D_{\tau,e+1}(t)/D_{\tau,e}(t)$ to determine false nearest neighbors.
-In the main text, we determine embedding dimension based as the first dimension without any false nearest neighbors for $R=10$.
+In the main text, we determine the embedding dimension based on the first dimension without any false nearest neighbors for $R=10$.
 In Supplementary Materials, we impose $R=5$ to select for higher dimensions.
 Once we determine the embedding lag $\tau$ and dimension $M$, we apply the embedding to the entire time series and calculate the nearest neighbor distance against the attractor $A_{\tau,M}$ to obtain a time series of distance from attractor $D_{\tau,M}(t)$.
 
-From a time series of distance from attractor, we estimate pathogen resilience by fitting a linear regression to an appropriate window.
+From a time series of distances from the attractor, we estimate pathogen resilience by fitting a linear regression to an appropriate window.
 To automatically select the fitting window, we begin by smoothing the distance time series using locally estimated scatterplot smoothing (LOESS) to obtain $\hat{D}_{\tau,M}(t)$, where the smoothing is performed on a log scale and exponentiated afterwards.
 Then, we determine threshold values ($\tsub{T}{start}$ and $\tsub{T}{end}$) for the smoothed distances and choose the fitting window based on when $\hat{D}_{\tau,M}(t)$ crosses these threshold values for the first time.
 These thresholds are determined by first calculating maximum distance,
@@ -466,7 +466,7 @@ The dynamics of the SIRS model is described by the following set of differential
 \frac{\dd R}{\dd t} &= \gamma I - (\delta + \mu) R \\
 \end{align}
 where $\mu$ represents the birth/death rate, $\beta(t)$ represents the time-varying transmission rate, and $\gamma$ represents the recovery rate.
-The basic reproduction number $\mathcal R_0 = \beta(t)/(\gamma + \mu)$ is defined as the average number of secondary infections caused by a single infected individual in a fully susceptible population and measures the intrinsic transmissibility of a pathogen.
+The basic reproduction number $\mathcal R_0(t) = \beta(t)/(\gamma + \mu)$ is defined as the average number of secondary infections caused by a single infected individual in a fully susceptible population and measures the intrinsic transmissibility of a pathogen.
 
 When we first introduce the idea of pathogen resilience (Figure 2), we impose sinusoidal changes to the transmission rate to account for seasonal transmission:
 \begin{equation}
@@ -967,7 +967,7 @@ Error bars represent 95\% confidence intervals.
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure4_th/figure4_dist_th.pdf}
 \caption{
-\textbf{Estimated time series of distance from attractor for each pathogen across Canada, Hong Kong, Korea, and the US using higher embedding dimensions.}
+\textbf{Estimated time series of distances from the attractor for each pathogen across Canada, Hong Kong, Korea, and the US using higher embedding dimensions.}
 Black lines represent the estimated distance from attractor.
 Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
 Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
