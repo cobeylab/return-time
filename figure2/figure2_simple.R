@@ -9,13 +9,13 @@ source("../R/distfun.R")
 
 ss_perturb_sirs <- simulate_sirs(
   tmax=2040) %>%
-  filter(time >= 2010) %>%
+  filter(time >= 2010, time < 2029.5) %>%
   mutate(
     group=time < 2020
   )
 
 ss_unperturb_sirs <- simulate_sirs(tmax=2040,npifun=function(x)1) %>%
-  filter(time >= 2010)
+  filter(time >= 2010, time < 2029.5)
 
 time <- ss_perturb_sirs$time
 
@@ -84,7 +84,7 @@ ss_perturb_sirs2 <- simulate_sirs(
     return(npi)
   },
   tmax=2040) %>%
-  filter(time >= 2010) %>%
+  filter(time >= 2010, time < 2029.5) %>%
   mutate(
     group=time < 2020
   )
@@ -139,13 +139,13 @@ g6 <- ggplot(filter(dist_SI_sirs2, time >= 2020)) +
   )
 
 ss_perturb_rsv_pitzer <- simulate_rsv_pitzer(tmax=2030) %>%
-  filter(time >= 2010) %>%
+  filter(time >= 2010, time < 2029.5) %>%
   mutate(
     group=time < 2020
   )
 
 ss_unperturb_rsv_pitzer <- simulate_rsv_pitzer(tmax=2030,npifun=function(x) 1) %>%
-  filter(time >= 2010)
+  filter(time >= 2010, time < 2029.5)
 
 time_rsv_pitzer <- ss_perturb_rsv_pitzer$time
 

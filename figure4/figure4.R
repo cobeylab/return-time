@@ -98,6 +98,12 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
     time_first <- time[which(time > maxdist_time & loesspred < target_first)[1]]
     time_last <- time[tail(which(time > maxdist_time & loesspred > target_second), 1)]
     
+    plot(time, dist, log="y")
+    abline(v=time_first)
+    abline(v=time_last)
+    lines(filter(x_filter, time >= time_first, time < time_last)$time, exp(predict(lfit)),
+          col=2)
+    
     lfit <- lm(log(dist_takens)~time, data=x_filter %>% filter(time >= time_first, time < time_last))
     
     est <- -coef(lfit)[[2]]
@@ -154,12 +160,15 @@ analysis_all_summ_filter <- analysis_all_summ %>%
     reldist < exp(2)
   )
 
+analysis_all_lm_filter <- analysis_all_lm %>%
+  merge(select(analysis_all_summ_filter, key, country))
+
 g1 <- ggplot(analysis_all) +
   geom_vline(xintercept=2013:2027, lty=3, col="gray") +
   geom_hline(data=analysis_all_summ, aes(yintercept=exp(pre_mean)), lty=2) +
   geom_line(aes(time, dist_takens)) +
-  geom_ribbon(data=analysis_all_lm, aes(time, ymin=pred_lwr, ymax=pred_upr), fill="red", alpha=0.2) +
-  geom_line(data=analysis_all_lm, aes(time, pred), col="red") +
+  geom_ribbon(data=analysis_all_lm_filter, aes(time, ymin=pred_lwr, ymax=pred_upr), fill="red", alpha=0.2) +
+  geom_line(data=analysis_all_lm_filter, aes(time, pred), col="red") +
   scale_x_continuous("Year",
                      breaks=seq(2014, 2030, by=2),
                      expand=c(0, 0)) +
