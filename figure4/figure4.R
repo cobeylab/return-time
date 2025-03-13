@@ -98,11 +98,10 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
     time_first <- time[which(time > maxdist_time & loesspred < target_first)[1]]
     time_last <- time[tail(which(time > maxdist_time & loesspred > target_second), 1)]
     
-    plot(time, dist, log="y")
-    abline(v=time_first)
-    abline(v=time_last)
-    lines(filter(x_filter, time >= time_first, time < time_last)$time, exp(predict(lfit)),
-          col=2)
+    # plot(time, dist, log="y")
+    # abline(v=time_first)
+    # abline(v=time_last)
+    # lines(filter(x_filter, time >= time_first, time < time_last)$time, exp(predict(lfit)), col=2)
     
     lfit <- lm(log(dist_takens)~time, data=x_filter %>% filter(time >= time_first, time < time_last))
     

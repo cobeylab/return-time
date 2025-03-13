@@ -8,6 +8,8 @@ source("../R/lm_iterative.R")
 
 nsim <- 500
 
+Rvec <- c(2, 4, 6, 8, 10)
+
 reslist <- vector('list', nsim)
 
 for (i in 1:nsim) {
@@ -16,10 +18,10 @@ for (i in 1:nsim) {
   extinction <- TRUE
   
   while (extinction) {
-    duration <- runif(1, 0.5, 3.5)
+    duration <- runif(1, 1, 2)
     npimin <- runif(1, 0.5, 0.7)
-    R0 <- runif(1, 1.5, 3)
-    immunity <- runif(1, 0.5, 2)
+    R0 <- runif(1, 1.5, 4)
+    immunity <- runif(1, 1, 4)
     
     npifun_random <- npifun_random_generate(duration=duration,
                                             npimin=npimin,
@@ -69,44 +71,54 @@ for (i in 1:nsim) {
   
   tau <- which(head(acfout$acf, -1) > 0 & tail(acfout$acf, -1) < 0)[1]
   
-  n.fnn <- fnn(logcases_pre, dmax=25, tau=tau, R_tol=10)
+  Rlist <- vector('list', length(Rvec))
   
-  d <- which(n.fnn==0)[1]+1
-  
-  takens_perturb <- takens(log(ss_weekly$cases+1), d=d, tau=tau)
-  takens_unperturb <- takens(logcases_pre, d=d, tau=tau)
-  
-  takens_data <- as.data.frame(takens_perturb)
-  takens_data$time <- tail(ss_weekly$year+ss_weekly$week/52, -tau*(d-1))
-  
-  dist <- sapply(1:nrow(takens_perturb), function(i) {
-    dd <- sqrt(colSums((takens_perturb[i,] - t(takens_unperturb))^2))
+  for (l in 1:length(Rvec)) {
+    R <- Rvec[l]
     
-    min(dd[dd>0])
-  })
+    n.fnn <- fnn(logcases_pre, dmax=25, tau=tau, R_tol=R)
+    
+    d <- which(n.fnn==0)[1]+1
+    
+    takens_perturb <- takens(log(ss_weekly$cases+1), d=d, tau=tau)
+    takens_unperturb <- takens(logcases_pre, d=d, tau=tau)
+    
+    takens_data <- as.data.frame(takens_perturb)
+    takens_data$time <- tail(ss_weekly$year+ss_weekly$week/52, -tau*(d-1))
+    
+    dist <- sapply(1:nrow(takens_perturb), function(i) {
+      dd <- sqrt(colSums((takens_perturb[i,] - t(takens_unperturb))^2))
+      
+      min(dd[dd>0])
+    })
+    
+    # plot(dist, log="y")
+    
+    time <- tail(ss_weekly$year+ss_weekly$week/52, -tau*(d-1))
+    
+    distdata_takens <- data.frame(
+      time=time,
+      dist=dist
+    )
+    
+    lfit <- lm_iterative(dist, time, iter=1)
+    
+    Rlist[[l]] <- data.frame(
+      duration=duration,
+      npimin=npimin,
+      R0=R0,
+      immunity=immunity,
+      resilience_true=ee,
+      est=lfit$resilience[1],
+      lwr=lfit$resilience_lwr[1],
+      upr=lfit$resilience_upr[1],
+      reldist=mean(tail(dist, 52))/mean(dist[time < 2020]),
+      R=R
+    )
+  }
   
-  # plot(dist, log="y")
-  
-  time <- tail(ss_weekly$year+ss_weekly$week/52, -tau*(d-1))
-  
-  distdata_takens <- data.frame(
-    time=time,
-    dist=dist
-  )
-  
-  lfit <- lm_iterative(dist, time, iter=1)
-  
-  reslist[[i]] <- data.frame(
-    duration=duration,
-    npimin=npimin,
-    R0=R0,
-    immunity=immunity,
-    resilience_true=ee,
-    est=lfit$resilience[1],
-    lwr=lfit$resilience_lwr[1],
-    upr=lfit$resilience_upr[1],
-    reldist=mean(tail(dist, 52))/mean(dist[time < 2020])
-  )
+  reslist[[i]] <- Rlist %>%
+    bind_rows
 }
 
 analysis_random_simple <- reslist %>%
