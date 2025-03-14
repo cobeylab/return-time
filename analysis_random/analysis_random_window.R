@@ -8,10 +8,10 @@ source("../R/lm_iterative.R")
 
 nsim <- 500
 
-Rvec <- c(2, 4, 6, 8, 10)
+Rvec <- c(4, 6, 8, 10, 12, 14)
 
 cutvec <- 1:3
-divvec <- 8:20
+divvec <- 8:25
 param <- expand.grid(cutvec, divvec)
 
 reslist <- vector('list', nsim)
@@ -163,12 +163,15 @@ analysis_random_window <- reslist %>%
 save("analysis_random_window",
      file="analysis_random_window.rda")
 
-analysis_random_window %>%
+analysis_random_window_summ <- analysis_random_window %>%
   group_by(cut, div, R) %>%
   summarize(
     cor=cor(resilience_true, est, use="complete.obs")
-  ) %>%
-  filter(cor > 0.6)
+  )
+
+ggplot(analysis_random_window_summ) +
+  geom_point(aes(R, cor)) +
+  facet_grid(cut~div)
 
 ggplot(analysis_random_window) +
   geom_point(aes(resilience_true, est)) +
