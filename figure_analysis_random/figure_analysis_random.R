@@ -2,59 +2,39 @@ library(dplyr)
 library(ggplot2); theme_set(theme_bw(base_family="Times"))
 load("../analysis_random/analysis_random_window.rda")
 load("../analysis_random/analysis_random_simple.rda")
-load("../analysis_random/analysis_random_iterative.rda")
 
-analysis_random_all <- bind_rows(
-  # analysis_random_iterative %>% mutate(method="Iterative"),
-  analysis_random_simple %>% mutate(method="Naive"),
-  analysis_random_window %>% mutate(method="Window-based")
-)
-
-g1 <- ggplot(analysis_random_all) +
-  geom_point(aes(resilience_true, est)) +
-  geom_smooth(aes(resilience_true, est), method="lm", col="red", fill="red") +
-  geom_abline(intercept=0, slope=1, lty=2) +
-  scale_x_continuous("Intrinsic resilience (1/year)") +
-  scale_y_continuous("Estimated resilience (1/year)") +
-  scale_color_viridis_c("Duration of NPIs") +
-  facet_wrap(~method) +
-  theme(
-    panel.grid = element_blank(),
-    legend.position = "top"
+analysis_random_window_summ <- analysis_random_window %>%
+  group_by(cut, div, R) %>%
+  summarize(
+    cor=cor(resilience_true, est, use="complete.obs")
+  ) %>%
+  mutate(
+    R=paste0("R=",R),
+    R=factor(R, levels=paste0("R=",(2:7)*2)),
+    cut=paste0("Truncation threshold=", cut)
   )
 
-ggsave("figure_analysis_random.pdf", g1, width=6, height=4)
-
-lapply(split( analysis_random_all, analysis_random_all$method),
-       function(x) {
-         cor(x$resilience_true, x$est)
-       })
-
-ggplot(analysis_random_all_filter) +
-  geom_point(aes(resilience_true, est, col=duration)) +
-  geom_smooth(aes(resilience_true, est), method="lm", col="red", fill="red") +
-  geom_abline(intercept=0, slope=1, lty=2) +
-  scale_x_log10("Intrinsic resilience") +
-  scale_y_log10("Estimated resilience") +
-  scale_color_viridis_c("Duration of NPIs") +
-  facet_wrap(~method) +
-  theme(
-    panel.grid = element_blank(),
-    legend.position = "top"
+analysis_random_simple_summ <- analysis_random_simple %>%
+  group_by(R) %>%
+  summarize(
+    cor=cor(resilience_true, est, use="complete.obs")
+  ) %>%
+  mutate(
+    R=paste0("R=",R),
+    R=factor(R, levels=paste0("R=",(2:7)*2))
   )
 
-cor(analysis_random_window$resilience_true, analysis_random_window$est)
+analysis_random_window_summ %>%
+  filter(cor > 0.6)
 
-g1 <- ggplot(analysis_random_window) +
-  geom_point(aes(resilience_true, est)) +
-  geom_smooth(aes(resilience_true, est), method="lm", col="red", fill="red") +
-  geom_abline(intercept=0, slope=1, lty=2) +
-  scale_x_continuous("Intrinsic resilience (1/year)") +
-  scale_y_continuous("Estimated resilience (1/year)") +
-  scale_color_viridis_c("Duration of NPIs") +
+g1 <- ggplot(analysis_random_window_summ) +
+  geom_point(aes(div, cor)) +
+  geom_hline(data=analysis_random_simple_summ, aes(yintercept=cor), lty=2,
+             col="red") +
+  scale_x_continuous("Number of divisions") +
+  facet_grid(cut~R) +
   theme(
-    panel.grid = element_blank(),
-    legend.position = "top"
+    strip.background = element_blank()
   )
 
-ggsave("figure_analysis_random_window.pdf", g1, width=6, height=6)
+ggsave("figure_analysis_random.pdf", g1, width=8, height=6)

@@ -8,7 +8,7 @@ source("../R/lm_iterative.R")
 
 nsim <- 500
 
-Rvec <- c(2, 4, 6, 8, 10)
+Rvec <- c(4, 6, 8, 10, 12, 14)
 
 reslist <- vector('list', nsim)
 
