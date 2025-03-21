@@ -25,7 +25,7 @@ analysis_random_simple_summ <- analysis_random_simple %>%
   )
 
 analysis_random_window_summ %>%
-  filter(cor > 0.6)
+  filter(cor > 0.59)
 
 g1 <- ggplot(analysis_random_window_summ) +
   geom_point(aes(div, cor)) +

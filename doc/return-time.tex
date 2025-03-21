@@ -131,7 +131,8 @@ Cases were scaled to account for changes in testing patterns (Materials and Meth
 Even though more than five years have passed since the emergence of SARS-CoV-2, we still observe persistent changes in pathogen dynamics following the pandemic NPIs: 
 for example, compared to pre-pandemic, seasonal patterns, human metapneumovirus and bocavirus in Korea are circulating at lower levels, whereas RSV in Korea seem to exhibit different seasonality (Figure 1).
 These observations suggest a possibility for a fundamental change in pathogen dynamics following the pandemic NPIs, which can be driven by permanent shift in either human behavior or population-level immunity \citep{kissler2020projecting,baker2022long}.
-Moreover, the possibility of a long-lasting impact of the pandemic NPIs pose an important question for future infectious disease dynamics: can we predict whether and when other respiratory pathogens will eventually return to their pre-pandemic dynamics?
+The possibility of a long-lasting impact of the pandemic NPIs pose an important question for future infectious disease dynamics: can we predict whether and when other respiratory pathogens will eventually return to their pre-pandemic dynamics?
+\swp{You suggested: I would say something about the dynamics of these pathogens not being well understood, but I've since rewritten the most of intro and I'm not sure where I would fit this. If you have any suggestions, let me know...}
 
 So far, the majority of epidemiological analyses of respiratory pathogens in the context of the pandemic NPIs have focused on characterizing the timing of rebound \citep{baker2020impact,eden2022off,perofsky2024impacts}.
 Instead, we seek to characterize how fast a pathogen returns to its pre-pandemic dynamics.
@@ -207,10 +208,15 @@ These observations indicate three possibilities.
 First, we can directly estimate the empirical resilience of a host-pathogen system by measuring the rate at which the system approaches an attractor, provided that we have a way to quantify the distance from the attractor.
 The empirical approach to estimating pathogen resilience is particularly convenient because it does not require us to know the true underlying model;
 estimating the intrinsic resilience from fitting misspecified models can lead to biased estimates (Supplementary Figure S5).
-Second, resilience estimates allow us to make phenomenological predictions about the dynamics of a host-pathogen system following a perturbation:
-assuming that the distance from the attractor will decrease exponentially over time, we can obtain a ballpark estimate for when the system will reach an attractor.
+Second, resilience estimates allow us to make phenomenological predictions about the dynamics of a host-pathogen system following a perturbation.
+Assuming that the distance from the attractor will decrease exponentially over time, we can obtain a ballpark estimate for when the system will reach an attractor;
+this prediction necessarily assumes that there won't be permanent changes in pathogen dynamics (Figure 2F) or a long-term transient phenomenon (Figure 2I).
 Finally, a change in the rate of an exponential decrease in the distance from attractor can provide information about whether the system has reached an alternative attractor, or a ghost attractor, that is different from the original, pre-pandemic attractor.
 These alternative attractors may reflect continued perturbations from permanent changes in transmission patterns as well as changes in immune landscapes.
+% There will be periods of time when pathogen dynamics have unsettled 
+
+
+, especially during major NPIs, but now that several years have passed since NPIs have been lifted, 
 
 \section*{Inferring pathogen resilience from real data}
 
@@ -218,7 +224,7 @@ Based on these observations, we now lay out our approach to estimating pathogen 
 We then test this approach against simulations and apply it to real data.
 
 So far, we focused on simple examples that assume a constant transmission reduction.
-However, in practice, the impact of NPIs on pathogen transmission is likely more complex (Figure 3A), reflecting introduction and relaxation of various intervention strategies.
+However, in practice, the impact of NPIs on pathogen transmission is likely more complex (Figure 3A), reflecting introduction and relaxation of various NPI strategies.
 In some cases, strong NPIs can even lead to a local fadeout, requiring immigration from another location for epidemic re-emergence.
 These complexities can lead to longer delays between the introduction of NPIs and pathogen re-emergence as well as temporal variation in outbreak sizes (Figure 3B):
 in this example, continued transmission reduction from NPIs limits the size of the first outbreak in 2021 following the emergence, allowing for a larger outbreak in 2022 when NPIs are further relaxed.
