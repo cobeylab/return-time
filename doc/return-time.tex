@@ -113,7 +113,7 @@ Our framework offers a novel perspective to characterizing the dynamics of endem
 
 Non-pharmaceutical interventions (NPIs) to slow the spread of SARS-CoV-2 disrupted the transmission of other human respiratory pathogens, adding uncertainties to their future epidemic dynamics and the overall public health burden \citep{baker2020impact}.
 As NPIs lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries, with some pathogens exhibiting earlier resurgences than others \citep{gomez2021uncertain,koltai2022determinants,park2024predicting}.
-Heterogeneities in the overall reduction in transmission and the timing of re-emergence likely reflect differences in NPI patterns, pathogen characteristics, immigration/importation from other countries, and pre-pandemic pathogen dynamics \citep{perofsky2024impacts}.
+Heterogeneities in the overall reduction in transmission and the timing of re-emergence likely reflect differences in NPI patterns, pathogen characteristics, immigration/importation from other countries, and pre-NPI pathogen dynamics \citep{perofsky2024impacts}.
 Therefore, comparing the differential impact of the pandemic NPIs across pathogens can provide unique opportunities to learn about underlying pathogen characteristics, such as their transmissibility or duration of immunity, from heterogeneities in re-emergence patterns \citep{chow2023effects}.
 
 \begin{figure}[!th]
@@ -281,20 +281,26 @@ Based on a simple ANOVA test, we do not find significant differences in resilien
 \begin{center}
 \includegraphics[width=0.8\textwidth]{../figure4/figure4.pdf}
 \caption{
-\textbf{Summary of resilience estimates.}
+\textbf{Summary of resilience estimates and predictions for return time.}
 (A) Estimated pathogen resilience.
 The gray horizontal line represents the intrinsic resilience of pre-vaccination measles dynamics.
 (B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
 The dashed line in panel B indicates the end of 2024 (current observation time).
 Error bars represent 95\% confidence intervals.
+(C) Observed dynamics for pathogen that are predicted to have returned before the end of 2024.
+Red points and lines represent data before 2020.
+Gray lines and shaded regions represent the mean seasonal patterns and corresponding 95\% confidence intervals around the mean, previously shown in Figure 1.
+Orange vertical lines represent the predicted timing of return.
 }
 \end{center}
 \end{figure}
 
 \swp{You suggested ``I think we probably need to spell out a bit more that long-term changes in the transmission rate (or some other parameter) mean the attractor is permanently different and the distance should remain nonzero'' and I think we've done that enough early on with current revisions so I don't feel like we need to do it again here. Let me know what you think.}
-Using resilience estimates, we now predict when each pathogen would hypothetically return to their pre-pandemic dynamics, assuming no long-term change in the attractor.
+Using resilience estimates, we predicted when each pathogen would hypothetically return to their pre-pandemic dynamics, assuming no long-term change in the attractor.
 Specifically, we extend our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value;
 since we relied on nearest neighbor distances, pre-pandemic distances are always greater than zero (Figure 3E), meaning that we can use the mean of pre-pandemic distances as our threshold.
+
+
 We predict that a return to pre-pandemic cycles would be imminent for most pathogens (Figure 4B).
 We also predict that many pathogens should have already returned to their pre-pandemic dynamics by the end of 2024, but these predictions contradict some of the observed pathogen dynamics.
 For example, we predict that both human metapneumovirus and RSV in Korea should have returned to their attractors by now, but the magnitude and timing of recent epidemics are different from pre-pandemic patterns (Figure 1). 
@@ -316,7 +322,7 @@ To do so, we vary the basic reproduction number $\mathcal R_0$, which represents
 
 \begin{figure}[!th]
 \begin{center}
-\includegraphics[width=\textwidth]{../figure_summary/figure_summary.pdf}
+\includegraphics[width=\textwidth]{../figure5/figure5.pdf}
 \caption{
 \textbf{Linking pathogen resilience to epidemiological parameters and susceptible host dynamics.}
 (A) The heat map represents intrinsic resilience as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
@@ -338,13 +344,22 @@ Across all pathogens we consider, except for bocavirus and norovirus, we estimat
 These rankings further allow us to map each pathogen onto a set of SIRS parameters that are consistent with its empirical resilience (Figure 5A) and obtain a plausible range of susceptible replenishment rates for each pathogen (Figure 5B).
 However, we note that there is no one-to-one correspondence between susceptible replenishment rates and pathogen resilience, leading to a wide uncertainty in the estimates for susceptible replenishment rates (Figure 5B).
 
+\section*{Pathogen resilience determines sensitivity to stochastic perturbations}
+
+
+
 \section*{Discussion}
 
 The pandemic NPIs have caused major disruptions to circulation patterns of both respiratory and non-respiratory pathogens, adding challenges to predicting their future dynamics \citep{baker2020impact,gomez2021uncertain,koltai2022determinants,park2024predicting}.
 However, these NPIs offer large-scale natural experiments for understanding how different pathogens respond to perturbations.
 In this study, we show that pathogen re-emergence patterns following NPIs can be characterized through the lens of ecological resilience.
-Traditionally, ecological resilience measures how fast a system returns to a reference state following a perturbation.
+We show that variation in pathogen resilience can be explained by the differences in susceptible host dynamics, where faster replenishment of the susceptible pool corresponds to a more resilient host-pathogen system.
+Finally, we show that pathogen resilience also determines the sensitivity to stochastic perturbations, which in turn determines the persistence of a host-pathogen system.
+
+Traditionally, ecological resilience measures how fast a system returns to a reference state following a perturbation \citep{pimm1979structure, neubert1997alternatives,gunderson2000ecological,dakos2022ecological}.
 In the context of respiratory pathogens, resilience measures how fast epidemics return to their endemic cycles after NPIs are lifted.
+% Here, 
+
 % Our study demonstrates that this perspective provides unique insights into underlying susceptible host dynamics and allows predictions for when epidemics will return to their endemic cycles.
 
 We use an attractor reconstruction approach to quantify how distance from the attractor changes over time for each pathogen \citep{takens2006detecting}.

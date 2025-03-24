@@ -12,6 +12,8 @@ load("../analysis_takens_acf_fnn/analysis_hongkong_noro_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_canada_takens_acf_fnn.rda")
 load("../analysis_takens_acf_fnn/analysis_nrevss_takens_acf_fnn.rda")
 
+load("../figure1/figure1.rda")
+
 analysis_all <- bind_rows(
   analysis_korea_takens_acf_fnn %>%
     mutate(country="Korea",
@@ -266,8 +268,79 @@ g3 <- ggplot(analysis_all_summ_filter) +
     legend.position = "none"
   )
 
-gcomb <- ggarrange(g2, g3,
-                   labels=c("A", "B"))
+predall <- bind_rows(
+  canada_pred %>% 
+    select(key, year, week, cases, mean, lwr, upr) %>% 
+    mutate(country="Canada",
+           time=year+week/52),
+  hongkong_pred %>% 
+    select(key, time, month, cases, mean, lwr, upr) %>% 
+    mutate(country="Hong Kong"),
+  korea_pred %>% 
+    select(key, year, week, cases, mean, lwr, upr) %>% 
+    mutate(country="Korea",
+           time=year+week/52),
+  nrevss_pred %>% 
+    select(type, year, week, proxy, mean, lwr, upr) %>% 
+    rename(cases=proxy, key=type) %>%
+    mutate(country="US",
+           time=year+week/52)
+)
 
-ggsave("figure4.pdf", gcomb, width=6, height=6)
+analysis_all_summ_filter2 <- analysis_all_summ_filter %>%
+  filter(when < 2025) %>%
+  select(key, country, when, when_lwr, when_upr)
+
+predall_filter <- predall %>%
+  merge(analysis_all_summ_filter2) %>%
+  mutate(
+    group=paste0(key, ", ", country)
+  )
+
+g4 <- ggplot(predall_filter) +
+  geom_ribbon(aes(time, ymin=lwr, ymax=upr), fill="gray", col="gray90", alpha=0.3, lwd=0.5) +
+  geom_line(aes(time, mean), col="gray", lwd=0.7) +
+  geom_line(aes(time, cases), col="#EF6351", lwd=0.5) +
+  geom_point(aes(time, cases), col="#EF6351", size=0.7) +
+  geom_vline(data=analysis_all_summ_filter2 %>% mutate(group=paste0(key, ", ", country)),
+             aes(xintercept=when), lty=2, col="orange", lwd=1) +
+  scale_x_continuous("Year", expand=c(0, 0)) +
+  scale_y_continuous("Cases/incidence proxy", expand=c(0, 0)) +
+  coord_cartesian(xlim=c(2021, 2025), ylim=c(0, NA)) +
+  facet_wrap(~group, scale="free", ncol=3) +
+  theme(
+    panel.grid = element_blank(),
+    strip.background = element_blank(),
+    plot.margin = margin(5.5, 10, 5.5, 5.5)
+  )
+
+predall_filter_no <- predall %>%
+  merge(analysis_all_summ_filter %>%
+          filter(when >= 2025) %>%
+          select(key, country, when, when_lwr, when_upr)) %>%
+  mutate(
+    group=paste0(key, ", ", country)
+  )
+
+g5 <- ggplot(predall_filter_no) +
+  geom_ribbon(aes(time, ymin=lwr, ymax=upr), fill="gray", col="gray90", alpha=0.3, lwd=0.5) +
+  geom_line(aes(time, mean), col="gray", lwd=0.7) +
+  geom_line(aes(time, cases), col="#EF6351", lwd=0.5) +
+  geom_point(aes(time, cases), col="#EF6351", size=0.7) +
+  scale_x_continuous("Year", expand=c(0, 0)) +
+  scale_y_continuous("Cases/incidence proxy", expand=c(0, 0)) +
+  coord_cartesian(xlim=c(2021, 2025), ylim=c(0, NA)) +
+  facet_wrap(~group, scale="free", ncol=3) +
+  theme(
+    panel.grid = element_blank(),
+    strip.background = element_blank(),
+    plot.margin = margin(5.5, 10, 5.5, 5.5)
+  )
+
+gcomb <- ggarrange(g2, g3, g4,
+                   labels=c("A", "B", "C"),
+                   heights=c(1, 1, 3))
+
+ggsave("figure4.pdf", gcomb, width=8, height=10)
+ggsave("figure4_noreturn.pdf", g5, width=8, height=6)
 save("analysis_all_summ_filter", file="figure4_summ.rda")

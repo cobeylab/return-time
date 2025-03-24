@@ -240,6 +240,7 @@ gcomb <- ggarrange(g1, g2, g3, g4, ncol=4, labels=c("A", "B", "C", "D"))
 
 ggsave("figure1.pdf", gcomb, width=16, height=10)
 ggsave("figure1.png", gcomb, width=16, height=10)
+save("hongkong_pred", "korea_pred", "nrevss_pred", "canada_pred", file="figure1.rda")
 
 gex <- ggplot(korea_pred) +
   geom_vline(xintercept=2016:2024, lty=3, col="gray70", lwd=0.5) +
