@@ -287,6 +287,12 @@ predall <- bind_rows(
            time=year+week/52)
 )
 
+analysis_all_summ_filter %>%
+  summarize(
+    before=sum(when<2025),
+    after=sum(when>=2025)
+  )
+
 analysis_all_summ_filter2 <- analysis_all_summ_filter %>%
   filter(when < 2025) %>%
   select(key, country, when, when_lwr, when_upr)

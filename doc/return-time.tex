@@ -279,7 +279,7 @@ Based on a simple ANOVA test, we do not find significant differences in resilien
 
 \begin{figure}[!th]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{../figure4/figure4.pdf}
+\includegraphics[width=\textwidth]{../figure4/figure4.pdf}
 \caption{
 \textbf{Summary of resilience estimates and predictions for return time.}
 (A) Estimated pathogen resilience.
@@ -300,8 +300,14 @@ Using resilience estimates, we predicted when each pathogen would hypothetically
 Specifically, we extend our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value;
 since we relied on nearest neighbor distances, pre-pandemic distances are always greater than zero (Figure 3E), meaning that we can use the mean of pre-pandemic distances as our threshold.
 
-
 We predict that a return to pre-pandemic cycles would be imminent for most pathogens (Figure 4B).
+In particular, we predict that 12 out of 23 pathogens should have already returned before the end of 2024.
+For almost all pathogens that are predicted to have returned already, the observed epidemic dynamics show clear convergence towards their pre-NPI seasonal averages, confirming our predictions (Figure 4C).
+However, there are a few exceptions, including norovirus in Hong Kong and Rhinovirus/Enterovirus in the US, where the observed epidemic dynamics in 2024 exhibit clear deviation from their pre-NPI seasonal averages (Figure 4C).
+These observations suggest the possibility that some common respiratory pathogens may have converged to different attractors.
+In contrast, pathogens that are predicted to have not returned yet also show clear differences from their pre-NPI seasonal averages; as many of these pathogens are predicted to return in 2025--2026, we may be able to test these predictions in near future (Supplementary Figure S10).
+
+
 We also predict that many pathogens should have already returned to their pre-pandemic dynamics by the end of 2024, but these predictions contradict some of the observed pathogen dynamics.
 For example, we predict that both human metapneumovirus and RSV in Korea should have returned to their attractors by now, but the magnitude and timing of recent epidemics are different from pre-pandemic patterns (Figure 1). 
 These observations suggest the possibility that some common respiratory pathogens may have converged to different attractors.
@@ -993,53 +999,21 @@ Dashed lines represent the average of the pre-pandemic nearest neighbor distance
 }
 \end{figure}
 
-
 \pagebreak
 
-\begin{figure}[!th]
-\includegraphics[width=\textwidth]{../figure4_th/figure4_dist_th.pdf}
-\caption{
-\textbf{Estimated time series of distances from the attractor for each pathogen across Canada, Hong Kong, Korea, and the US using higher embedding dimensions.}
-Black lines represent the estimated distance from the attractor.
-Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
-Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
-A lower threshold is used for determining embedding dimensions with the false nearest neighbors approach, thereby yielding a higher embedding dimension.
-}
-\end{figure}
-
-\pagebreak
 
 \begin{figure}[!th]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{../figure4_th/figure4_th.pdf}
+\includegraphics[width=\textwidth]{../figure4/figure4_noreturn.pdf}
 \caption{
-\textbf{Summary of resilience estimates using higher embedding dimensions.}
-(A) Estimated pathogen resilience.
-The gray horizontal line represents the intrinsic resilience of pre-vaccination measles dynamics.
-(B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
-The dashed line in panel B indicates the end of 2024 (current observation time).
-Error bars represent 95\% confidence intervals.
-A lower threshold is used for determining embedding dimensions with the false nearest neighbors approach, thereby yielding a higher embedding dimension.
+\textbf{Observed dynamics for pathogen that are predicted to return after the end of 2024.}
+Red points and lines represent data before 2020.
+Gray lines and shaded regions represent the mean seasonal patterns and corresponding 95\% confidence intervals around the mean, previously shown in Figure 1.
 }
 \end{center}
 \end{figure}
 
 \pagebreak
-
-\begin{figure}[!th]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{../figure4_th/figure4_comparison.pdf}
-\caption{
-\textbf{Comparison of resilience estimates.}
-Each point represents a resilience estimate for a specific pathogen at a specific country.
-The x values represent the original resilience estimates presented in Figure 4.
-The y values represent the original resilience estimates presented in Supplementary Figure S11.
-}
-\end{center}
-\end{figure}
-
-\pagebreak
-
 
 \bibliography{return-time.bib}
 
