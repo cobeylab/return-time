@@ -143,7 +143,7 @@ Measuring this rate of return is particularly useful because it allows us to qua
 In this study, we lay out theoretical and statistical approaches to characterizing the resilience of a host-pathogen system based on how fast the system recovers from perturbation.
 We begin by laying out a few representative scenarios that capture the potential impact of NPIs on endemic pathogen dynamics and illustrate how resilience can be measured by comparing the pre- and post-pandemic dynamics of susceptible and infected hosts.
 In practice, information on susceptible hosts is often unavailable, making this theoretical approach infeasible.
-Instead, we utilize a mathematical technique to reconstruct empirical attractors from the data \citep{takens2006detecting}, which allows us to measure the rate at which the host-pathogen system appraoches this empirical attractor after a perturbation;
+Instead, we utilize a mathematical technique to reconstruct empirical attractors from the data \citep{takens2006detecting}, which allows us to measure the rate at which the host-pathogen system approaches this empirical attractor after a perturbation;
 this rate corresponds to the resilience of the host-pathogen system.
 We use this method to analyze pathogen surveillance data for respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and US.
 Finally, we show that susceptible host dynamics explain variation in pathogen resilience.
@@ -228,7 +228,7 @@ These complexities can lead to longer delays between the introduction of NPIs an
 in this example, continued transmission reduction from NPIs limits the size of the first outbreak in 2021 following the emergence, allowing for a larger outbreak in 2022 when NPIs are further relaxed.
 
 Previously, we relied on the dynamics of susceptible and infected hosts to compute the distance from the attractor (Figure 2), but information on susceptible hosts is rarely available in practice.
-In addition, uncertainties in case counts due to observation error as well as multiannual cycles in the observed epidemic dynamics (e.g., adenovirus circulation patterns in Hong Kong and Korea) add challenges to defining pre-pandendemic attractors, which limits our ability to measure the distance from the attractor.
+In addition, uncertainties in case counts due to observation error as well as multiannual cycles in the observed epidemic dynamics (e.g., adenovirus circulation patterns in Hong Kong and Korea) add challenges to defining pre-pandemic attractors, which limits our ability to measure the distance from the attractor.
 To address these challenges, we can reconstruct an empirical attractor by utilizing Takens' theorem \citep{takens2006detecting}, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding (Materials and Methods).
 For example, we can use delayed logged values of pre-pandemic cases $C(t)$ (Figure 3C) to reconstruct the attractor:
 \begin{equation}
@@ -266,16 +266,16 @@ In almost all cases, the automated window selection approach outperformed a naiv
 % Second, complex changes in the distance from the attractor suggests that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
 % Finally, temporal variation in the impact of NPIs on pathogen transmission will affect the intrinsic resilience of the system throughout the NPI period, meaning that the estimated resilience from linear regression will likely reflect some sort of average impact of the NPIs.
 
-Based on the best performing window selection criteria and embedding dimension, we applied this approach to pathogen surveillance data presented in Figure 1.
-For each time series, we applied Takens' theorem independently to reconstruct the empirical attractor and obtain the corresponding time series of distances from attractors (Supplementary Figure S8 for the distance time series and linear regression fits).
-Then, we use the automated window selection criterion to fit a linear regression and estimate the empirical resilience for each pathogen in each country.
+Based on the best performing window selection criteria and embedding dimension, we applied this approach to pathogen surveillance data presented in Figure 1 (Materials and Methods).
+For each time series, we applied Takens' theorem independently to reconstruct the empirical attractor and obtained the corresponding time series of distances from attractors (Supplementary Figure S8).
+Then, we use the automated window selection criterion to fit a linear regression and estimate the empirical resilience for each pathogen in each country (Supplementary Figure S8);
+the window selection criterion gave poor regression window for three cases (norovirus in Hong Kong and Korea and Rhinovirus/Enterovirus in the US), leading to unrealistically low resilience estimates, and so we used ad-hoc regression windows instead (Supplementary Figure S9; Materials and Methods).
 
-
-For most respiratory pathogens, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A), with the exception of rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
-Excluding these exceptions, the mean resilience of common respiratory pathogens is $0.974/\mathrm{year}$ (95\% CI: $0.784/\mathrm{year}$--$1.16/\mathrm{year}$).
-As a reference, this is $\approx 7$ times higher than the intrinsic resilience of pre-vaccination measles in England and Wales ($\approx 0.13/\mathrm{year}$).
-Finally, resilience estimates for norovirus appears to be comparable to the intrinsic resilience of measles: $0.119/\mathrm{year}$ (95\%CI: $0.004/\mathrm{year}$--$0.233/\mathrm{year}$) for Korea and $0.385/\mathrm{year}$ (95\% CI: $0.167/\mathrm{year}$--$0.603/\mathrm{year}$).
-A simple ANOVA shows that there are significant differences in resilience estimates across countries ($p<0.036$) and pathogens ($p<0.030$).
+For all pathogens we consider, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A).
+We estimate the mean resilience of common respiratory pathogens to be $0.99/\mathrm{year}$ (95\% CI: $0.80/\mathrm{year}$--$1.18/\mathrm{year}$).
+As a reference, this is $\approx 7.5$ times higher than the intrinsic resilience of pre-vaccination measles in England and Wales ($\approx 0.13/\mathrm{year}$).
+Finally, resilience estimates for norovirus are comparable to those of common respiratory pathogens: $1.44/\mathrm{year}$ (95\%CI: $1.01/\mathrm{year}$--$1.87/\mathrm{year}$) for Hong Kong and $1.07/\mathrm{year}$ (95\%CI: $0.86/\mathrm{year}$--$1.29/\mathrm{year}$) for Korea.
+Based on a simple ANOVA test, we do not find significant differences in resilience estimates across countries ($p=0.25$) or pathogens ($p=0.68$).
 
 \begin{figure}[!th]
 \begin{center}
@@ -291,9 +291,11 @@ Error bars represent 95\% confidence intervals.
 \end{center}
 \end{figure}
 
+\swp{You suggested ``I think we probably need to spell out a bit more that long-term changes in the transmission rate (or some other parameter) mean the attractor is permanently different and the distance should remain nonzero'' and I think we've done that enough early on with current revisions so I don't feel like we need to do it again here. Let me know what you think.}
 Using resilience estimates, we now predict when each pathogen would hypothetically return to their pre-pandemic dynamics, assuming no long-term change in the attractor.
-Specifically, we extend our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value, which we set equal to the mean of pre-pandemic distances.
-We predict that a return to pre-pandemic cycles would be imminent for most pathogens (Figure 4B; see Supplementary Figure S9 for a zoomed out version).
+Specifically, we extend our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value;
+since we relied on nearest neighbor distances, pre-pandemic distances are always greater than zero (Figure 3E), meaning that we can use the mean of pre-pandemic distances as our threshold.
+We predict that a return to pre-pandemic cycles would be imminent for most pathogens (Figure 4B).
 We also predict that many pathogens should have already returned to their pre-pandemic dynamics by the end of 2024, but these predictions contradict some of the observed pathogen dynamics.
 For example, we predict that both human metapneumovirus and RSV in Korea should have returned to their attractors by now, but the magnitude and timing of recent epidemics are different from pre-pandemic patterns (Figure 1). 
 These observations suggest the possibility that some common respiratory pathogens may have converged to different attractors.
@@ -373,7 +375,7 @@ So far, most of model validation in infectious disease ecology is based on the a
 However, many models can perform similarly under these criteria.
 For example, two major RSV models have been proposed to explain biennial epidemic patterns: (1) a stage- and age-structured model that allows disease severity to vary with number of past infections and age of infection \citep{pitzer2015environmental} and (2) a pathogen-interaction model that accounts for cross immunity between RSV and human metapnuemovirus \citep{bhattacharyya2015cross}.
 Since both models can accurately reproduce the observed epidemic patterns, standard criteria for model validation do not allow us to distinguish between these two models from population-level data alone.
-Instead, we can measure the empirical resilience of each model by simulating various perturbations and compare them to estimates of empirical resilience from data, using pandemic NPIs as an opportunity.
+Instead, it would be possible to measure the empirical resilience of each model by simulating various perturbations and compare them to estimates of empirical resilience from data, using pandemic NPIs as an opportunity.
 % Future studies should further investigate using pathogen resilience for validating epidemic models.
 
 There are several limitations to our work.
@@ -680,9 +682,10 @@ $\mu =1/(364\times 50)/\mathrm{days}$, and $N = 1 \times 10^{8}$.
 The model is simulated from 1900 to 2030 assuming $S(0) = N/3$, $I(0) = 100$, and $R(0) = N - S(0) - I(0)$.
 The observed incidence from the model is then simulated as follows:
 \begin{equation}
-C(t) = \mathrm{Beta-Binom}(N_{SI}(t), \rho, k), 
+C(t) = \textrm{Beta-Binom}(N_{SI}(t), \rho, k), 
 \end{equation}
 where $\rho$ represents the reporting probability and $k$ represents the overdispersion parameter of beta-binomial distribution.
+Here, we use the beta-binomial distribution to account for overdispersion in reporting.
 We assume $\rho = 0.002$ (i.e., 0.2\% probability) and $k = 1000$.
 
 We used an analogous approach for the two-strain model:
@@ -842,7 +845,7 @@ We repeat this procedure 500 times and quantify the correlation between empirica
 \includegraphics[width=\textwidth]{../figure2/figure2_simple_seas.pdf}
 \caption{
 \textbf{Impact of seasonal transmission on pathogen resilience.}
-(A, D, G) Simulated epidemic trajectories using the SIRS model without seasonal forcing (A), with seasonal forcing of amplitude of 0.2 (D), and with seasonal forcing of amplitude of 0.2 (G).
+(A, D, G) Simulated epidemic trajectories using the SIRS model without seasonal forcing (A), with seasonal forcing of amplitude of 0.2 (D), and with seasonal forcing of amplitude of 0.4 (G).
 Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
 Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
 Gray regions indicate the duration of interventions.
@@ -866,7 +869,7 @@ Red and blue solid lines represent epidemic dynamics before and after interventi
 Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
 Gray regions indicate the duration of interventions.
 (B, E, H) Phase plane representation of the corresponding model.
-Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
+Blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
 (C, F, I) Changes in logged distance from the attractor over time.
 Blue lines represent the logged distance from the attractor.
 Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
@@ -953,14 +956,28 @@ then, a linear regression is fitted by using the raw distance within this time p
 \pagebreak
 
 \begin{figure}[!th]
-\includegraphics[width=\textwidth]{../figure4/figure4_dist.pdf}
+\includegraphics[width=\textwidth]{../figure4/figure4_dist_auto.pdf}
 \caption{
-\textbf{Estimated time series of distance from the attractor for each pathogen across Canada, Hong Kong, Korea, and the US.}
+\textbf{Estimated time series of distance from the attractor for each pathogen and corresponding linear regression fits using automated window selection criterion across Canada, Hong Kong, Korea, and the US.}
 Black lines represent the estimated distance from the attractor.
 Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
 Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
 }
 \end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\includegraphics[width=\textwidth]{../figure4/figure4_dist.pdf}
+\caption{
+\textbf{Estimated time series of distance from the attractor for each pathogen and corresponding linear regression fits across Canada, Hong Kong, Korea, and the US, including ad-hoc regression window selection.}
+We used ad-hoc regression windows for norovirus in Hong Kong and Korea and Rhinovirus/Enterovirus in the US.
+Black lines represent the estimated distance from the attractor.
+Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
+Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
+}
+\end{figure}
+
 
 \pagebreak
 

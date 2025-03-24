@@ -6,12 +6,12 @@ library(egg)
 library(gridExtra)
 source("../R/simulate_sirs.R")
 source("../R/simulate_seir.R")
-load("../figure3/figure3_summ.rda")
+load("../figure4/figure4_summ.rda")
 
 R0vec <- seq(1.1, 6,
              length.out=101)
 
-deltavec <- exp(seq(log(1/80), log(2), length.out=101))
+deltavec <- exp(seq(log(1/4), log(2), length.out=101))
 
 paramdata <- expand.grid(R0vec, deltavec)
 
@@ -83,9 +83,14 @@ g1 <- ggplot(summdata) +
   scale_x_continuous("Basic reproduction number", expand=c(0, 0),
                      breaks=c(2, 4, 6),
                      limits = c(NA,9)) +
-  scale_y_log10("Duration of immunity (years)", expand=c(0, 0)) +
-  scale_fill_viridis_c("Resilience\n(1/years)", limits=log10(range(summdata$resilience))) +
-  scale_color_viridis_c("Resilience\n(1/years)", limits=log10(range(summdata$resilience))) +
+  scale_y_log10("Duration of immunity (years)", expand=c(0, 0),
+                breaks=c(0.5, 1, 2, 4)) +
+  scale_fill_viridis_c("Resilience\n(1/years)", limits=log10(range(summdata$resilience)),
+                       breaks=log10(c(0.25, 0.5, 1, 2, 4)),
+                       labels=c(0.25, 0.5, 1, 2, 4)) +
+  scale_color_viridis_c("Resilience\n(1/years)", limits=log10(range(summdata$resilience)),
+                        breaks=log10(c(0.25, 0.5, 1, 2, 4)),
+                        labels=c(0.25, 0.5, 1, 2, 4)) +
   theme(
     panel.grid = element_blank(),
     panel.border = element_blank(),
@@ -105,9 +110,12 @@ g2 <- ggplot(summdata) +
   scale_x_continuous("Basic reproduction number", expand=c(0, 0),
                      breaks=c(2, 4, 6),
                      limits = c(NA,9)) +
-  scale_y_log10("Duration of immunity (years)", expand=c(0, 0)) +
+  scale_y_log10("Duration of immunity (years)", expand=c(0, 0),
+                breaks=c(0.5, 1, 2, 4)) +
   scale_fill_viridis_c("Susceptible replenishment rate\n(%/years)",
-                       option="A") +
+                       option="A",
+                       breaks=log10(c(6.25, 25, 100, 400)),
+                       labels=c(6.25, 25, 100, 400)) +
   theme(
     panel.grid = element_blank(),
     panel.border = element_blank(),
@@ -115,7 +123,7 @@ g2 <- ggplot(summdata) +
     legend.justification = "left"
   )
 
-replenish_range <- lapply(split(analysis_all_summ_mean, analysis_all_summ_mean$key), function(x) {
+replenish_range <- lapply(split(analysis_all_summ_mean, analysis_all_summ_mean$key)[-7], function(x) {
   summdata %>%
     filter(
       resilience < x$resilience * 1.01 & resilience > x$resilience * 0.99
