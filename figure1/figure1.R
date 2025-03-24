@@ -58,18 +58,18 @@ hongkong_pred <- lapply(split(data_hongkong_all_scaled, data_hongkong_all_scaled
   bind_rows %>%
   filter(!key %in% c("rv", "ev"))  %>%
   bind_rows(
-    data.frame(key=c("cov", "boca", "noro"))
+    data.frame(key=c("cov", "noro"))
   ) %>%
   mutate(
     key=factor(key,
-               levels=c("adeno", "hmpv", "PIV", "rvev", "rsv", "cov", "boca", "noro"),
+               levels=c("adeno", "hmpv", "PIV", "rvev", "rsv", "cov", "noro"),
                labels=c("Adenovirus", "Human metapneumovirus",
                         "Parainfluenza virus", "Rhinovirus/Enterovirus",
-                        "RSV", "Human coronavirus", "Bocavirus", "Norovirus"))
+                        "RSV", "Human coronavirus", "Norovirus"))
   )
 
 data_korea_all_scaled <- bind_rows(
-  data_korea_ari_scaled,
+  data_korea_ari_scaled %>% filter(key != "Bocavirus"),
   filter(data_korea_int_scaled, key %in% c("Norovirus"))
 )
 
@@ -90,7 +90,7 @@ korea_pred <- lapply(split(data_korea_all_scaled, data_korea_all_scaled$key), fu
     key=factor(key,
                levels=c("Adenovirus", "Human metapneumovirus",
                          "Parainfluenza virus", "Rhinovirus",
-                         "RSV", "Human coronavirus", "Bocavirus", "Norovirus"))
+                         "RSV", "Human coronavirus", "Norovirus"))
   )
 
 canada_pred <- lapply(split(data_canada_resp_scaled, data_canada_resp_scaled$key), function(x) {
@@ -107,20 +107,20 @@ canada_pred <- lapply(split(data_canada_resp_scaled, data_canada_resp_scaled$key
 }) %>%
   bind_rows() %>%
   bind_rows(
-    data.frame(key=c("boca", "noro"))
+    data.frame(key=c("noro"))
   ) %>%
   mutate(
     key=factor(key,
                 levels=c("AdV", "HMPV", "PIV", "RV/EV", "RSV",
-                         "Flu A", "Flu B", "CoV", "boca", "noro"),
+                         "Flu A", "Flu B", "CoV", "noro"),
                 labels=c("Adenovirus", "Human metapneumovirus",
                          "Parainfluenza virus", "Rhinovirus/Enterovirus",
                          "RSV", "Flu A", "Flu B", "Human coronavirus",
-                         "Bocavirus", "Norovirus"))
+                         "Norovirus"))
   ) %>% 
   filter(key %in% c("Adenovirus", "Human coronavirus", "Human metapneumovirus",
                           "Parainfluenza virus", "Rhinovirus/Enterovirus",
-                          "RSV", "Bocavirus", "Norovirus"))
+                          "RSV", "Norovirus"))
 
 data_nrevss_resp_comb_proxy2 <- data_nrevss_resp_comb_proxy %>%
   filter(type %in% c("Adenovirus", "PIV", "CoV", "Human metapneumovirus", "RSV",
@@ -141,15 +141,15 @@ nrevss_pred <- lapply(split(data_nrevss_resp_comb_proxy2, data_nrevss_resp_comb_
 }) %>%
   bind_rows() %>%
   bind_rows(
-    data.frame(type=c("boca", "noro"))
+    data.frame(type=c("noro"))
   ) %>%
   mutate(
     type=factor(type,
                levels=c("Adenovirus", "Human metapneumovirus", "PIV", "Rhinovirus",
-                        "RSV", "CoV", "boca", "noro"),
+                        "RSV", "CoV", "noro"),
                labels=c("Adenovirus", "Human metapneumovirus",
                         "Parainfluenza virus", "Rhinovirus/Enterovirus",
-                        "RSV", "Human coronavirus", "Bocavirus", "Norovirus"))
+                        "RSV", "Human coronavirus", "Norovirus"))
   )
 
 g1 <- ggplot(canada_pred) +

@@ -129,7 +129,7 @@ Cases were scaled to account for changes in testing patterns (Materials and Meth
 \end{figure} 
 
 Even though more than five years have passed since the emergence of SARS-CoV-2, we still observe persistent changes in pathogen dynamics following the pandemic NPIs: 
-for example, compared to pre-pandemic, seasonal patterns, human metapneumovirus and bocavirus in Korea are circulating at lower levels, whereas RSV in Korea seem to exhibit different seasonality (Figure 1).
+for example, compared to pre-pandemic, seasonal patterns, human metapneumovirus in Korea seem to circulate at lower levels, whereas RSV in Korea seem to exhibit different seasonality (Figure 1).
 These observations suggest a possibility for a fundamental change in pathogen dynamics following the pandemic NPIs, which can be driven by permanent shift in either human behavior or population-level immunity \citep{kissler2020projecting,baker2022long}.
 The possibility of a long-lasting impact of the pandemic NPIs pose an important question for future infectious disease dynamics: can we predict whether and when other respiratory pathogens will eventually return to their pre-pandemic dynamics?
 \swp{You suggested: I would say something about the dynamics of these pathogens not being well understood, but I've since rewritten the most of intro and I'm not sure where I would fit this. If you have any suggestions, let me know...}
@@ -161,8 +161,8 @@ As an example, we begin with a simple Susceptible-Infected-Recovered-Susceptible
 The SIRS model is the simplest model that allows for waning of immunity and is commonly used for modeling the dynamics of respiratory pathogens \citep{dushoff2004dynamical}.
 First, consider an intervention that reduce transmission by 50\% for 6 months starting in 2020, which causes epidemic patterns to deviate from its original stable annual cycle for a short period of time and eventually come back (Figure 2A).
 To measure the resilience of this system empirically, we first need to be able to measure the distance from its pre-pandemic attractor.
-There are many ways we can measure the distance from attractor, but for illustrative purposes, we choose one of the most parsimonious approach: that is, we look at how the susceptible (S) and infected (I) populations change over time and measure the distance on the SI phase plane (Figure 2B).
-In this simple case, the locally estimated scatterplot smoothing (LOESS) fit indicates that the distance from attractor decreases exponentially (linearly on a log scale) on average (Figure 2C).
+There are many ways we can measure the distance from the attractor, but for illustrative purposes, we choose one of the most parsimonious approach: that is, we look at how the susceptible (S) and infected (I) populations change over time and measure the distance on the SI phase plane (Figure 2B).
+In this simple case, the locally estimated scatterplot smoothing (LOESS) fit indicates that the distance from the attractor decreases exponentially (linearly on a log scale) on average (Figure 2C).
 Furthermore, the overall rate of return approximates the intrinsic resilience of the seasonally unforced system (Figure 2C).
 
 \begin{figure}[!th]
@@ -177,7 +177,7 @@ Gray regions indicate the duration of interventions.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
 (C, F, I) Changes in logged distance from the attractor over time.
 Blue lines represent the logged distance from the attractor.
-Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
 Dotted lines show the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
@@ -211,12 +211,10 @@ estimating the intrinsic resilience from fitting misspecified models can lead to
 Second, resilience estimates allow us to make phenomenological predictions about the dynamics of a host-pathogen system following a perturbation.
 Assuming that the distance from the attractor will decrease exponentially over time, we can obtain a ballpark estimate for when the system will reach an attractor;
 this prediction necessarily assumes that there won't be permanent changes in pathogen dynamics (Figure 2F) or a long-term transient phenomenon (Figure 2I).
-Finally, a change in the rate of an exponential decrease in the distance from attractor can provide information about whether the system has reached an alternative attractor, or a ghost attractor, that is different from the original, pre-pandemic attractor.
+Finally, a change in the rate of an exponential decrease in the distance from the attractor can provide information about whether the system has reached an alternative attractor, or a ghost attractor, that is different from the original, pre-pandemic attractor.
 These alternative attractors may reflect continued perturbations from permanent changes in transmission patterns as well as changes in immune landscapes.
-% There will be periods of time when pathogen dynamics have unsettled 
-
-
-, especially during major NPIs, but now that several years have passed since NPIs have been lifted, 
+There will be periods of time when it is difficult to tell whether pathogen dynamics are still diverging from its original attractor or have begun to converge to an attractor; 
+now that several years have passed since NPIs have been lifted, we expect many respiratory pathogens to have had sufficient time to begin returning to their post-NPI attractors.
 
 \section*{Inferring pathogen resilience from real data}
 
@@ -229,18 +227,18 @@ In some cases, strong NPIs can even lead to a local fadeout, requiring immigrati
 These complexities can lead to longer delays between the introduction of NPIs and pathogen re-emergence as well as temporal variation in outbreak sizes (Figure 3B):
 in this example, continued transmission reduction from NPIs limits the size of the first outbreak in 2021 following the emergence, allowing for a larger outbreak in 2022 when NPIs are further relaxed.
 
-Previously, we relied on the dynamics of susceptible and infected hosts to compute the distance from attractor (Figure 2), but information on susceptible hosts is rarely available in practice.
-In addition, uncertainties in case counts due to observation error as well as the possibility of complex, multiannual attractor add challenges to measuring the distance from attractor.
-To address these challenges, we first reconstruct an empirical attractor by utilizing Takens' theorem, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding \citep{takens2006detecting}.
-Here, we use delayed logged values of pre-pandemic cases $C(t)$ (Figure 3C) to reconstruct the attractor:
+Previously, we relied on the dynamics of susceptible and infected hosts to compute the distance from the attractor (Figure 2), but information on susceptible hosts is rarely available in practice.
+In addition, uncertainties in case counts due to observation error as well as multiannual cycles in the observed epidemic dynamics (e.g., adenovirus circulation patterns in Hong Kong and Korea) add challenges to defining pre-pandendemic attractors, which limits our ability to measure the distance from the attractor.
+To address these challenges, we can reconstruct an empirical attractor by utilizing Takens' theorem \citep{takens2006detecting}, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding (Materials and Methods).
+For example, we can use delayed logged values of pre-pandemic cases $C(t)$ (Figure 3C) to reconstruct the attractor:
 \begin{equation}
 \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
 \end{equation}
 where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respectively \citep{kennel1992determining,tan2023selecting}.
-We then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical pre-pandemic attractor (Figure 3E).
-In principle, we can quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression corresponds to pathogen resilience.
-Overall temporal variations in the distance from attractor, especially the observed rate of decrease, appear robust to choices about embedding delays and dimensions; 
-using longer delays and higher dimensions tends to smooth out temporal variations in the distance from the attractor (Supplementary Figure S6).
+We can then apply the same delay and embedding dimensions to the entire time series to determine the position on a multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical pre-pandemic attractor (Figure 3E).
+In theory, we can now quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression corresponds to pathogen resilience.
+However, resulting estimates of pathogen resilience can be sensitive to choices about embedding delays and dimensions; 
+for example, using longer delays and higher dimensions tends to smooth out temporal variations in the distance from the attractor (Supplementary Figure S6).
 
 \begin{figure}[!ht]
 \includegraphics[width=\textwidth]{../figure3/figure3.pdf}
@@ -255,20 +253,24 @@ This distance time series can be used to infer pathogen resilience after choosin
 }
 \end{figure}
 
-Complex changes in the distance from attractor suggest that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression (Figure 3E).
-In Supplementary Materials, we explore an automated window selection criterion for linear regression and test it against randomized, stochastic simulations across a wide range of realistic NPI shapes.
-We find that resilience estimates based on the automated window selection criterion are moderately correlated ($\rho=0.48$) with the intrinsic resilience of the post-NPI attractor (Supplementary Figure S7).
-In contrast, a naive approach that uses the entire time series, starting from the peak distance, only gives a correlation coefficient of $\rho=0.09$ and consistently underestimates the intrinsic resilience (Supplementary Figure S7).
+Complex changes in the distance from the attractor suggest that estimating pathogen resilience from linear regression will be particularly sensitive to our choice of fitting windows for the regression (Figure 3E).
+Therefore, before we tried estimating resilience from real data, we explored an automated window selection criterion for linear regression and test it against randomized, stochastic simulations across a wide range of realistic NPI shape;
+in doing so, we also explored optimal choices for embedding dimensions and evaluated our choices for fitting window parameters and embedding dimensions by quantifying correlation coefficients between the estimated resilience and the intrinsic resilience of a seasonally unforced system (Materials and Methods).
+Overall, we find large variation in estimation performances with correlation coefficient ranging from 0.21 to 0.61 (Supplementary Figure S7).
+In almost all cases, the automated window selection approach outperformed a naive approach that uses the entire time series, starting from the peak distance (Supplementary Figure S7).
 
-% A closer observation of the resulting time series of the distance from attractor provides three important insights (Figure 3E).
+
+% A closer observation of the resulting time series of the distance from the attractor provides three important insights (Figure 3E).
 % First, the relaxation of NPIs in realistic settings can cause a false return of the system, as indicated by a rapid decrease in the distance in early 2022 followed by a rapid increase in distance.
 % In other words, we need at least several years of data to be able to properly assess the return of system to an attractor.
-% Second, complex changes in the distance from attractor suggests that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
+% Second, complex changes in the distance from the attractor suggests that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
 % Finally, temporal variation in the impact of NPIs on pathogen transmission will affect the intrinsic resilience of the system throughout the NPI period, meaning that the estimated resilience from linear regression will likely reflect some sort of average impact of the NPIs.
 
-Now, we apply this approach to pathogen surveillance data presented in Figure 1.
-For each time series, we apply Takens' theorem independently to reconstruct the empirical attractor and obtain the corresponding time series of distances from attractors (Supplementary Figure S8 for the distance time series and linear regression fits).
+Based on the best performing window selection criteria and embedding dimension, we applied this approach to pathogen surveillance data presented in Figure 1.
+For each time series, we applied Takens' theorem independently to reconstruct the empirical attractor and obtain the corresponding time series of distances from attractors (Supplementary Figure S8 for the distance time series and linear regression fits).
 Then, we use the automated window selection criterion to fit a linear regression and estimate the empirical resilience for each pathogen in each country.
+
+
 For most respiratory pathogens, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A), with the exception of rhinovirus in the US ($0.066/\mathrm{year}$; 95\% CI: $0.018/\mathrm{year}$--$0.113/\mathrm{year}$) and bocavirus in Korea ($0.087/\mathrm{year}$; 95\% CI: $0.023/\mathrm{year}$--$0.151/\mathrm{year}$).
 Excluding these exceptions, the mean resilience of common respiratory pathogens is $0.974/\mathrm{year}$ (95\% CI: $0.784/\mathrm{year}$--$1.16/\mathrm{year}$).
 As a reference, this is $\approx 7$ times higher than the intrinsic resilience of pre-vaccination measles in England and Wales ($\approx 0.13/\mathrm{year}$).
@@ -343,7 +345,7 @@ Traditionally, ecological resilience measures how fast a system returns to a ref
 In the context of respiratory pathogens, resilience measures how fast epidemics return to their endemic cycles after NPIs are lifted.
 % Our study demonstrates that this perspective provides unique insights into underlying susceptible host dynamics and allows predictions for when epidemics will return to their endemic cycles.
 
-We use an attractor reconstruction approach to quantify how distance from attractor changes over time for each pathogen \citep{takens2006detecting}.
+We use an attractor reconstruction approach to quantify how distance from the attractor changes over time for each pathogen \citep{takens2006detecting}.
 We show that the resilience of a host-pathogen system can be estimated by fitting a linear regression to a logged distance-from-attractor time series.
 Overall, we estimate that the resilience for most common respiratory pathogens ranges between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$, which is 3--14 times more resilient than prevaccination measles, indicating potential challenges in controlling common respiratory pathogens.
 
@@ -438,7 +440,7 @@ Then, if the distance between these two points on $e+1$ dimension, $D_{\tau,e+1}
 specifically, we use a threshold $R$ for the ratio between two distances $D_{\tau,e+1}(t)/D_{\tau,e}(t)$ to determine false nearest neighbors.
 In the main text, we determine the embedding dimension based on the first dimension without any false nearest neighbors for $R=10$.
 In Supplementary Materials, we impose $R=5$ to select for higher dimensions.
-Once we determine the embedding lag $\tau$ and dimension $M$, we apply the embedding to the entire time series and calculate the nearest neighbor distance against the attractor $A_{\tau,M}$ to obtain a time series of distance from attractor $D_{\tau,M}(t)$.
+Once we determine the embedding lag $\tau$ and dimension $M$, we apply the embedding to the entire time series and calculate the nearest neighbor distance against the attractor $A_{\tau,M}$ to obtain a time series of distance from the attractor $D_{\tau,M}(t)$.
 
 From a time series of distances from the attractor, we estimate pathogen resilience by fitting a linear regression to an appropriate window.
 To automatically select the fitting window, we begin by smoothing the distance time series using locally estimated scatterplot smoothing (LOESS) to obtain $\hat{D}_{\tau,M}(t)$, where the smoothing is performed on a log scale and exponentiated afterwards.
@@ -503,7 +505,7 @@ To measure the empirical resilience of the SIR model (Figure 2C and 2F), we comp
 \sqrt{\left(\frac{S(t) - \tsub{S}{pre}(t)}{\sigma_S}\right)^2 + \left(\frac{\log I(t) - \log \tsub{I}{pre}(t)}{\sigma_{\log I}}\right)^2},
 \end{equation}
 where $\sigma_S$ and $\sigma_{\log I}$ represent the standard deviation in the pre-intervention susceptible and logged infected proportions.
-We normalize the differences in susceptible and logged infected proportions to allow both quantities to equally contribute to the changes in distance from attractor.
+We normalize the differences in susceptible and logged infected proportions to allow both quantities to equally contribute to the changes in distance from the attractor.
 We used logged prevalence, instead of absolute prevalence, in order to capture epidemic dynamics in deep troughs during the intervention period.
 In Supplementary Materials, we also compare how the degree of seasonal transmission affects empirical resilience by varying $\theta$ from 0 to 0.4; when we assume no seasonality ($\theta = 0$), we do not normalize the distance because the standard deviation of pre-intervention dynamics are zero. 
 
@@ -846,9 +848,9 @@ Red dashed lines represent counterfactual epidemic dynamics in the absence of in
 Gray regions indicate the duration of interventions.
 (B, E, H) Phase plane representation of the corresponding model.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
-(C, F, I) Changes in logged distance from attractor over time.
-Blue lines represent the logged distance from attractor.
-Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+(C, F, I) Changes in logged distance from the attractor over time.
+Blue lines represent the logged distance from the attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
 Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
@@ -865,9 +867,9 @@ Red dashed lines represent counterfactual epidemic dynamics in the absence of in
 Gray regions indicate the duration of interventions.
 (B, E, H) Phase plane representation of the corresponding model.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
-(C, F, I) Changes in logged distance from attractor over time.
-Blue lines represent the logged distance from attractor.
-Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+(C, F, I) Changes in logged distance from the attractor over time.
+Blue lines represent the logged distance from the attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
 Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
@@ -884,9 +886,9 @@ Red dashed lines represent counterfactual epidemic dynamics in the absence of in
 Gray regions indicate the duration of interventions.
 (B, E, H) Phase plane representation of the corresponding model.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
-(C, F, I) Changes in logged distance from attractor over time.
-Blue lines represent the logged distance from attractor.
-Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+(C, F, I) Changes in logged distance from the attractor over time.
+Blue lines represent the logged distance from the attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
 Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
@@ -903,9 +905,9 @@ Red dashed lines represent counterfactual epidemic dynamics in the absence of in
 Gray regions indicate the duration of interventions.
 (B, E, H) Phase plane representation of the corresponding model.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
-(C, F, I) Changes in logged distance from attractor over time.
-Blue lines represent the logged distance from attractor.
-Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from attractor.
+(C, F, I) Changes in logged distance from the attractor over time.
+Blue lines represent the logged distance from the attractor.
+Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
 Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
@@ -929,7 +931,7 @@ Solid lines and shaded regions represent fitted posterior median and 95\% credib
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure3/figure3_sens.pdf}
 \caption{
-\textbf{Sensitivity of the distance from attractor to choices about emedding lags and dimensions.}
+\textbf{Sensitivity of the distance from the attractor to choices about emedding lags and dimensions.}
 Sensitivity analysis for the distance-from-attractor time series shown in Figure 3E in the main text by varying the embedding lag between 10--15 days and embedding dimensions between 2--6 dimensions.
 }
 \end{figure}
@@ -941,7 +943,7 @@ Sensitivity analysis for the distance-from-attractor time series shown in Figure
 \caption{
 \textbf{Impact of fitting window selection on the estimation of empirical resilience.}
 We simulated 500 epidemics of a stochastic SIRS model with randomly drawn parameters and randomly generated intervention impacts.
-For each simulation, we reconstructed the empirical attractor based on the approach outlined in Figure 3 and estimate the distance from attractor.
+For each simulation, we reconstructed the empirical attractor based on the approach outlined in Figure 3 and estimate the distance from the attractor.
 The naive approach fits a linear regression on a log scale, starting from the maximum distance until the end of the time series.
 The window-based approach tries to select an appropriate window by smoothing the distance estimates and finding the time period when the smoothed time series crosses pre-determined threshold, relative to the maximum distance;
 then, a linear regression is fitted by using the raw distance within this time period.
@@ -953,21 +955,10 @@ then, a linear regression is fitted by using the raw distance within this time p
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure4/figure4_dist.pdf}
 \caption{
-\textbf{Estimated time series of distance from attractor for each pathogen across Canada, Hong Kong, Korea, and the US.}
-Black lines represent the estimated distance from attractor.
+\textbf{Estimated time series of distance from the attractor for each pathogen across Canada, Hong Kong, Korea, and the US.}
+Black lines represent the estimated distance from the attractor.
 Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
 Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
-}
-\end{figure}
-
-\pagebreak
-
-\begin{figure}[!th]
-\includegraphics[width=\textwidth]{../figure4/figure4_unzoom.pdf}
-\caption{
-\textbf{Predicted timing of when each pathogen will return to their pre-pandemic cycles (zoomed out).}
-The dashed line in panel B indicates the end of 2024 (current observation time).
-Error bars represent 95\% confidence intervals.
 }
 \end{figure}
 
@@ -977,7 +968,7 @@ Error bars represent 95\% confidence intervals.
 \includegraphics[width=\textwidth]{../figure4_th/figure4_dist_th.pdf}
 \caption{
 \textbf{Estimated time series of distances from the attractor for each pathogen across Canada, Hong Kong, Korea, and the US using higher embedding dimensions.}
-Black lines represent the estimated distance from attractor.
+Black lines represent the estimated distance from the attractor.
 Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
 Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
 A lower threshold is used for determining embedding dimensions with the false nearest neighbors approach, thereby yielding a higher embedding dimension.

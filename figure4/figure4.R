@@ -69,6 +69,9 @@ analysis_all <- bind_rows(
                levels=c("Adenovirus", "Human metapneumovirus",
                         "Parainfluenza virus", "Rhinovirus/Enterovirus",
                         "RSV", "Human coronavirus", "Bocavirus", "Norovirus"))
+  ) %>%
+  filter(
+    key != "Bocavirus"
   )
 
 analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]), function(x) {
@@ -92,11 +95,22 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
     maxdist_time <- time[which.max(loesspred)]
     meandist <- mean(loesspred[time<2020])
     
-    target_first <- meandist * (maxdist/meandist)^(9/10)
-    target_second <- meandist * (maxdist/meandist)^(1/10)
+    target_first <- meandist * (maxdist/meandist)^(17/19)
+    target_second <- meandist * (maxdist/meandist)^(2/19)
     
     time_first <- time[which(time > maxdist_time & loesspred < target_first)[1]]
     time_last <- time[tail(which(time > maxdist_time & loesspred > target_second), 1)]
+    
+    if (x$key[1]=="Norovirus" & x$country[1]=="Hong Kong") {
+      time_first <- 2022.5
+      time_last <- 2024
+    } else if (x$key[1]=="Norovirus" & x$country[1]=="Korea") {
+      time_first <- 2022.5
+      time_last <- 2024
+    } else if (x$key[1]=="Rhinovirus/Enterovirus" & x$country[1]=="US") {
+      time_first <- 2021+21/52
+      time_last <- 2022
+    }
     
     # plot(time, dist, log="y")
     # abline(v=time_first)
@@ -236,7 +250,7 @@ g3 <- ggplot(analysis_all_summ_filter) +
                      breaks=seq(2020, 2030, by=2)) +
   scale_color_viridis_d("Country") +
   scale_shape_discrete("Country") +
-  coord_cartesian(ylim=c(2020, 2030)) +
+  # coord_cartesian(ylim=c(2020, 2030)) +
   theme(
     axis.text.x = element_text(angle=45, hjust=1),
     axis.title.x = element_blank(),
@@ -250,23 +264,3 @@ gcomb <- ggarrange(g2, g3,
 
 ggsave("figure4.pdf", gcomb, width=6, height=6)
 save("analysis_all_summ_filter", file="figure4_summ.rda")
-
-g3b <- ggplot(analysis_all_summ_filter) +
-  geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
-                position = position_dodge(width=0.5)) +
-  geom_point(aes(key, when, col=country, shape=country), 
-             position = position_dodge(width=0.5), size=3) +
-  # geom_hline(yintercept = 2020:2039, lty=3, col="gray") +
-  geom_hline(yintercept = 2025, lty=2) +
-  scale_y_continuous("Expected return time") +
-  scale_color_viridis_d("Country") +
-  scale_shape_discrete("Country") +
-  theme(
-    axis.text.x = element_text(angle=45, hjust=1),
-    axis.title.x = element_blank(),
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor.y = element_blank(),
-    legend.position = "none"
-  )
-
-ggsave("figure4_unzoom.pdf", g3b, width=6, height=3)
