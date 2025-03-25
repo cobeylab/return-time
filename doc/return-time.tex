@@ -279,7 +279,7 @@ Based on a simple ANOVA test, we do not find significant differences in resilien
 
 \begin{figure}[!th]
 \begin{center}
-\includegraphics[width=\textwidth]{../figure4/figure4.pdf}
+\includegraphics[width=0.8\textwidth]{../figure4/figure4.pdf}
 \caption{
 \textbf{Summary of resilience estimates and predictions for return time.}
 (A) Estimated pathogen resilience.
@@ -306,15 +306,7 @@ For almost all pathogens that are predicted to have returned already, the observ
 However, there are a few exceptions, including norovirus in Hong Kong and Rhinovirus/Enterovirus in the US, where the observed epidemic dynamics in 2024 exhibit clear deviation from their pre-NPI seasonal averages (Figure 4C).
 These observations suggest a possibility that some common respiratory pathogens may have converged to different attractors or are still exhibiting non-equilibrium dynamics.
 In contrast, pathogens that are predicted to have not returned yet also show clear differences from their pre-NPI seasonal averages; as many of these pathogens are predicted to return in 2025--2026, we may be able to test these predictions in near future (Supplementary Figure S10).
-
-
-
-In Supplementary Materials, we also consider using a lower threshold for the false nearest neighbor approach when determining the embedding dimension;
-this gives a higher embedding dimension.
-As explained earlier (Supplementary Figure S6), this gives a smoother distance-from-attractor time series (compare Supplementary Figure S10 with S8);
-this also requires us to use longer time series, which prevents us from estimating resilience for some pathogens.
-Overall, resulting estimates of pathogen resilience with higher embedding dimensions still mostly fall between $0.3/\mathrm{year}$ and $2.1/\mathrm{year}$ (Supplementary Figure S11).
-A direct comparison between two approaches (i.e., original estimate vs using higher dimensions) shows a strong consistency in resilience estimates (Supplementary Figure S12).
+Our reconstructions of distance time series and estimates of pathogen resilience and expected return time are generally robust to choices of embedding dimensions (Supplementary Figure S11--12).
 
 \section*{Susceptible host dynamics explain variation in pathogen resilience}
 
@@ -343,7 +335,7 @@ This rate can be expressed as a ratio between absolute rate at which new suscept
 Therefore, both higher $\mathcal R_0$ and shorter duration of immunity can drive faster per-capita susceptible replenishment rate (Figure 5B), especially because higher $\mathcal R_0$ leads to lower $\bar{S}$.
 
 Finally, we can rank different pathogens based on the average values of empirical resilience computed previously, which allows us to determine a set of parameters that are consistent with the estimated resilience (Figure 5A).
-Across all pathogens we consider, except for bocavirus and norovirus, we estimate that the average duration of immunity is likely to be short ($<6$ years) across a plausible range of $\mathcal R_0$.
+Across all pathogens we consider, except for bocavirus and norovirus, we estimate that the average duration of immunity is likely to be short ($<4$ years) across a plausible range of $\mathcal R_0$ ($<6$).
 These rankings further allow us to map each pathogen onto a set of SIRS parameters that are consistent with its empirical resilience (Figure 5A) and obtain a plausible range of susceptible replenishment rates for each pathogen (Figure 5B).
 However, we note that there is no one-to-one correspondence between susceptible replenishment rates and pathogen resilience, leading to a wide uncertainty in the estimates for susceptible replenishment rates (Figure 5B).
 
@@ -998,7 +990,6 @@ Dashed lines represent the average of the pre-pandemic nearest neighbor distance
 
 \pagebreak
 
-
 \begin{figure}[!th]
 \begin{center}
 \includegraphics[width=\textwidth]{../figure4/figure4_noreturn.pdf}
@@ -1009,6 +1000,39 @@ Gray lines and shaded regions represent the mean seasonal patterns and correspon
 }
 \end{center}
 \end{figure}
+
+
+\pagebreak
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=\textwidth]{../figure4_R/figure4_dist_R.pdf}
+\caption{
+\textbf{Estimated time series of distance from the attractor for each pathogen across different choices about false nearest neighbor threshold values.}
+Using higher threshold values for the false nearest neighbor approach gives lower embedding dimensions.
+Colored lines represent the estimated distance from the attractor for different threshold values.
+}
+\end{center}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=\textwidth]{../figure4_R/figure4_R.pdf}
+\caption{
+\textbf{Summary of resilience estimates and predictions for return time across different choices about false nearest neighbor threshold values.}
+The automated window selection method was used for all scenarios to estimate pathogen resilience, except for norovirus in Hong Kong and Korea and Rhinovirus/Enterovirus in the US.
+We used the same ad-hoc regression windows for norovirus in Hong Kong and Korea and Rhinovirus/Enterovirus in the US as we did in the main analysis.
+(A) Estimated pathogen resilience.
+The gray horizontal line represents the intrinsic resilience of pre-vaccination measles dynamics.
+(B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
+The dashed line in panel B indicates the end of 2024 (current observation time).
+Error bars represent 95\% confidence intervals.
+}
+\end{center}
+\end{figure}
+
 
 \pagebreak
 
