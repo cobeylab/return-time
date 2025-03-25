@@ -341,7 +341,29 @@ However, we note that there is no one-to-one correspondence between susceptible 
 
 \section*{Pathogen resilience determines sensitivity to stochastic perturbations}
 
-Host-pathogen systems face constant perturbations 
+Beyond the pandemic NPIs, we expect host-pathogen systems to experience continued perturbations of varying degrees from changes in epidemiological conditions, such as human behavior, climate, and viral evolution.
+These perturbations can also arise from demographic stochasticity, which is inherent to any ecological systems.
+Here, we use a seasonally unforced SIRS model with birth/death to explore how resilience of a host-pathogen system determines the sensitivity to perturbations caused by demographic stochasticity (Materials and Methods).
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=\textwidth]{../figure6/figure_persistence_noise.pdf}
+\caption{
+\textbf{Linking resilience of a host-pathogen system to its sensitivity to stochastic perturbations.}
+(A--C) Epidemic trajectories of a stochastic SIRS model across three different resilience values: low, intermediate, and high.
+The relative prevalence was calculated by dividing infection prevalence by its mean value.
+(D) The heat map represents the intrinsic resilience of a system as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+(E) The heat map represents the epidemic amplitude as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+The epidemic amplitude corresponds to $(\max I - \min I)/(2 \bar{I})$, where $\bar{I}$ represents the mean prevalence.
+(F) The relationship between pathogen resilience and epidemic amplitude.
+}
+\end{center}
+\end{figure}
+
+We find that resilience of a host-pathogen system determines  the amount of deviation from the deterministic trajectory caused by demographic stochasticity, with less resilient systems experiencing larger deviations (Figure 6).
+Notably, less resilience systems also exhibit slower epidemic cycles; the periodicity of this epidemic cycle matches those predicted by the intrinsic periodicity of the system (Supplementary Figure S13).
+These conclusions are robust for the seasonally forced SIRS model (Supplementary Figure S14),
+However, we note that resilience is not the only factor that determines sensitivity to stochastic perturbations.
 
 
 \section*{Discussion}
@@ -1020,7 +1042,7 @@ Colored lines represent the estimated distance from the attractor for different 
 
 \begin{figure}[!th]
 \begin{center}
-\includegraphics[width=\textwidth]{../figure4_R/figure4_R.pdf}
+\includegraphics[width=0.9\textwidth]{../figure4_R/figure4_R.pdf}
 \caption{
 \textbf{Summary of resilience estimates and predictions for return time across different choices about false nearest neighbor threshold values.}
 The automated window selection method was used for all scenarios to estimate pathogen resilience, except for norovirus in Hong Kong and Korea and Rhinovirus/Enterovirus in the US.
@@ -1030,6 +1052,38 @@ The gray horizontal line represents the intrinsic resilience of pre-vaccination 
 (B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
 The dashed line in panel B indicates the end of 2024 (current observation time).
 Error bars represent 95\% confidence intervals.
+}
+\end{center}
+\end{figure}
+
+\pagebreak
+
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=\textwidth]{../figure6/figure_persistence_noise_period.pdf}
+\caption{
+\textbf{Comparison between the observed and predicted periodicity of the epidemic cycle of the seasonally unforced SIRS model.}
+The observed periodicity of the epidemic corresponds to the periodicity at which maximum spectral density occurs.
+The predicted periodicity of the epidemic corresponds to $2 \pi/\mathrm{Im}(\lambda)$, where $\mathrm{Im}(\lambda)$ is the imaginary part of the eigenvalue.
+}
+\end{center}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=\textwidth]{../figure6/figure_persistence_noise_cycle.pdf}
+\caption{
+\textbf{Linking resilience of a host-pathogen system to its sensitivity to stochastic perturbations for the seasonally forced SIRS model.}
+(A--C) Epidemic trajectories of a stochastic SIRS model across three different resilience values: low, intermediate, and high.
+The relative prevalence was calculated by dividing infection prevalence by its mean value.
+(D) The heat map represents the intrinsic resilience of the seasonally unforced system as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+(E) The heat map represents the relative epidemic amplitude as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+To calculate the relative epidemic amplitude, we first take the relative difference in infection prevalence between stochastic and deterministic trajectories: $\epsilon = (\tsub{I}{stoch}-\tsub{I}{det})/\tsub{I}{det}$. 
+Then, we calculate the difference between maximum and minimum of the relative difference and divide by half: $(\max \epsilon - \min \epsilon)/2$.
+(F) The relationship between pathogen resilience and relative epidemic amplitude.
 }
 \end{center}
 \end{figure}
