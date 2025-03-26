@@ -429,11 +429,15 @@ Weekly time series of respiratory infection cases in Canada comes from a publicl
 Weekly time series of respiratory infection cases in Hong Kong comes from a publicly available website by the  Centre for Health Protection, Department of Health \citep{hkdata}.
 Weekly time series of acute respiratory infection cases in Korea comes from a publicly available website by the Korea Disease Control and Prevention Agency \citep{kordata}.
 Finally, weekly time series of respiratory infection cases in the US were obtained from the National Respiratory and Enteric Virus Surveillance System.
+Time series on number of tests were also available in Canada, Hong Kong, and the US, but not in Korea.
+\swp{Not sure how to cite NREVSS data because we got it by emailing them...}
 
 \subsection*{Data processing}
 
 For all time series, we rounded every year to 52 weeks by taking the average number of cases and tests between the 52nd and 53rd week.
 We also rescale all time series to account for changes in testing patterns, which are then used for the actual analysis.
+
+For Canada, an increase in testing was observed from 2013 to 2024.
 
 Canada: To account for an increase in testing from 2013 to 2024, we calculate a 2 year moving average for the number of tests for each pathogen, which we use as a proxy for testing effort.
 Then, we divide the smoothed testing patterns by the smoothed value at the final week such that the testing effort has a maximum of 1.
