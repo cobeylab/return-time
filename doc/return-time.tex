@@ -102,12 +102,13 @@ Sang Woo Park, \dots, Bryan T. Grenfell, Sarah Cobey
 
 Major priority for epidemiological research in the time of anthropogenic change is understanding how infectious disease dynamics respond to perturbations.
 Interventions to slow the spread of SARS-CoV-2 significantly disrupted the transmission of other human pathogens. 
-As interventions lifted, whether and when respiratory pathogens would eventually return to their pre-pandemic dynamics remains to be answered. 
-We develop a framework for estimating pathogen resilience based on how fast epidemic patterns return to their pre-pandemic, endemic dynamics.
-Our analysis suggests that some pathogens may have settled to endemic cycles that are different from their pre-pandemic patterns.
-Finally, we show that the replenishment rate of the susceptible pool is a key determinant of pathogen resilience.
-Our framework offers a novel perspective to characterizing the dynamics of endemic pathogens and their responses to SARS-CoV-2 interventions.
-\swp{Need to emphasize broader implications.}
+As interventions lifted, whether and when respiratory pathogens would eventually return to their pre-pandemic dynamics remains to be answered.
+Here, we present a framework for estimating pathogen resilience based on how fast epidemic patterns return to their pre-pandemic, endemic dynamics and analyze time series data from Hong Kong, Canada, Korea, and the US from the resulting framework.
+By quantifying the resilience of common respiratory pathogens, we are able to predict when each pathogen will eventually return to their pre-pandemic, endemic dynamics.
+Our predictions about whether each pathogen should have already returned to their pre-pandemic dynamics closely match the observed patterns of deviations (or lack thereof) from their pre-pandemic dynamics.
+Discrepancies between predicted and observed dynamics indicate long-term impact of pandemic perturbations, suggesting a possibility that some pathogens may have converged to a different endemic cycle.
+Finally, we show that the replenishment rate of the susceptible pool is a key determinant of pathogen resilience, which in turn determines the sensitivity of a system to stochastic perturbations.
+Overall, our analysis highlight the persistence of common respiratory pathogens.
 
 \pagebreak
 
@@ -183,7 +184,7 @@ Dotted lines show the intrinsic resilience of the seasonally unforced system.
 \end{figure}
 
 Alternatively, pandemic perturbations can have a lasting impact on the pathogen dynamics; 
-as an example, we consider a scenario in which a 10\% reduction in transmission persists even after interevntions are lifted (Figure 2D--F).
+as an example, we consider a scenario in which a 10\% reduction in transmission persists even after interventions are lifted (Figure 2D--F).
 In such cases in practice, we cannot know whether the pathogen will return to its original cycle or a different cycle until many years have passed, and we cannot measure the distance to the new unknown attractor that the system might eventually approach.
 Nonetheless, we can still measure the distance from the pre-pandemic attractor and ask how the distance changes over time (Figure 2E).
 The LOESS fit suggests that the distance from the pre-pandemic attractor will initially decrease exponentially on average (equivalently, linearly on a log scale) and eventually plateau (Figure 2F).
@@ -272,10 +273,10 @@ Then, we use the automated window selection criterion to fit a linear regression
 the window selection criterion gave poor regression window for three cases (norovirus in Hong Kong and Korea and Rhinovirus/Enterovirus in the US), leading to unrealistically low resilience estimates, and so we used ad-hoc regression windows instead (Supplementary Figure S9; Materials and Methods).
 
 For all pathogens we consider, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A).
-We estimate the mean resilience of common respiratory pathogens to be $0.99/\mathrm{year}$ (95\% CI: $0.80/\mathrm{year}$--$1.18/\mathrm{year}$).
+We estimate the mean resilience of common respiratory pathogens to be $0.99/\mathrm{year}$ (95\% CI: $0.81/\mathrm{year}$--$1.18/\mathrm{year}$).
 As a reference, this is $\approx 7.5$ times higher than the intrinsic resilience of pre-vaccination measles in England and Wales ($\approx 0.13/\mathrm{year}$).
 Finally, resilience estimates for norovirus are comparable to those of common respiratory pathogens: $1.44/\mathrm{year}$ (95\%CI: $1.01/\mathrm{year}$--$1.87/\mathrm{year}$) for Hong Kong and $1.07/\mathrm{year}$ (95\%CI: $0.86/\mathrm{year}$--$1.29/\mathrm{year}$) for Korea.
-Based on a simple ANOVA test, we do not find significant differences in resilience estimates across countries ($p=0.25$) or pathogens ($p=0.68$).
+Based on a simple ANOVA test, we do not find significant differences in resilience estimates across countries ($p=0.25$) or pathogens ($p=0.67$).
 
 \begin{figure}[!th]
 \begin{center}
@@ -441,43 +442,42 @@ For Canada, an increase in testing was observed from 2013 to 2024 (Supplementary
 To account for this increase, we calculated a 2 year moving average for the number of tests for each pathogen, which we used as a proxy for testing effort.
 Then, we divided the smoothed testing patterns by the smoothed value at the final week such that the testing effort has a maximum of 1.
 We then divided weekly cases by the testing effort to obtain a scaled case time series.
-A similar approach was used earlier for an analysis of RSV time series in the US to account for changes in testing pattterns \citep{pitzer2015environmental}.
+A similar approach was used earlier for an analysis of RSV time series in the US to account for changes in testing patterns \citep{pitzer2015environmental}.
 
 For Hong Kong, we also applied the same scaling procedure to the time series as we did for Canada.
 In this case, we only adjusted for testing efforts up to the end of 2019 because there was a major reduction in testing for common respiratory pathogens since 2020 (Supplementary Figure S16).
 
-For Korea, while we do not have information on testing, the reported number of respiratory infections consistently increased from 2013 to the end of 2019, which we interpreted as changes in testing patterns (Supplementary Figure S17).
-Since we do not have testing numbers, we used the weekly sum of all acute respiratory viral infection cases as a proxy for testing, which were further smoothed with moving averaged and scaled to have a maximum of 1.
-For Korea, we also only adjust for testing efforts up to the end of 2019.
+For Korea, while we did not have information on testing, the reported number of respiratory infections consistently increased from 2013 to the end of 2019, which we interpreted as changes in testing patterns (Supplementary Figure S17).
+Since we did not have testing numbers, we used the weekly sum of all acute respiratory viral infection cases as a proxy for testing, which were further smoothed with moving averaged and scaled to have a maximum of 1.
+For Korea, we also only adjusted for testing efforts up to the end of 2019.
 
-In the US, there has been a large increase in testing against some respiratory pathogens, especially RSV, which could not be corrected for through simple scaling.
-Instead, we derive an incidence proxy by multiplying the test positivity with influenza-like illness positivity, which is taken from \url{https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html}.
+In the US, there has been a large increase in testing against some respiratory pathogens, especially RSV, which could not be corrected for through simple scaling (Supplementary Figure S18).
+Instead, we derived an incidence proxy by multiplying the test positivity with influenza-like illness positivity, which was taken from \url{https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html}.
 This method of estimating an incidence proxy has been recently applied in the analysis of seasonal coronaviruses \citep{kissler2020projecting} and \textit{Mycoplasma pneumoniae} infections \citep{park2024predicting}.
 Detailed assumptions and justifications are provided in \citep{goldstein2011predicting}.
 
 \subsection*{Estimating pathogen resilience}
 
-In order to measure pathogen resilience from surveillance data, we first reconstruct the empirical pre-pandemic attractor of the system using Takens' embedding theorem \citep{takens2006detecting}.
-Specifically, for a given pathogen, we take the pre-pandemic (before 2020) case time series $C(t)$ and reconstruct the attractor using delayed embedding with a uniform delay of $\tau$ and dimension $M$:
+In order to measure pathogen resilience from surveillance data, we first reconstructed the empirical pre-pandemic attractor of the system using Takens' embedding theorem \citep{takens2006detecting}.
+Specifically, for a given pathogen, we took the pre-pandemic (before 2020) case time series $C(t)$ and reconstruct the attractor using delayed embedding with a uniform delay of $\tau$ and dimension $M$:
 \begin{equation}
 X_{\tau,m}(t) = \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle.
 \end{equation}
-Here, the delay $\tau$ is determined by calculating the autocorrelation of the logged pre-pandemic time series and asking when the autocorrelation crosses 0 for the first time \citep{tan2023selecting};
+Here, the delay $\tau$ was determined by calculating the autocorrelation of the logged pre-pandemic time series and asking when the autocorrelation crosses 0 for the first time \citep{tan2023selecting};
 a typical delay for for an annual outbreak is around 13 weeks.
 
-Then, for a given delay $\tau$, we determine the embedding dimension $M$ using the false nearest neighbors approach \citep{kennel1992determining,tan2023selecting}.
-To do so, we start with an embedding dimension $e$ and construct a set of points $A_{\tau,e}= \{X_{\tau,e}(t) | t < 2020\}$.
-Then, for each point $X_{\tau,e}(t)$, we determine the nearest neighbor from the set $A_{\tau,e}$, which we denote $X_{\tau,e}(\tsub{t}{nn})$ for $t \neq \tsub{t}{nn}$.
+Then, for a given delay $\tau$, we determined the embedding dimension $M$ using the false nearest neighbors approach \citep{kennel1992determining,tan2023selecting}.
+To do so, we started with an embedding dimension $e$ and construct a set of points $A_{\tau,e}= \{X_{\tau,e}(t) | t < 2020\}$.
+Then, for each point $X_{\tau,e}(t)$, we determined the nearest neighbor from the set $A_{\tau,e}$, which we denote $X_{\tau,e}(\tsub{t}{nn})$ for $t \neq \tsub{t}{nn}$.
 Then, if the distance between these two points on $e+1$ dimension, $D_{\tau,e+1}(t) = ||X_{\tau,e+1}(\tsub{t}{nn})-X_{\tau,e+1}(t)||_2$, is larger than their distance on $e$ dimension, $D_{\tau,e}(t) = ||X_{\tau,e}(\tsub{t}{nn})-X_{\tau,e}(t)||_2$, these two points are deemed to be false nearest neighbors;
-specifically, we use a threshold $R$ for the ratio between two distances $D_{\tau,e+1}(t)/D_{\tau,e}(t)$ to determine false nearest neighbors.
-In the main text, we determine the embedding dimension based on the first dimension without any false nearest neighbors for $R=10$.
-In Supplementary Materials, we impose $R=5$ to select for higher dimensions.
-Once we determine the embedding lag $\tau$ and dimension $M$, we apply the embedding to the entire time series and calculate the nearest neighbor distance against the attractor $A_{\tau,M}$ to obtain a time series of distance from the attractor $D_{\tau,M}(t)$.
+specifically, we used a threshold $R$ for the ratio between two distances $D_{\tau,e+1}(t)/D_{\tau,e}(t)$ to determine false nearest neighbors.
+For the main analysis, we used $R=10$, which was chosen from a sensitivity analysis against simulated data (Supplementary Text).
+Once we determined the embedding lag $\tau$ and dimension $M$, we apply the embedding to the entire time series and calculate the nearest neighbor distance against the attractor $A_{\tau,M}$ to obtain a time series of distance from the attractor $D_{\tau,M}(t)$.
 
-From a time series of distances from the attractor, we estimate pathogen resilience by fitting a linear regression to an appropriate window.
-To automatically select the fitting window, we begin by smoothing the distance time series using locally estimated scatterplot smoothing (LOESS) to obtain $\hat{D}_{\tau,M}(t)$, where the smoothing is performed on a log scale and exponentiated afterwards.
-Then, we determine threshold values ($\tsub{T}{start}$ and $\tsub{T}{end}$) for the smoothed distances and choose the fitting window based on when $\hat{D}_{\tau,M}(t)$ crosses these threshold values for the first time.
-These thresholds are determined by first calculating maximum distance,
+From a time series of distances from the attractor, we estimated pathogen resilience by fitting a linear regression to an appropriate window.
+To automatically select the fitting window, we began by smoothing the distance time series using locally estimated scatterplot smoothing (LOESS) to obtain $\hat{D}_{\tau,M}(t)$, where the smoothing is performed on a log scale and exponentiated afterwards.
+Then, we determined threshold values ($\tsub{T}{start}$ and $\tsub{T}{end}$) for the smoothed distances and choose the fitting window based on when $\hat{D}_{\tau,M}(t)$ crosses these threshold values for the first time.
+These thresholds were determined by first calculating maximum distance,
 \begin{equation}
 \max \hat{D} = \max \hat{D}_{\tau,M}(t),
 \end{equation}
@@ -485,19 +485,22 @@ and mean pre-pandemic distance,
 \begin{equation}
 \tsub{\hat{D}}{mean} = \frac{1}{N_{t<2020}} \sum_{t < 2020} \hat{D}_{\tau,M}(t),
 \end{equation}
-as a reference, and then dividing their ratios into 10 equal bins:
+as a reference, and then dividing their ratios into $K$ equal bins:
 \begin{align}
-\tsub{T}{start} &= \tsub{\hat{D}}{mean} \times \left(\frac{\max \hat{D}}{\tsub{\hat{D}}{mean}} \right)^{9/10}\\
-\tsub{T}{end} &= \tsub{\hat{D}}{mean} \times \left(\frac{\max \hat{D}}{\tsub{\hat{D}}{mean}} \right)^{1/10}
+\tsub{T}{start} &= \tsub{\hat{D}}{mean} \times \left(\frac{\max \hat{D}}{\tsub{\hat{D}}{mean}} \right)^{(K-a)/K}\\
+\tsub{T}{end} &= \tsub{\hat{D}}{mean} \times \left(\frac{\max \hat{D}}{\tsub{\hat{D}}{mean}} \right)^{a/K}
 \end{align}
+where $a$ represents the truncation threshold.
 This allows us to discard the initial period during which the distance increases (from the introduction of intervention measures) and the final period during which the distance plateaus (as the system reaches an attractor).
 The fitting window is determined based on when the smoothed distance $\hat{D}_{\tau,M}(t)$ crosses these threshold values for the first time; then, we fit a linear regression to logged (unsmoothed) distances $\log D_{\tau,M}(t)$ using that window.
+Alongside the threshold $R$ for the false nearest neighbors approach, we tested optimal choices for $K$ and $a$ values using simulations (Supplementary Text).
+We used $K=19$ and $a=2$ throughout the paper based on the simulation results.
 
 \subsection*{Mathematical modeling}
 
 Throughout the paper, we use a series of mathematical models to illustrate the concept of pathogen resilience and to understand the determinants of pathogen resilience.
 In general, the intrinsic resilience for a given system is given by the largest real part of the eigenvalues of the linearized system at endemic equilibrium.
-Here, we focus on the SIRS model with demography and present the details of other models in Supplementary Materials.
+Here, we focus on the SIRS model with demography (birth and death) and present the details of other models in Supplementary Text.
 The SIRS (Susceptible-Infected-Recovered-Susceptible) model is the simplest model that allows for waning of immunity, where recovered (immune) individuals are assumed to become fully susceptible after an average of $1/\delta$ time period.
 The dynamics of the SIRS model is described by the following set of differential equations:
 \begin{align}
@@ -508,21 +511,21 @@ The dynamics of the SIRS model is described by the following set of differential
 where $\mu$ represents the birth/death rate, $\beta(t)$ represents the time-varying transmission rate, and $\gamma$ represents the recovery rate.
 The basic reproduction number $\mathcal R_0(t) = \beta(t)/(\gamma + \mu)$ is defined as the average number of secondary infections that a single infected individual would cause in a fully susceptible population at time $t$ and measures the intrinsic transmissibility of a pathogen.
 
-When we first introduce the idea of pathogen resilience (Figure 2), we impose sinusoidal changes to the transmission rate to account for seasonal transmission:
+When we first introduced the idea of pathogen resilience (Figure 2), we imposed sinusoidal changes to the transmission rate to account for seasonal transmission:
 \begin{equation}
 \beta(t) = b_1 (1 + \theta \cos(2 \pi (t-\phi))) \alpha(t),
 \end{equation}
 where $b_1$ represents the baseline transmission rate, $\theta$ represents the seasonal amplitude, and $\phi$ represents the seasonal offset term.
-Here, we also introduce an extra multiplicative term $\alpha(t)$ to account for the impact of pandemic NPIs, where $\alpha(t) < 1$ indicates transmission reduction.
-Figure 2A and 2B are generated assuming $b_1 = 3 \times (365/7+1/50)/\mathrm{years}$, $\theta=0.2$, $\phi=0$, $\mu=1/50/\mathrm{years}$, $\gamma=365/7/\mathrm{years}$, and $\delta=1/2/\mathrm{years}$,
-In Figure 2A, we impose a 50\% transmission reduction for 6 months from 2020:
+Here, we also introduced an extra multiplicative term $\alpha(t)$ to account for the impact of pandemic perturbations, where $\alpha(t) < 1$ indicates transmission reduction.
+Figure 2A and 2B were generated assuming $b_1 = 3 \times (365/7+1/50)/\mathrm{years}$, $\theta=0.2$, $\phi=0$, $\mu=1/50/\mathrm{years}$, $\gamma=365/7/\mathrm{years}$, and $\delta=1/2/\mathrm{years}$,
+In Figure 2A, we imposed a 50\% transmission reduction for 6 months from 2020:
 \begin{equation}
 \alpha(t) = \begin{cases}
 0.5 & 2020 \leq t< 2020.5\\
 1 & \textrm{otherwise}
 \end{cases}
 \end{equation}
-In Figure 2B, we impose a 50\% transmission reduction for 6 months from 2020 and a permanent 10\% reduction onward:
+In Figure 2B, we imposed a 50\% transmission reduction for 6 months from 2020 and a permanent 10\% reduction onward:
 \begin{equation}
 \alpha(t) = \begin{cases}
 1 & t < 2020\\
@@ -530,18 +533,19 @@ In Figure 2B, we impose a 50\% transmission reduction for 6 months from 2020 and
 0.9 & 2020.5 \leq t
 \end{cases}
 \end{equation}
-In both scenarios, we simulate the SIRS model from the following initial conditions ($S(0) = 1/\mathcal R_0$, $I(0) = 1\times 10^{-6}$, and $R(0) = 1 - S(0) - I(0)$) from 1900 until 2030.
+In both scenarios, we simulated the SIRS model from the following initial conditions ($S(0) = 1/\mathcal R_0$, $I(0) = 1\times 10^{-6}$, and $R(0) = 1 - S(0) - I(0)$) from 1900 until 2030.
 
-To measure the empirical resilience of the SIR model (Figure 2C and 2F), we compute the normalized distance between post-intervention susceptible and logged infected proportions and their corresponding pre-intervention values at the same time of year:
+To measure the empirical resilience of the SIRS model (Figure 2C and 2F), we computed the normalized distance between post-intervention susceptible and logged infected proportions and their corresponding unperturbed values at the same time:
 \begin{equation}
-\sqrt{\left(\frac{S(t) - \tsub{S}{pre}(t)}{\sigma_S}\right)^2 + \left(\frac{\log I(t) - \log \tsub{I}{pre}(t)}{\sigma_{\log I}}\right)^2},
+\sqrt{\left(\frac{S(t) - \tsub{S}{unperturbed}(t)}{\sigma_S}\right)^2 + \left(\frac{\log I(t) - \log \tsub{I}{unperturbed}(t)}{\sigma_{\log I}}\right)^2},
 \end{equation}
-where $\sigma_S$ and $\sigma_{\log I}$ represent the standard deviation in the pre-intervention susceptible and logged infected proportions.
-We normalize the differences in susceptible and logged infected proportions to allow both quantities to equally contribute to the changes in distance from the attractor.
+where $\sigma_S$ and $\sigma_{\log I}$ represent the standard deviation in the unperturbed susceptible and logged infected proportions.
+The unperturbed values were obtained by simulating the same SIRS model without pandemic perturbations ($\alpha = 1$).
+We normalized the differences in susceptible and logged infected proportions to allow both quantities to equally contribute to the changes in distance from the attractor.
 We used logged prevalence, instead of absolute prevalence, in order to capture epidemic dynamics in deep troughs during the intervention period.
-In Supplementary Materials, we also compare how the degree of seasonal transmission affects empirical resilience by varying $\theta$ from 0 to 0.4; when we assume no seasonality ($\theta = 0$), we do not normalize the distance because the standard deviation of pre-intervention dynamics are zero. 
+In Supplementary Materials, we also compared how the degree of seasonal transmission affects empirical resilience by varying $\theta$ from 0 to 0.4; when we assumed no seasonality ($\theta = 0$), we did not normalize the distance because the standard deviation of pre-intervention dynamics are zero. 
 
-Finally, we use the SIRS model to understand how underlying epidemiological parameters affect pathogen resilience and link this relationship to underlying susceptible host dynamics.
+We used the SIRS model to understand how underlying epidemiological parameters affect pathogen resilience and link this relationship to underlying susceptible host dynamics.
 For the simple SIRS model without seasonal transmission ($\theta = 0$), the intrinsic resilience corresponds to
 \begin{equation}
 -\frac{\mathrm{Re}(\lambda)}{2} = \frac{\delta + \beta I^{\ast} + \mu}{2}.
@@ -555,12 +559,23 @@ The susceptible replenishment rate is given by
 \tsub{S}{replenish} = \frac{\mu + \delta R}{S^\ast},
 \end{equation}
 where $S^\ast = 1/\mathcal R_0$ represents the equilibrium proportion of susceptible individuals.
-We vary the basic reproduction number $\mathcal R_0$ between 1.1 to 6 and the average duration of immunity $1/\delta$ between 2 to 80 years, and compute these two quantities.
-In doing so, we fix all other parameters: $\mu=1/80/\mathrm{years}$ and $\gamma=365/7/\mathrm{years}$.
+We varied the basic reproduction number $\mathcal R_0$ between 1.1 to 6 and the average duration of immunity $1/\delta$ between 2 to 4 years, and computed these two quantities.
+In doing so, we fixed all other parameters: $\mu=1/80/\mathrm{years}$ and $\gamma=365/7/\mathrm{years}$.
+
+Finally, we used a seasonally unforced stochastic SIRS model without demography to understand how pathogen resilience affects sensitivity of the system to demographic stochasticity (see Supplementary Text for the details of the stochastic SIRS model).
+By varying the basic reproduction number $\mathcal R_0$ between 2 to 20 and the average duration of immunity $1/\delta$ between 1 to 40 years, we ran the the SIRS model for 100 years and computed the epidemic amplitude, which we defined as  $(\max I - \min I)/(2 \bar{I})$.
+Each simulation began from the equilibrium, and we truncated initial 25 years before computing the epidemic amplitude.
+In doing so, we assumed $\gamma=365/7/\mathrm{years}$ and fixed the population size to 1 billion to prevent any fadeouts.
+We also considered using a seasonally forced stochastic SIRS model without demography, assuming an amplitude of seasonal forcing of $0.04$;
+in this case, we computed the relative epidemic amplitude by comparing the deterministic and stochastic trajectories (Supplementary Materials).
 
 \section*{Data availability}
 
+All data and code are stored in a publicly available GitHub repository (\url{https://github.com/cobeylab/return-time}).
+
 \section*{Funding}
+
+S.W.P. is a Peter and Carmen Lucia Buck Foundation Awardee of the Life Sciences Research Foundation. 
 
 \pagebreak
 
@@ -573,8 +588,8 @@ In doing so, we fix all other parameters: $\mu=1/80/\mathrm{years}$ and $\gamma=
 
 \subsection*{Resilience of a stage-structured system.}
 
-In Figure 2G--I, we use a more realistic, stage-structured model to illustrate how transient phenomena can cause the system to slow down.
-Specifically, we use the stage-structured RSV model proposed by \citep{pitzer2015environmental}, which assumes that subsequent reinfections cause an individual to become less susceptible and transmissible than previous infections.
+In Figure 2G--I, we used a more realistic, stage-structured model to illustrate how transient phenomena can cause the system to slow down.
+Specifically, we used the stage-structured RSV model proposed by \citep{pitzer2015environmental}, which assumes that subsequent reinfections cause an individual to become less susceptible and transmissible than previous infections.
 The model dynamics can be described as follows:
 \begin{align}
 \frac{\dd M}{\dd t} &= \mu - (\omega + \mu) M\\
@@ -601,16 +616,16 @@ The force of infection is modeled using a sinusoidal function:
 \lambda(t) &= \beta (I_1 + \rho_1 I_2 + \rho_2 (I_3 + I_4)), 
 \end{align}
 where $b_1$ represents the baseline transmission rate; $\theta$ represents the seasonal amplitude; $\phi$ represents the seasonal offset term; $\alpha(t)$ represents the intervention effect; and $\rho_i$ represents the impact of immunity on transmission reduction.
-We use the following parameters to simulate the impact of interventions on epidemic dynamics \citep{pitzer2015environmental}: $b_1 = 9 \times (365/10+1/80)/\mathrm{years}$, $\theta = 0.2$, $\phi = -0.1$, $\omega=365/112/\mathrm{years}$, $\gamma_1=365/10/\mathrm{years}$, $\gamma_2=365/7/\mathrm{years}$, $\gamma_3=365/5/\mathrm{years}$, $\sigma_1 = 0.76$, $\sigma_2 = 0.6$, $\sigma_3 = 0.4$, $\rho_1 = 0.75$, $\rho_2 = 0.51$, and $\mu = 1/80/\mathrm{years}$.
-We assume a 50\% transmission reduction for 6 months from 2020:
+We used the following parameters to simulate the impact of interventions on epidemic dynamics \citep{pitzer2015environmental}: $b_1 = 9 \times (365/10+1/80)/\mathrm{years}$, $\theta = 0.2$, $\phi = -0.1$, $\omega=365/112/\mathrm{years}$, $\gamma_1=365/10/\mathrm{years}$, $\gamma_2=365/7/\mathrm{years}$, $\gamma_3=365/5/\mathrm{years}$, $\sigma_1 = 0.76$, $\sigma_2 = 0.6$, $\sigma_3 = 0.4$, $\rho_1 = 0.75$, $\rho_2 = 0.51$, and $\mu = 1/80/\mathrm{years}$.
+We assumed a 50\% transmission reduction for 6 months from 2020:
 \begin{equation}
 \alpha(t) = \begin{cases}
 0.5 & 2020 \leq t< 2020.5\\
 1 & \textrm{otherwise}
 \end{cases}
 \end{equation}
-The model is simulated from 1900 to 2030 using the following initial conditions: $M=0$, $S_0=1/\mathcal R_0-I_1$, $I_1=1\times 10^{-6}$, $S_1=1-1/\mathcal R_0$, $I_2=0$, $S_2=0$, $I_3=0$, $S_3=0$, and $I_4=0$.
-For the phase plane analysis (Figure 2H) and distance analysis (Figure 2I), we rely on the average susceptibility,
+The model was simulated from 1900 to 2030 using the following initial conditions: $M=0$, $S_0=1/\mathcal R_0-I_1$, $I_1=1\times 10^{-6}$, $S_1=1-1/\mathcal R_0$, $I_2=0$, $S_2=0$, $I_3=0$, $S_3=0$, and $I_4=0$.
+For the phase plane analysis (Figure 2H) and distance analysis (Figure 2I), we relied on the average susceptibility,
 \begin{equation}
 \bar{S} = S_0 + \sigma_1 S_1 + \sigma_2 S_2 + \sigma_3 S_3,
 \end{equation}
@@ -618,11 +633,11 @@ and total prevalence,
 \begin{equation}
 \tsub{I}{total} = I_1 + I_2 + I_3 + I_4.
 \end{equation}
-These quantities are used to compute the normalized distance from the attractor, as described in the main text.
+These quantities were used to compute the normalized distance from the attractor, as described in the main text.
 
 \subsection*{Resilience of a multistrain system.}
 
-We use a simple two-strain model to show that a multistrain host-pathogen system that is coupled through cross immunity can be described by a single resilience value.
+We used a simple two-strain model to show that a multistrain host-pathogen system that is coupled through cross immunity can be described by a single resilience value.
 The model dynamics can be described as follows \citep{bhattacharyya2015cross}: 
 \begin{align}
 \frac{\dd S}{\dd t} &= \mu - \mu S - (\lambda_1 + \lambda_2) S + \rho_1 R_1 + \rho_2 R_2 \\
@@ -654,10 +669,10 @@ The force of infection is modeled as follows:
 \lambda_1 &= \beta_1 (I_1 + J_1)\\
 \lambda_2 &= \beta_2 (I_2 + J_2)
 \end{align}
-In Supplementary Figures S2--S4, we assume the following parameters:
+In Supplementary Figures S2--S4, we assumed the following parameters:
 $b_1 = 2 \times 52/\mathrm{years}$, $b_2 = 4 \times 52/\mathrm{years}$, $\phi_1 = \phi_2 = 0$, $\epsilon_{12} = 0.9$, $\epsilon_{21} = 0.5$,
 $\gamma_1 = \gamma_2 = 52/\mathrm{years}$, $\rho_1 = \rho_2 = 1/\mathrm{years}$, and $\mu=1/70/\mathrm{years}$.
-For all simulations, we assume a 50\% transmission reduction for 6 months from 2020:
+For all simulations, we assumed a 50\% transmission reduction for 6 months from 2020:
 \begin{equation}
 \alpha(t) = \begin{cases}
 0.5 & 2020 \leq t< 2020.5\\
@@ -668,27 +683,27 @@ The seasonal amplitude $\theta$ is varied from 0 to 0.4.
 All simulations were ran from 1900 to 2030 with following initial conditions: 
 $S(0) = 1 - 2\times 10^{-6}$, $I_1(0) = 1 \times 10^{-6}$, $I_2(0) = 1 \times 10^{-6}$, $R_1(0) = 0$, $R_2(0) = 0$, $J_1(0) = 0$, $J_2(0) = 0$, and $R(0) = 0$.
 
-We consider three scenarios for measuring pathogen resilience: (1) we only have information about strain 1, (2) we only have information about strain 2, and (3) we are unable to distinguish between strains.
-In the first two scenarios (see panels A--C for strain 1 and panels D--F for strain 2), we consider the dynamics of average susceptibility for each strain and total prevalence:
+We considered three scenarios for measuring pathogen resilience: (1) we only have information about strain 1, (2) we only have information about strain 2, and (3) we are unable to distinguish between strains.
+In the first two scenarios (see panels A--C for strain 1 and panels D--F for strain 2), we considered the dynamics of average susceptibility for each strain and total prevalence:
 \begin{align}
 \bar{S}_1 &= S + \epsilon_{12} R_2\\
 \hat{I}_1 &= I_1 + J_1\\
 \bar{S}_2 &= S + \epsilon_{21} R_1\\
 \hat{I}_2 &= I_2 + J_2
 \end{align}
-In the third scenario (panels G--I), we consider the dynamics of total susceptible and infected populations:
+In the third scenario (panels G--I), we considered the dynamics of total susceptible and infected populations:
 \begin{align}
 \hat{S} &= S + R_2 + R_1\\
 \hat{I} &= I_1 + J_1 + I_2 + J_2
 \end{align}
-These quantities are used to compute the normalized distance from the attractor, as described in the main text.
+These quantities were used to compute the normalized distance from the attractor, as described in the main text.
 
 \subsection*{Estimating intrinsic resilience using mechanistic model}
 
 We tested whether we can reliably estimate the intrinsic resilience of a system by fitting a mechanistic model.
 Specifically, we simulated case time series from stochastic SIRS and two-strain models and fitted a simple, deterministic SIRS model using a Bayesian framework.
 
-We simulated the models in discrete time, incorporating demographic stochasticity:
+We simulated the models in discrete time with a daily time step ($\Delta t = 1$), incorporating demographic stochasticity:
 \begin{align}
 \beta(t) &= \mathcal R_0 \left(1 + \theta \cos\left(\frac{2 \pi t}{364}\right)\right) \alpha(t)  (1-\exp(-\gamma))\\
 \textrm{FOI}(t) &= \beta(t) I(t- \Delta t)/N\\
@@ -706,17 +721,17 @@ R(t) &= R(t-\Delta t) + N_{IR}(t) - \Delta R(t)
 where $\textrm{FOI}$ represent the force of infection;
 $N_{ij}$ represent the number of individuals moving from compartment $i$ to $j$ on a given day; 
 and $B(t)$ represents the number of new births.
-We simulate the model on a daily scale---assuming 364 days in a year so that it can be evenly grouped into 52 weeks---with the following parameters:
+We simulated the model on a daily scale---assuming 364 days in a year so that it can be evenly grouped into 52 weeks---with the following parameters:
 $\mathcal R_0 = 3$, $\theta = 0.1$, $\gamma = 1/7/\mathrm{days}$, $\delta = 1/(364\times 2)/\mathrm{days}$,
 $\mu =1/(364\times 50)/\mathrm{days}$, and $N = 1 \times 10^{8}$.
-The model is simulated from 1900 to 2030 assuming $S(0) = N/3$, $I(0) = 100$, and $R(0) = N - S(0) - I(0)$.
-The observed incidence from the model is then simulated as follows:
+The model was simulated from 1900 to 2030 assuming $S(0) = N/3$, $I(0) = 100$, and $R(0) = N - S(0) - I(0)$.
+The observed incidence from the model was then simulated as follows:
 \begin{equation}
 C(t) = \textrm{Beta-Binom}(N_{SI}(t), \rho, k), 
 \end{equation}
 where $\rho$ represents the reporting probability and $k$ represents the overdispersion parameter of beta-binomial distribution.
-Here, we use the beta-binomial distribution to account for overdispersion in reporting.
-We assume $\rho = 0.002$ (i.e., 0.2\% probability) and $k = 1000$.
+Here, we used the beta-binomial distribution to account for overdispersion in reporting.
+We assumed $\rho = 0.002$ (i.e., 0.2\% probability) and $k = 1000$.
 
 We used an analogous approach for the two-strain model:
 \begin{align}
@@ -754,20 +769,20 @@ J_1(t) &= J_1(t-\Delta t) - \Delta J_1(t) + N_{R_2J_1}(t) \\
 J_2(t) &= J_2(t-\Delta t) - \Delta J_2(t) + N_{R_1J_2}(t) \\
 R(t) &= R(t-\Delta t) - \Delta R(t) + N_{J_1 R}(t) + N_{J_2 R}(t) 
 \end{align}
-We simulate the model on a daily scale with previously estimated parameters for the RSV-HMPV interaction \citep{bhattacharyya2015cross}:
+We simulated the model on a daily scale with previously estimated parameters for the RSV-HMPV interaction \citep{bhattacharyya2015cross}:
 $b_1=1.7/\mathrm{weeks}$, $b_1=1.95/\mathrm{weeks}$, $\theta_1 = 0.4$, $\theta_2 = 0.3$, $\phi_1=0.005 \times 7/364$, $\phi_2=4.99 \times 7/364$, $\epsilon_{12}=0.92$, $\epsilon_{21}=0.45$, $\gamma_1=1/10/\mathrm{days}$, $\gamma_2=1/10/\mathrm{days}$, $\rho_1=1/364/\mathrm{days}$, $\rho_2=1/364/\mathrm{days}$, $\mu=1/(70\times 364)/\mathrm{days}$, and $N = 1 \times 10^8$.
-The model is simulated from 1900 to 2030 assuming $S(0) = N - 200$, $I_1(0) = 100$, $I_2(0) = 100$, $R_1(0) = 0$, $R_2(0) = 0$, $J_1(0) = 0$, $J_2(0) = 0$, and $R(0) = 0$.
+The model was simulated from 1900 to 2030 assuming $S(0) = N - 200$, $I_1(0) = 100$, $I_2(0) = 100$, $R_1(0) = 0$, $R_2(0) = 0$, $J_1(0) = 0$, $J_2(0) = 0$, and $R(0) = 0$.
 The observed incidence for each strain is then simulated as follows:
 \begin{align}
-C_1(t) &= \mathrm{Beta-Binom}(N_{SI_1}(t) + N_{R_2J_1}, \rho, k),\\ 
-C_2(t) &= \mathrm{Beta-Binom}(N_{SI_2}(t) + N_{R_1J_2}, \rho, k),
+C_1(t) &= \textrm{Beta-Binom}(N_{SI_1}(t) + N_{R_2J_1}, \rho, k),\\ 
+C_2(t) &= \textrm{Beta-Binom}(N_{SI_2}(t) + N_{R_1J_2}, \rho, k),
 \end{align}
 where $\rho$ represents the reporting probability and $k$ represents the overdispersion parameter of beta-binomial distribution.
-We assume $\rho = 0.002$ (i.e., 0.2\% probability) and $k = 500$.
-We also consider the total incidence: $\tsub{C}{total}(t) = C_1(t) + C_2(t)$.
+We assumed $\rho = 0.002$ (i.e., 0.2\% probability) and $k = 500$.
+We also considered the total incidence: $\tsub{C}{total}(t) = C_1(t) + C_2(t)$.
 
-For both models, we consider a more realistic challenges in intervention effects $\alpha(t)$ to challenge our ability to estimate the intervention effects.
-Thus, we assume a 40\% transmission reduction for 3 months from March 2020, followed by a 10\% transmission reduction for 6 months, 20\% transmission reduction for 3 months, and a final return to normal levels:
+For both models, we considered a more realistically shaped pandemic perturbation $\alpha(t)$ to challenge our ability to estimate the intervention effects.
+Thus, we assumed a 40\% transmission reduction for 3 months from March 2020, followed by a 10\% transmission reduction for 6 months, 20\% transmission reduction for 3 months, and a final return to normal levels:
 \begin{equation}
 \alpha(t) = \begin{cases}
 1 & t < 2020.25\\
@@ -777,9 +792,9 @@ Thus, we assume a 40\% transmission reduction for 3 months from March 2020, foll
 1 & 2021.25 \leq t
 \end{cases}.
 \end{equation}
-For all simulations, we truncate the time series from the beginning of 2014 to the end of 2023 and aggregate them into weekly cases.
+For all simulations, we truncated the time series from the beginning of 2014 to the end of 2023 and aggregate them into weekly cases.
 
-To infer intrinsic resilience from time series, we fit a simple discrete time, deterministic SIRS model \citep{park2024predicting}:
+To infer intrinsic resilience from time series, we fitted a simple discrete time, deterministic SIRS model \citep{park2024predicting}:
 \begin{align}
 \Delta t &= 1\,\mathrm{week}\\
 \textrm{FOI}(t) &= \beta(t) (I(t- \Delta t)+\omega)/N\\
@@ -794,37 +809,37 @@ I(t) &= I(t-\Delta t) - \Delta I(t) + N_{SI}(t)  \\
 R(t) &= R(t-\Delta t) - \Delta R(t) + N_{IR}(t)
 \end{align}
 where we include an extra term $\omega$ to account for external infections.
-Although actual simulations do not include any external infections, we found that including this term generally helped with model convergence in previous analyses \citep{park2024predicting}.
-The transmission rate is divided into a seasonal term $\tsub{\beta}{seas}(t)$ (repeated every year) and intervention term $\alpha(t)$, which are estimated jointly:
+Although actual simulations did not include any external infections, we found that including this term generally helped with model convergence in previous analyses \citep{park2024predicting}.
+The transmission rate was divided into a seasonal term $\tsub{\beta}{seas}(t)$ (repeated every year) and intervention term $\alpha(t)$, which were estimated jointly:
 \begin{align}
 \beta(t) &= \tsub{\beta}{seas}(t) \alpha(t),
 \end{align}
 where $\alpha < 1$ corresponds to reduction in transmission due to intervention effects.
-To constrain the smoothness of $\tsub{\beta}{seas}(t)$, we impose cyclic, random-walk priors:
+To constrain the smoothness of $\tsub{\beta}{seas}(t)$, we imposed cyclic, random-walk priors:
 \begin{align}
 \tsub{\beta}{seas}(t) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(t-1), \sigma) \qquad t = 2 \dots 52\\
 \tsub{\beta}{seas}(1) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(52), \sigma)
 \end{align}
 \swp{I noticed that I forgot to put a prior on $\sigma$ so need to re-do this but won't change the results.}
-We fix $\alpha(t)=1$ for all $t < 2020$ and estimate $\alpha$ assuming a normal prior:
+We fixed $\alpha(t)=1$ for all $t < 2020$ and estimate $\alpha$ assuming a normal prior:
 \begin{equation}
 \alpha \sim \mathrm{Normal}(1, 0.25).
 \end{equation}
-We assume weakly informative priors on $\omega$ and $\nu$:
+We assumed weakly informative priors on $\omega$ and $\nu$:
 \begin{align}
 \omega \sim \mathrm{Normal}(0, 200)\\
 \nu \sim \mathrm{Normal}(104, 26)
 \end{align}
-We assume that the true birth/death rates, population sizes, and recovery rates are known.
+We assumed that the true birth/death rates, population sizes, and recovery rates are known.
 We note, however, that assuming $\gamma=1/\mathrm{week}$ actually corresponds to a mean simulated infectious period of 1.6 weeks, which is much longer than the true value; this approximation allows us to test whether we can still robustly estimate the intrinsic resilience given parameter mis-specification.
-Initial conditions are estimated with following priors:
+Initial conditions were estimated with following priors:
 \begin{align}
 S(0) &= N s(0)\\
 I(0) &= N i(0)\\
 s(0) &\sim \textrm{Uniform}(0, 1)\\
 i(0) &\sim \textrm{Half-Normal}(0, 0.001)
 \end{align}
-Finally, the Observation model is specified as follows:
+Finally, the observation model was specified as follows:
 \begin{align}
 \textrm{Cases}(t) &\sim \textrm{Negative-Binomial}(\rho N_{SI}(t), \phi)\\
 \rho &\sim \textrm{Half-Normal}(0, 0.02)\\
@@ -832,27 +847,27 @@ Finally, the Observation model is specified as follows:
 \end{align}
 where $\rho$ represents the reporting probability and $\phi$ represents the negative binomial overdispersion parameter.
 
-The model is fitted to four separate time series: (1) incidence time series from the SIRS model, (2) incidence time series for strain 1 from the two-strain model, (3) incidence time series for strain 2 from the two-strain model, and (4) combined incidence time series for strains 1 and 2 from the two-strain model.
+The model was fitted to four separate time series: (1) incidence time series from the SIRS model, (2) incidence time series for strain 1 from the two-strain model, (3) incidence time series for strain 2 from the two-strain model, and (4) combined incidence time series for strains 1 and 2 from the two-strain model.
 The model was fitted using rstan \citep{carpenter2017stan,rstan}.
 The resulting posterior distribution was used to calculate the intrinsic resilience of the seasonally unforced system with the same parameters;
 eigenvalues of the discrete-time SIR model were computed by numerically finding the equilibrium and calculating the Jacobian matrix.
 
 \subsection*{Validations for window-selection criteria}
 
-We use stochastic SIRS simulations to validate the window-selection criteria that we use for the linear regression for estimating empirical resilience.
-For each simulation, we begin by generating a random intervention $\alpha(t)$ from a random set of parameters.
-First, we draw the duration of intervention $\tsub{\tau}{npi}$ from a uniform distribution between 0.5 and 3.5 years.
-Then, we draw independent normal variables $z_i$ of length $\lfloor 364 \tsub{\tau}{npi} \rfloor$ with a standard deviation of 0.02 and take a reverse cumulative sum to obtain a realistic shape for the intervention:
+We used stochastic SIRS simulations to identify optimal parameters for the window-selection criteria that we used for the linear regression for estimating empirical resilience.
+For each simulation, we began by generating a random perturbation $\alpha(t)$ from a random set of parameters.
+First, we drew the duration of intervention $\tsub{\tau}{npi}$ from a uniform distribution between 1 and 2 years.
+Then, we drew independent normal variables $z_i$ of length $\lfloor 364 \tsub{\tau}{npi} \rfloor$ with a standard deviation of 0.02 and took a reverse cumulative sum to obtain a realistic shape for the intervention:
 \begin{equation}
 x_n = 1 + \sum_{i=n}^{\lfloor 364 \tsub{\tau}{npi}\rfloor} z_i, \quad n = 1, \dots, \lfloor 364 \tsub{\tau}{npi}\rfloor.
 \end{equation}
-We repeat this random generation process until less than 10\% of $x_n$ exceeds 1.
+We repeated this random generation process until less than 10\% of $x_n$ exceeds 1---this was done to prevent the perturbation $\alpha(t)$ stays below 1 (and therefore reduce transmission) for the most part.
 Then, we set any values that are above 1 or below 0 as 1 and 0, respectively.
-Then, we randomly draw the minimum transmission during intervention $\tsub{\alpha}{min}$ from a uniform distribution between 0.5 and 0.7 and scale $x_n$ to have a minimum of $\tsub{\alpha}{min}$:
+Then, we randomly drew the minimum transmission during intervention $\tsub{\alpha}{min}$ from a uniform distribution between 0.5 and 0.7 and scale $x_n$ to have a minimum of $\tsub{\alpha}{min}$:
 \begin{equation}
 x_{\textrm{scale},n} =  \tsub{\alpha}{min} + (1- \tsub{\alpha}{min}) \times \frac{x_n-\min x_n}{1- \min x_n}.
 \end{equation}
-This allows us to simulate a realistically shaped intervention:
+This allowed us to simulate a realistically shaped intervention:
 \begin{equation}
 \alpha(t) = \begin{cases}
 1 & t < 2020\\
@@ -860,12 +875,14 @@ x_{\textrm{scale},364(t-2020)} & 2020 \leq t < 2020 + \tsub{\tau}{npi}\\
 1 & \tsub{\tau}{npi} \leq t
 \end{cases}.
 \end{equation}
-Given this intervention function, we draw $\mathcal R_0$ from a uniform distribution between 1.5 and 3 and the mean duration of immunity $1/\delta$ from a uniform distribution between 0.5 and 2.
+Given this intervention function, we draw $\mathcal R_0$ from a uniform distribution between 1.5 and 4 and the mean duration of immunity $1/\delta$ from a uniform distribution between 1 and 4.
 Then, we simulate the stochastic SIRS model from $S(0) = 10^8/\mathcal R_0$ and $I(0) = 100$ from 1990 to 2025 and truncate the time series to 2014--2025;
 if the epidemic becomes extinct before the end of simulation, we discard that simulation and start over from the intervention generation step.
-We then apply the window selection criteria described in the main text to compute the empirical resilience and compare it against the intrinsic resilience of the seasonally unforced system.
-We also compare this with the naive approach that uses the entire distance-from-attractor time series, starting from the maximum distance.
-We repeat this procedure 500 times and quantify the correlation between empirical and intrinsic resilience estimates across two approaches.
+
+For each epidemic simulation, we computed the empirical resilience by varying the threshold $R$ for the nearest neighbor approach from 4 to 14 with increments of 2, the number of divisions $K$ for the window selection between 8 and 25, and the truncation threshold $a$ for the window selection between 1 to 3;
+this was done for all possible combinations of $R$, $K$, and $a$.
+We also compared this with the naive approach that uses the entire distance-from-attractor time series, starting from the maximum distance to the end of the time series.
+We repeated this procedure 500 times and quantified the correlation between empirical and intrinsic resilience estimates across two approaches.
 
 \pagebreak
 
@@ -879,12 +896,12 @@ We repeat this procedure 500 times and quantify the correlation between empirica
 Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
 Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
 Gray regions indicate the duration of interventions.
-(B, E, H) Phase plane representation of the corresponding model.
+(B, E, H) Phase plane representation of the time series in panels A, D, and G alongside the corresponding susceptible host dynamics.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
 (C, F, I) Changes in logged distance from the attractor over time.
 Blue lines represent the logged distance from the attractor.
 Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
-Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
+Dotted lines show the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
 
@@ -898,12 +915,12 @@ Dotted lines are superimposed as a comparison to have the same slope as the intr
 Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
 Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
 Gray regions indicate the duration of interventions.
-(B, E, H) Phase plane representation of the corresponding model.
+(B, E, H) Phase plane representation of the time series in panels A, D, and G alongside the corresponding susceptible host dynamics.
 Blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
 (C, F, I) Changes in logged distance from the attractor over time.
 Blue lines represent the logged distance from the attractor.
 Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
-Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
+Dotted lines show the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
 
@@ -912,17 +929,18 @@ Dotted lines are superimposed as a comparison to have the same slope as the intr
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure2/figure2_multi.pdf}
 \caption{
-\textbf{Conceptual framework for measuring pathogen resilience following NPIs for a multi-strain system with seasonal forcing.}
-(A, D, G) Simulated epidemic trajectories using a multi-strain system with seasonal forcing (amplitude of 0.2).
+\textbf{Conceptual framework for measuring pathogen resilience following NPIs for a two-strain system with seasonal forcing.}
+(A, D, G) Simulated epidemic trajectories using a two-strain system with seasonal forcing (amplitude of 0.2).
+In this model, two strains compete through cross immunity.
 Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
 Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
 Gray regions indicate the duration of interventions.
-(B, E, H) Phase plane representation of the corresponding model.
+(B, E, H) Phase plane representation of the time series in panels A, D, and G alongside the corresponding susceptible host dynamics.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
 (C, F, I) Changes in logged distance from the attractor over time.
 Blue lines represent the logged distance from the attractor.
 Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
-Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
+Dotted lines show the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
 
@@ -933,15 +951,16 @@ Dotted lines are superimposed as a comparison to have the same slope as the intr
 \caption{
 \textbf{Conceptual framework for measuring pathogen resilience following NPIs for a multi-strain system with strong seasonal forcing.}
 (A, D, G) Simulated epidemic trajectories using a multi-strain system with seasonal forcing (amplitude of 0.4).
+In this model, two strains compete through cross immunity.
 Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
 Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
 Gray regions indicate the duration of interventions.
-(B, E, H) Phase plane representation of the corresponding model.
+(B, E, H) Phase plane representation of the time series in panels A, D, and G alongside the corresponding susceptible host dynamics.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after interventions are introduced, respectively.
 (C, F, I) Changes in logged distance from the attractor over time.
 Blue lines represent the logged distance from the attractor.
 Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
-Dotted lines are superimposed as a comparison to have the same slope as the intrinsic resilience of the seasonally unforced system.
+Dotted lines show the intrinsic resilience of the seasonally unforced system.
 }
 \end{figure}
 
@@ -951,10 +970,12 @@ Dotted lines are superimposed as a comparison to have the same slope as the intr
 \includegraphics[width=\textwidth]{../figure_fit/figure_fit.pdf}
 \caption{
 \textbf{Mechanistic model fits to simulated data and inferred intrinsic resilience.}
-(A, D, G, J) Simulated case time series from corresponding models (red) and SIRS model fits (black).
-(B, E, H, K) Assumed changes in transmission due to pandemic NPIs (red) and estimated changes from the SIRS model (black).
+We simulated discrete time, stochastic epidemic trajectories using seasonally forced SIRS model (A,E,I) and seasonally forced two-strain model (B--D, F--H, and J--L) and tested whether we can estimate the intrinsic resilience of the seasonally unforced versions of the model by fitting a mechanistic model (Supplementary Text).
+We fitted the same discrete time, deterministic SIRS model across all four scenarios.
+(A--D) Simulated case time series from corresponding models shown in the title (red) and SIRS model fits (black).
+(E--H) Assumed changes in transmission due to pandemic perturbations (red) and estimated time-varying relative transmission rates for the perturbation impact from the SIRS model fits (black).
 Solid lines and shaded regions represent fitted posterior median and 95\% credible intervals.
-(C, F, I, L) True intrinsic resilience of the seasonally unforced system (vertical lines) and the posterior distribution of the inferred intrinsic resilience from the SIRS model (density plots).
+(I--L) True intrinsic resilience of the seasonally unforced system (vertical lines) and the posterior distribution of the inferred intrinsic resilience from the SIRS model (density plots).
 }
 \end{figure}
 
@@ -966,6 +987,7 @@ Solid lines and shaded regions represent fitted posterior median and 95\% credib
 \caption{
 \textbf{Sensitivity of the distance from the attractor to choices about emedding lags and dimensions.}
 Sensitivity analysis for the distance-from-attractor time series shown in Figure 3E in the main text by varying the embedding lag between 10--15 days and embedding dimensions between 2--6 dimensions.
+\swp{You said: ``Did you do sensitivity analyses with other systems or just this one? I think we'll probably need to do it with several systems''. I think it's OK to just do this because we're just trying to show qualitatively that longer lags and higher dimensions smooth things out. We also explore resilience of other models in other figures.}
 }
 \end{figure}
 
@@ -975,11 +997,10 @@ Sensitivity analysis for the distance-from-attractor time series shown in Figure
 \includegraphics[width=\textwidth]{../figure_analysis_random/figure_analysis_random.pdf}
 \caption{
 \textbf{Impact of fitting window selection on the estimation of empirical resilience.}
-We simulated 500 epidemics of a stochastic SIRS model with randomly drawn parameters and randomly generated intervention impacts.
-For each simulation, we reconstructed the empirical attractor based on the approach outlined in Figure 3 and estimate the distance from the attractor.
-The naive approach fits a linear regression on a log scale, starting from the maximum distance until the end of the time series.
-The window-based approach tries to select an appropriate window by smoothing the distance estimates and finding the time period when the smoothed time series crosses pre-determined threshold, relative to the maximum distance;
-then, a linear regression is fitted by using the raw distance within this time period.
+We simulated 500 epidemics of a stochastic SIRS model with randomly drawn parameters and randomly generated pandemic perturbations (Supplementary Text).
+For each simulation, we varied the false nearest neighbor threshold $R$ for reconstructing the empirical attractor as well as the parameters for regression window selection (i.e., the truncation threshold $a$ and the the number of divisions $K$).
+Each point represents the resulting correlation coefficient between empirical and intrinsic resilience estimates for a given scenario.
+Dashed lines represent the correlation coefficient between empirical and intrinsic resilience estimates for the naive approach that fits a linear regression on a log scale, starting from the maximum distance until the end of the time series.
 }
 \end{figure}
 
@@ -1115,6 +1136,17 @@ Then, we calculate the difference between maximum and minimum of the relative di
 \includegraphics[width=\textwidth]{../figure_test/figure_test_korea.pdf}
 \caption{
 \textbf{Total number of reported respiratory infection cases in Korea.}
+}
+\end{center}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=\textwidth]{../figure_test/figure_test_nrevss.pdf}
+\caption{
+\textbf{Testing patterns for respiratory pathogens in the US reported through the NREVSS.}
 }
 \end{center}
 \end{figure}

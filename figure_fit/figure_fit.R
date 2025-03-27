@@ -24,6 +24,20 @@ ss_bboth <- summary(stanfit_sirs_bhattacharyya_both)
 time <- data_simulation_SIRS$year+data_simulation_SIRS$week/52
 time <- time[time > 2014]
 
+npifun_default <- function(t) {
+  if (t >= 2020.25 & t < 2020.5) {
+    npi <- 0.6
+  } else if (t >= 2020.5 & t < 2021) {
+    npi <- 0.9
+  } else if (t >= 2021 & t < 2021.25) {
+    npi <- 0.8
+  } else {
+    npi <- 1
+  }
+  
+  return(npi)
+}
+
 npidata <- data.frame(
   time=time,
   npi=sapply(time, npifun_default)
@@ -305,6 +319,9 @@ g12 <- ggplot(resilience_bboth) +
 gcomb <- ggarrange(g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12,
           byrow = FALSE,
           ncol=4,
-          labels=LETTERS[1:12])
+          labels=c("A", "E", "I",
+                   "B", "F", "J",
+                   "C", "G", "K",
+                   "D", "H", "L"))
 
 ggsave("figure_fit.pdf", gcomb, width=16, height=8)

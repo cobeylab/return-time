@@ -11,8 +11,8 @@ data_nrevss_resp <- read.csv("../data_processed/data_nrevss_resp.csv") %>%
     positive=round(mean(positive))
   )
 
-data_nrevss_resp$tests[15791] <- 3644
-data_nrevss_resp$tests[22850] <- 5846
+data_nrevss_resp$tests[18674] <- 3644
+data_nrevss_resp$tests[26923] <- 5846
 
 data_nrevss_resp_comb <- data_nrevss_resp %>%
   group_by(year, week, type) %>%
