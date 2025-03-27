@@ -112,9 +112,9 @@ Overall, our analysis highlight the persistence of common respiratory pathogens.
 
 \pagebreak
 
-Non-pharmaceutical interventions (NPIs) to slow the spread of SARS-CoV-2 disrupted the transmission of other human respiratory pathogens, adding uncertainties to their future epidemic dynamics and the overall public health burden \citep{baker2020impact}.
-As NPIs lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries, with some pathogens exhibiting earlier resurgences than others \citep{gomez2021uncertain,koltai2022determinants,park2024predicting}.
-Heterogeneities in the overall reduction in transmission and the timing of re-emergence likely reflect differences in NPI patterns, pathogen characteristics, immigration/importation from other countries, and pre-pandemic pathogen dynamics \citep{perofsky2024impacts}.
+Non-pharmaceutical interventions to slow the spread of SARS-CoV-2 disrupted the transmission of other human respiratory pathogens, adding uncertainties to their future epidemic dynamics and the overall public health burden \citep{baker2020impact}.
+As interventions lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries, with some pathogens exhibiting earlier resurgences than others \citep{gomez2021uncertain,koltai2022determinants,park2024predicting}.
+Heterogeneities in the overall reduction in transmission and the timing of re-emergence likely reflect differences in intervention patterns, pathogen characteristics, immigration/importation from other countries, and pre-pandemic pathogen dynamics \citep{perofsky2024impacts}.
 Therefore, comparing the differential impact of the pandemic perturbations across pathogens can provide unique opportunities to learn about underlying pathogen characteristics, such as their transmissibility or duration of immunity, from heterogeneities in re-emergence patterns \citep{chow2023effects}.
 
 \begin{figure}[!th]
@@ -147,9 +147,7 @@ In practice, information on susceptible hosts is often unavailable, making this 
 Instead, we utilize a mathematical technique to reconstruct empirical attractors from the data \citep{takens2006detecting}, which allows us to measure the rate at which the host-pathogen system approaches this empirical attractor after a perturbation;
 this rate corresponds to the resilience of the host-pathogen system.
 We use this method to analyze pathogen surveillance data for respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and US.
-Finally, we show that susceptible host dynamics explain variation in pathogen resilience.
-% Our study offers unique insights into understanding pathogen re-emergence patterns following COVID-19 interventions.
-% \swp{Revisit.}
+Finally, we show that susceptible host dynamics explain variation in pathogen resilience and further link pathogen resilience to responses to perturbations caused by demographic stocahsticity, thereby providing a direct link between pathogen resilience and persistence. 
  
 \section*{Conceptual introduction to pathogen resilience}
 
@@ -259,13 +257,6 @@ Therefore, before we tried estimating resilience from real data, we explored an 
 in doing so, we also explored optimal choices for embedding dimensions and evaluated our choices for fitting window parameters and embedding dimensions by quantifying correlation coefficients between the estimated resilience and the intrinsic resilience of a seasonally unforced system (Materials and Methods).
 Overall, we find large variation in estimation performances with correlation coefficient ranging from 0.21 to 0.61 (Supplementary Figure S7).
 In almost all cases, the automated window selection approach outperformed a naive approach that uses the entire time series, starting from the peak distance (Supplementary Figure S7).
-
-
-% A closer observation of the resulting time series of the distance from the attractor provides three important insights (Figure 3E).
-% First, the relaxation of NPIs in realistic settings can cause a false return of the system, as indicated by a rapid decrease in the distance in early 2022 followed by a rapid increase in distance.
-% In other words, we need at least several years of data to be able to properly assess the return of system to an attractor.
-% Second, complex changes in the distance from the attractor suggests that estimating pathogen resilience from linear regression will likely be sensitive to our choice of fitting windows for the regression.
-% Finally, temporal variation in the impact of NPIs on pathogen transmission will affect the intrinsic resilience of the system throughout the NPI period, meaning that the estimated resilience from linear regression will likely reflect some sort of average impact of the NPIs.
 
 Based on the best performing window selection criteria and embedding dimension, we applied this approach to pathogen surveillance data presented in Figure 1 (Materials and Methods).
 For each time series, we applied Takens' theorem independently to reconstruct the empirical attractor and obtained the corresponding time series of distances from attractors (Supplementary Figure S8).
@@ -400,7 +391,7 @@ So far, most of model validation in infectious disease ecology is based on the a
 However, many models can perform similarly under these criteria.
 For example, two major RSV models have been proposed to explain biennial epidemic patterns: (1) a stage- and age-structured model that allows disease severity to vary with number of past infections and age of infection \citep{pitzer2015environmental} and (2) a pathogen-interaction model that accounts for cross immunity between RSV and human metapnuemovirus \citep{bhattacharyya2015cross}.
 Since both models can accurately reproduce the observed epidemic patterns, standard criteria for model validation do not allow us to distinguish between these two models from population-level data alone.
-Instead, it would be possible to measure the empirical resilience of each model by simulating various perturbations and compare them to estimates of empirical resilience from data, using pandemic NPIs as an opportunity.
+Instead, it would be possible to measure the empirical resilience of each model by simulating various perturbations and compare them to estimates of empirical resilience from data, using pandemic perturbations as an opportunity.
 % Future studies should further investigate using pathogen resilience for validating epidemic models.
 
 There are several limitations to our work.
@@ -411,12 +402,13 @@ Our resilience estimates are likely overly confident given a lack of uncertainti
 Nonetheless, as illustrated in our sensitivity analyses, inferences about pathogen resilience in our SIRS model appear to be robust to decisions about embedding lags and dimensions---this is because tracking the rate at which the system approaches the attractor is likely a much simpler problem than making inferences about causal directionality.
 Short pre-pandemic time series also limit our ability to accurately reconstruct the attractor and contribute to the crudeness of our resilience estimates;
 although this is less likely a problem for respiratory pathogens that are strongly annual, our attractor reconstruction may be inaccurate for those exhibiting multi-annual cycles, such as adenovirus in Hong Kong and Korea.
-Despite these limitations, our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust, given how rapid many respiratory pathogens returned to their original cycles following pandemic NPIs.
-% Despite these limitations, our study illustrates the utility of quantifying pathogen resilience for understanding how different pathogens respond to perturbations.
+Uncertainties in pathogen dynamics due to changes in testing patterns further contribute to the curdeness of our resilience estimates.
+Despite these limitations, our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust, given how rapid many respiratory pathogens returned to their original cycles following pandemic perturbations.
 
 Predicting the impact of anthropogenic changes on infectious disease dynamics is a fundamental aim of infectious disease research in a rapidly changing world.
-Our study illustrates that quantifying pathogen resilience can help us understand how infectious disease pathogens respond to major perturbations caused by NPIs.
-More broadly, a detailed understanding of the determinants of pathogen resilience may offer unique insights into pathogen persistence and controllability.
+Our study illustrates that how a host-pathogen system responds to both small and large perturbations is largely predictable through the lens of ecological resilience.
+In particular, quantifying the resilience of a host-pathogen system offers a unique insight into questions about endemic pathogens' responses to pandemic perturbations, including whether some pathogens will exhibit long-lasting impact from the pandemic perturbation or not.
+More broadly, a detailed understanding of the determinants of pathogen resilience can provide deeper understanding of pathogen persistence.
 
 \section*{Materials and Methods}
 
@@ -910,7 +902,7 @@ Dotted lines show the intrinsic resilience of the seasonally unforced system.
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure2/figure2_multi_noseas.pdf}
 \caption{
-\textbf{Conceptual framework for measuring pathogen resilience following NPIs for a two-strain system without seasonal forcing.}
+\textbf{A simple method to measure pathogen resilience following pandemic perturbations for a two-strain system without seasonal forcing.}
 (A, D, G) Simulated epidemic trajectories using a multi-strain system without seasonal forcing.
 Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
 Red dashed lines represent counterfactual epidemic dynamics in the absence of interventions.
@@ -929,7 +921,7 @@ Dotted lines show the intrinsic resilience of the seasonally unforced system.
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure2/figure2_multi.pdf}
 \caption{
-\textbf{Conceptual framework for measuring pathogen resilience following NPIs for a two-strain system with seasonal forcing.}
+\textbf{A simple method to measure pathogen resilience following pandemic perturbations for a two-strain system with seasonal forcing.}
 (A, D, G) Simulated epidemic trajectories using a two-strain system with seasonal forcing (amplitude of 0.2).
 In this model, two strains compete through cross immunity.
 Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
@@ -949,7 +941,7 @@ Dotted lines show the intrinsic resilience of the seasonally unforced system.
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure2/figure2_multi_strong.pdf}
 \caption{
-\textbf{Conceptual framework for measuring pathogen resilience following NPIs for a multi-strain system with strong seasonal forcing.}
+\textbf{A simple method to measure pathogen resilience following pandemic perturbations for a multi-strain system with strong seasonal forcing.}
 (A, D, G) Simulated epidemic trajectories using a multi-strain system with seasonal forcing (amplitude of 0.4).
 In this model, two strains compete through cross immunity.
 Red and blue solid lines represent epidemic dynamics before and after interventions are introduced, respectively.
