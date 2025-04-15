@@ -103,17 +103,17 @@ Sang Woo Park, \dots, Bryan T. Grenfell, Sarah Cobey
 A major priority for epidemiological research in the time of anthropogenic change is understanding how infectious disease dynamics respond to perturbations.
 Interventions to slow the spread of SARS-CoV-2 significantly disrupted the transmission of other human pathogens. 
 As interventions lifted, whether and when respiratory pathogens would eventually return to their pre-pandemic dynamics remains to be answered.
-Here, we present a framework for estimating pathogen resilience based on how fast epidemic patterns return to their pre-pandemic, endemic dynamics and analyze time series data from Hong Kong, Canada, Korea, and the US from the resulting framework.
+Here, we present a framework for estimating pathogen resilience based on how fast epidemic patterns return to their pre-pandemic, endemic dynamics and analyze time series data from Hong Kong, Canada, Korea, and the US.
 By quantifying the resilience of common respiratory pathogens, we are able to predict when each pathogen will eventually return to its pre-pandemic, endemic dynamics.
-Our predictions about whether each pathogen should have already returned to its pre-pandemic dynamics closely match the observed patterns of deviations (or lack thereof) from its pre-pandemic dynamics.
-Discrepancies between predicted and observed dynamics indicate the long-term impact of pandemic perturbations, suggesting a possibility that some pathogens may have converged to a different endemic cycle.
+Our predictions closely match the observed deviations (or lack thereof) from its pre-COVID dynamics.
+Discrepancies between predicted and observed dynamics indicate the long-term impact of pandemic perturbations, suggesting that some pathogens may be converging to a different endemic cycle.
 Finally, we show that the replenishment rate of the susceptible pool is a key determinant of pathogen resilience, which in turn determines the sensitivity of a system to stochastic perturbations.
-Overall, our analysis highlights the persistent nature of common respiratory pathogens.
+Overall, our analysis highlights the persistent nature of common respiratory pathogens compared to vaccine-preventable infections, such as measles.
 
 \pagebreak
 
-Non-pharmaceutical interventions to slow the spread of SARS-CoV-2 disrupted the transmission of other human respiratory pathogens, adding uncertainties to their future epidemic dynamics and the overall public health burden \citep{baker2020impact}.
-As interventions lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries, with some pathogens exhibiting earlier resurgences than others \citep{gomez2021uncertain,koltai2022determinants,park2024predicting}.
+Non-pharmaceutical interventions to slow the spread of SARS-CoV-2 disrupted the transmission of other human respiratory pathogens, adding uncertainties to their future epidemic dynamics and their public health burden \citep{baker2020impact}.
+As interventions lifted, large heterogeneities in outbreak dynamics were observed across different pathogens in different countries, with some pathogens exhibiting earlier and faster resurgences than others \citep{gomez2021uncertain,koltai2022determinants,park2024predicting}.
 Heterogeneities in the overall reduction in transmission and the timing of re-emergence likely reflect differences in intervention patterns, pathogen characteristics, immigration/importation from other countries, and pre-pandemic pathogen dynamics \citep{perofsky2024impacts}.
 Therefore, comparing the differential impact of the pandemic perturbations across pathogens can provide unique opportunities to learn about underlying pathogen characteristics, such as their transmissibility or duration of immunity, from heterogeneities in re-emergence patterns \citep{chow2023effects}.
 
@@ -131,11 +131,11 @@ Cases were scaled to account for changes in testing patterns (Materials and Meth
 
 Even though more than five years have passed since the emergence of SARS-CoV-2, we still observe persistent changes in pathogen dynamics following the pandemic perturbations.
 For example, compared to pre-pandemic, seasonal patterns, human metapneumovirus in Korea seem to circulate at lower levels, whereas RSV in Korea seems to exhibit different seasonality (Figure 1).
-These observations suggest a possibility for a fundamental change in pathogen dynamics following the pandemic perturbations, which can be driven by a permanent shift in either human behavior or population-level immunity \citep{kissler2020projecting,baker2022long}.
-The possibility of a long-lasting impact of the pandemic perturbations poses an important question for future infectious disease dynamics: can we predict whether and when other respiratory pathogens will eventually return to their pre-pandemic dynamics?
-\swp{You suggested: I would say something about the dynamics of these pathogens not being well understood, but I've since rewritten the most of intro and I'm not sure where I would fit this. If you have any suggestions, let me know...}
+These observations suggest a fundamental change in pathogen dynamics following the pandemic perturbations, which might be driven by a long-term shift in either human behavior or population-level immunity \citep{kissler2020projecting,baker2022long}.
+For example, the emergence of SARS-CoV-2 could have caused a long-term shift in population-level immunity through its interactions with other pathogens \citep{swets2022sars}, especially with seasonal coronaviruses \citep{kissler2020projecting,lin2022pre,murray2023impact}.
+The possibility of a long-lasting impact of the pandemic perturbations poses an important question for future infectious disease dynamics: can we predict whether and when other pathogens will eventually return to their pre-pandemic dynamics?
 
-So far, the majority of epidemiological analyses of respiratory pathogens in the context of the pandemic perturbations have focused on characterizing the timing of rebound \citep{baker2020impact,eden2022off,perofsky2024impacts}.
+So far, most analyses of respiratory pathogens after pandemic perturbations have focused on characterizing the timing of rebound \citep{baker2020impact,eden2022off,perofsky2024impacts}.
 Instead, we seek to characterize how fast a pathogen returns to its pre-pandemic dynamics.
 These two concepts have subtle but important differences: 
 for example, it took more than 3 years for human metapneumovirus to rebound in Hong Kong but the observed epidemic patterns in 2024 are similar to pre-pandemic seasonal means, suggesting a rapid return to pre-pandemic dynamics following a perturbation (Figure 1).
@@ -447,6 +447,12 @@ In the US, there has been a large increase in testing against some respiratory p
 Instead, we derived an incidence proxy by multiplying the test positivity with influenza-like illness positivity, which was taken from \url{https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html}.
 This method of estimating an incidence proxy has been recently applied in the analysis of seasonal coronaviruses \citep{kissler2020projecting} and \textit{Mycoplasma pneumoniae} infections \citep{park2024predicting}.
 Detailed assumptions and justifications are provided in \citep{goldstein2011predicting}.
+
+\subsection*{Data summary}
+
+To make qualitative comparisons between pre- and post-perturbation dynamics of respiratory pathogen circulation patterns, we calculate the mean seasonal patterns using time series of either rescaled cases or incidence proxy estimates before 2020.
+We do so by taking the mean value in each week across all years before 2020.
+Confidence intervals around the means are calculated using a simple t test.
 
 \subsection*{Estimating pathogen resilience}
 

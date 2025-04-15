@@ -117,6 +117,7 @@ gcomb <- ggarrange(g1, g2, g3, g4, g5, g6,
                    labels=c("A", "B", "C", "D", "E", "F"))
 
 ggsave("figure_persistence_noise.pdf", gcomb, width=12, height=6)
+ggsave("figure_persistence_noise.png", gcomb, width=12, height=6)
 
 g7 <- ggplot(analysis_factorial_noise) +
   geom_point(aes(period, period_obs)) +
