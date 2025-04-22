@@ -183,7 +183,7 @@ Dotted lines show the intrinsic resilience of the seasonally unforced system.
 
 Alternatively, pandemic perturbations can have a lasting impact on the pathogen dynamics; 
 as an example, we consider a scenario in which a 10\% reduction in transmission persists even after the major pandemic perturbations are lifted (Figure 2D--F).
-In such cases in practice, we cannot know whether the pathogen will return to its original cycle or a different cycle until many years have passed, and we cannot measure the distance to the new unknown attractor that the system might eventually approach.
+In such cases, we cannot know whether the pathogen will return to its original cycle or a different cycle until many years have passed, and we cannot measure the distance to the new unknown attractor that the system might eventually approach.
 Nonetheless, we can still measure the distance from the pre-pandemic attractor and ask how the distance changes over time (Figure 2E).
 The LOESS fit suggests that the distance from the pre-pandemic attractor will initially decrease exponentially on average (equivalently, linearly on a log scale) and eventually plateau (Figure 2F).
 Here, a permanent 10\% reduction in transmission rate slows the system, which causes the distance from the pre-pandemic attractor initially to decrease at a slower rate (Figure 2F) than it would have otherwise (Figure 2C) before plateauing at a fixed distance between the two attractors.
@@ -218,8 +218,8 @@ With recent data, we can strart to evaluate whether we see early signs of conver
 \section*{Inferring pathogen resilience from real data}
 
 Based on these observations, we now lay out our approach to estimating pathogen resilience from real data (Figure 3).
-We then test this approach against simulations and apply it to real data.
-Specifically, we analyze case time series of respiratory pathogens from four countries: Canada, Hong Kong, Korea, and the US.
+We first tested this approach against simulations and applied it to real data.
+Specifically, we analyzed case time series of respiratory pathogens from four countries: Canada, Hong Kong, Korea, and the US.
 
 So far, we have focused on simple examples that assume a constant transmission reduction during the pandemic.
 However, in practice, the impact of pandemic perturbations on pathogen transmission was likely more complex (Figure 3A), reflecting introduction and relaxation of various intervention strategies.
@@ -261,14 +261,14 @@ In almost all cases, the automated window selection approach outperformed a naiv
 
 Based on the best performing window selection criteria and embedding dimension, we applied this approach to pathogen surveillance data presented in Figure 1 (Materials and Methods).
 For each time series, we applied Takens' theorem independently to reconstruct the empirical attractor and obtained the corresponding time series of distances from attractors (Supplementary Figure S8).
-Then, we use the automated window selection criterion to fit a linear regression and estimate the empirical resilience for each pathogen in each country (Supplementary Figure S8);
+Then, we used the automated window selection criterion to fit a linear regression and estimated the empirical resilience for each pathogen in each country (Supplementary Figure S8);
 the window selection criterion gave poor regression window for three cases (norovirus in Hong Kong and Korea and rhinovirus/enterovirus in the US), leading to unrealistically low resilience estimates, and so we used ad-hoc regression windows instead (Supplementary Figure S9; Materials and Methods).
 
-For all pathogens we considered, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A).
-We estimate the mean resilience of common respiratory pathogens to be $0.99/\mathrm{year}$ (95\% CI: $0.81/\mathrm{year}$--$1.18/\mathrm{year}$).
+For all pathogens we considered, resilience estimates fell between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A).
+We estimated the mean resilience of common respiratory pathogens to be $0.99/\mathrm{year}$ (95\% CI: $0.81/\mathrm{year}$--$1.18/\mathrm{year}$).
 For reference, this is $\approx 7.5$ times higher than the intrinsic resilience of pre-vaccination measles in England and Wales ($\approx 0.13/\mathrm{year}$).
-Finally, resilience estimates for norovirus are comparable to those of common respiratory pathogens: $1.44/\mathrm{year}$ (95\%CI: $1.01/\mathrm{year}$--$1.87/\mathrm{year}$) for Hong Kong and $1.07/\mathrm{year}$ (95\%CI: $0.86/\mathrm{year}$--$1.29/\mathrm{year}$) for Korea.
-Based on a simple ANOVA test, we do not find significant differences in resilience estimates across countries ($p=0.25$) or pathogens ($p=0.67$).
+Finally, resilience estimates for norovirus were comparable to those of common respiratory pathogens: $1.44/\mathrm{year}$ (95\%CI: $1.01/\mathrm{year}$--$1.87/\mathrm{year}$) for Hong Kong and $1.07/\mathrm{year}$ (95\%CI: $0.86/\mathrm{year}$--$1.29/\mathrm{year}$) for Korea.
+Based on a simple ANOVA test, we did not find significant differences in resilience estimates across countries ($p=0.25$) or pathogens ($p=0.67$).
 
 \begin{figure}[!th]
 \begin{center}
@@ -278,7 +278,7 @@ Based on a simple ANOVA test, we do not find significant differences in resilien
 (A) Estimated pathogen resilience.
 The gray horizontal line represents the intrinsic resilience of pre-vaccination measles dynamics.
 (B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
-The dashed line in panel B indicates the end of 2024 (current observation time).
+The dashed line in panel B indicates the end of 2024.
 Error bars represent 95\% confidence intervals.
 (C) Observed dynamics for pathogen that are predicted to have returned before the end of 2024.
 Red points and lines represent data before 2020.
@@ -288,55 +288,53 @@ Orange vertical lines represent the predicted timing of return.
 \end{center}
 \end{figure}
 
-\swp{You suggested ``I think we probably need to spell out a bit more that long-term changes in the transmission rate (or some other parameter) mean the attractor is permanently different and the distance should remain nonzero'' and I think we've done that enough early on with current revisions so I don't feel like we need to do it again here. Let me know what you think.}
 Using resilience estimates, we predicted when each pathogen would hypothetically return to their pre-pandemic dynamics, assuming no long-term change in the attractor.
-Specifically, we extend our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value;
+Specifically, we extended our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value;
 since we relied on nearest neighbor distances, pre-pandemic distances are always greater than zero (Figure 3E), meaning that we can use the mean of pre-pandemic distances as our threshold.
 
-We predict that a return to pre-pandemic cycles would be imminent for most pathogens (Figure 4B).
-In particular, we predict that 12 out of 23 pathogens should have already returned before the end of 2024.
-For almost all pathogens that are predicted to have returned already, the observed epidemic dynamics show clear convergence towards their pre-pandemic seasonal averages, confirming our predictions (Figure 4C).
-However, there are a few exceptions, including norovirus in Hong Kong and Rhinovirus/Enterovirus in the US, where the observed epidemic dynamics in 2024 exhibit clear deviation from their pre-pandemic seasonal averages (Figure 4C).
+We predicted that a return to pre-pandemic cycles has occurred would be imminent for most pathogens (Figure 4B).
+In particular, we predicted that 12 out of 23 pathogen-country pairs should have already returned before the end of 2024.
+For almost all pathogens that were predicted to have returned already, the observed epidemic dynamics showed clear convergence towards their pre-pandemic seasonal averages, confirming our predictions (Figure 4C).
+However, there were a few exceptions, including norovirus in Hong Kong and rhinovirus/enterovirus in the US, where the observed epidemic dynamics in 2024 exhibit clear deviation from their pre-pandemic seasonal averages (Figure 4C; Figure S9).
 These observations suggest a possibility that some common respiratory pathogens may have converged to different attractors or are still exhibiting non-equilibrium dynamics.
-In contrast, pathogens that are predicted to have not returned yet also show clear differences from their pre-pandemic seasonal averages; as many of these pathogens are predicted to return in 2025--2026, we may be able to test these predictions in near future (Supplementary Figure S10).
-Our reconstructions of distance time series and estimates of pathogen resilience and expected return time are generally robust to choices of embedding dimensions (Supplementary Figure S11--12).
+In contrast, pathogens that were predicted to have not returned yet also showed clear differences from their pre-pandemic seasonal averages; as many of these pathogens are predicted to return in 2025--2026, we may be able to test these predictions in near future (Supplementary Figure S10).
+Our reconstructions of distance time series and estimates of pathogen resilience and expected return time were generally robust to choices of embedding dimensions (Supplementary Figure S11--12).
 
 \section*{Susceptible host dynamics explain variation in pathogen resilience}
 
-So far, we focused on quantifying pathogen resilience from the observed patterns of pathogen re-emergence following pandemic perturbations.
+So far, we have focused on quantifying pathogen resilience from the observed patterns of pathogen re-emergence following pandemic perturbations.
 But what factors determine how resilient a host-pathogen system is?
-Here, we use the SIRS model to show that susceptible host dynamics are the key determinants of pathogen resilience.
-To do so, we vary the basic reproduction number $\mathcal R_0$, which represents the average number of secondary infections caused by a newly infected individual in a fully susceptible population, and the duration of immunity and compute intrinsic resilience for each parameter.
+To address this question, we used the SIRS model to explore how changes in susceptible host dynamics affect pathogen resilience.
+To do so, we varied the basic reproduction number $\mathcal R_0$, which represents the average number of secondary infections caused by a newly infected individual in a fully susceptible population, and the duration of immunity and computed intrinsic resilience for each parameter.
 
 \begin{figure}[!th]
 \begin{center}
 \includegraphics[width=\textwidth]{../figure5/figure5.pdf}
 \caption{
 \textbf{Linking pathogen resilience to epidemiological parameters and susceptible host dynamics.}
-(A) The heat map represents intrinsic resilience as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
-(B) The heat map represents per-capita susceptible replenishment rate as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
-The standard SIRS model is used to compute intrinsic resilience and per-capita susceptible replenishment rate.
-Lines correspond to a set of parameters that are consistent with mean resilience estimates for each pathogen.
-Pathogens are ranked based on their mean resilience estimates, averaged across different countries.
+(A) Intrinsic resilience as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+(B) Per-capita susceptible replenishment rate as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+The standard SIRS model without seasonal forcing is used to compute intrinsic resilience and the per-capita susceptible replenishment rate.
+Lines correspond to a set of parameters that are consistent with mean resilience estimates for each pathogen, averaged across different countries.
 }
 \end{center}
 \end{figure}
 
-We find an increase in $\mathcal R_0$ and a decrease in duration of immunity correspond to an increase in pathogen resilience (Figure 5A).
-These variations can be understood in terms of the susceptible host dynamics, where faster per-capita susceptible replenishment rate causes the system to be more resilient (Figure 5B).
-This rate can be expressed as a ratio between absolute rate at which new susceptibles enter the population and the equilibrium number of susceptible individuals in the population, $\bar{S}$.
-Therefore, both higher $\mathcal R_0$ and shorter duration of immunity can drive faster per-capita susceptible replenishment rate (Figure 5B), especially because higher $\mathcal R_0$ leads to lower $\bar{S}$.
+We found that an increase in $\mathcal R_0$ and a decrease in the duration of immunity correspond to an increase in pathogen resilience (Figure 5A).
+Similarly, an increase in $\mathcal R_0$ and a decrease in the duration of immunity corresponds to a faster per-capita rate of susceptible replenishment, which is defined as the ratio between absolute rate at which new susceptibles enter the population and the equilibrium number of susceptible individuals in the population, $S^\ast$ (Figure 5B).
+We note that a higher $\mathcal R_0$ drives a faster per-capita susceptible replenishment rate by decreasing the susceptible proportion at equilibrium, $S^\ast$.
+For a simple SIR model that assumes a life-long immunity, we can show analytically that pathogen resilience is proportional to the per-capita rate of susceptible replenishment (Materials and Methods).
+Overall, these observations suggest that a faster per-capita susceptible replenishment rate causes the system to be more resilient.
 
-We can also rank different pathogens based on the average values of empirical resilience computed previously, which allows us to determine a set of parameters that are consistent with the estimated resilience (Figure 5A).
-Across all pathogens we consider, except for bocavirus and norovirus, we estimate that the average duration of immunity is likely to be short ($<4$ years) across a plausible range of $\mathcal R_0$ ($<6$).
-These rankings further allow us to map each pathogen onto a set of SIRS parameters that are consistent with its empirical resilience (Figure 5A) and obtain a plausible range of susceptible replenishment rates for each pathogen (Figure 5B).
-However, we note that there is no one-to-one correspondence between susceptible replenishment rates and pathogen resilience, leading to a wide uncertainty in the estimates for susceptible replenishment rates (Figure 5B).
+By taking the average values of empirical resilience values for each pathogen, we were able to map each pathogen onto a set of parameters of the SIRS model that are consistent with corresponding resilience estimates (Figure 5A).
+Across all pathogens we considered, we estimated that the average duration of immunity is likely to be short ($<4$ years) across a plausible range of $\mathcal R_0$ ($<6$).
+We were also able to obtain a plausible range of susceptible replenishment rates for each pathogen (Figure 5B), but there was a large uncertainty in the estimates for susceptible replenishment rates due to a lack of one-to-one correspondence between susceptible replenishment rates and pathogen resilience.
 
 \section*{Pathogen resilience determines sensitivity to stochastic perturbations}
 
-Beyond the pandemic perturbations, we expect host-pathogen systems to experience continued perturbations of varying degrees from changes in epidemiological conditions, such as human behavior, climate, and viral evolution.
+Beyond the pandemic perturbations, we hypothesized host-pathogen systems to experience continued perturbations of varying degrees from changes in epidemiological conditions, such as human behavior, climate, and viral evolution.
 These perturbations can also arise from demographic stochasticity, which is inherent to any ecological systems.
-Here, we use a seasonally unforced SIRS model with birth/death to explore how resilience of a host-pathogen system determines the sensitivity to perturbations caused by demographic stochasticity (Materials and Methods).
+Here, we used a seasonally unforced SIRS model with birth/death to explore how resilience of a host-pathogen system determines the sensitivity to perturbations caused by demographic stochasticity (Materials and Methods).
 
 \begin{figure}[!th]
 \begin{center}
@@ -353,13 +351,16 @@ The epidemic amplitude corresponds to $(\max I - \min I)/(2 \bar{I})$, where $\b
 \end{center}
 \end{figure}
 
-We find that resilience of a host-pathogen system determines  the amount of deviation from the deterministic trajectory caused by demographic stochasticity, with less resilient systems experiencing larger deviations (Figure 6).
-Notably, less resilience systems also exhibit slower epidemic cycles; the periodicity of this epidemic cycle matches those predicted by the intrinsic periodicity of the system (Supplementary Figure S13).
-These conclusions are robust for the seasonally forced SIRS model (Supplementary Figure S14),
+We found that resilience of a host-pathogen system determines  the amount of deviation from the deterministic trajectory caused by demographic stochasticity, with less resilient systems experiencing larger deviations (Figure 6).
+Notably, less resilience systems also exhibited slower epidemic cycles (Figure 6A--C). 
+The periodicity of this epidemic cycle matched those predicted by the intrinsic periodicity of the system (Supplementary Figure S13) where the intrinsic resilience of the system is inversely proportional to its intrinsic periodicity (Supplementary Figure S14).
+We note that 
+
+These conclusions were robust for the seasonally forced SIRS model (Supplementary Figure S15).
 
 \section*{Discussion}
 
-The pandemic interventions have caused major disruptions to circulation patterns of both respiratory and non-respiratory pathogens, adding challenges to predicting their future dynamics \citep{baker2020impact,gomez2021uncertain,koltai2022determinants,park2024predicting}.
+COVID-19 pandemic interventions caused major disruptions to circulation patterns of both respiratory and non-respiratory pathogens, adding challenges to predicting their future dynamics \citep{baker2020impact,gomez2021uncertain,koltai2022determinants,park2024predicting}.
 However, these perturbations offer large-scale natural experiments for understanding how different pathogens respond to perturbations.
 In this study, we showed that pathogen re-emergence patterns following pandemic perturbations can be characterized through the lens of ecological resilience.
 We showed that variation in pathogen resilience can be explained by the differences in susceptible host dynamics, where faster replenishment of the susceptible pool corresponds to a more resilient host-pathogen system.
@@ -560,6 +561,10 @@ The susceptible replenishment rate is given by
 where $S^\ast = 1/\mathcal R_0$ represents the equilibrium proportion of susceptible individuals.
 We varied the basic reproduction number $\mathcal R_0$ between 1.1 to 6 and the average duration of immunity $1/\delta$ between 2 to 4 years, and computed these two quantities.
 In doing so, we fixed all other parameters: $\mu=1/80/\mathrm{years}$ and $\gamma=365/7/\mathrm{years}$.
+When infection provides a life-long immunity ($\delta = 0$), the intrinsic resilience is inversely proportional to the susceptible replenishment rate:
+\begin{equation}
+-\frac{\mathrm{Re}(\lambda)}{2} = \frac{\mu}{2 S^\ast} = \frac{\tsub{S}{replenish}}{2}.
+\end{equation}
 
 Finally, we used a seasonally unforced stochastic SIRS model without demography to understand how pathogen resilience affects sensitivity of the system to demographic stochasticity (see Supplementary Text for the details of the stochastic SIRS model).
 By varying the basic reproduction number $\mathcal R_0$ between 2 to 20 and the average duration of immunity $1/\delta$ between 1 to 40 years, we ran the the SIRS model for 100 years and computed the epidemic amplitude, which we defined as  $(\max I - \min I)/(2 \bar{I})$.
@@ -1067,7 +1072,7 @@ We used the same ad-hoc regression windows for norovirus in Hong Kong and Korea 
 (A) Estimated pathogen resilience.
 The gray horizontal line represents the intrinsic resilience of pre-vaccination measles dynamics.
 (B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
-The dashed line in panel B indicates the end of 2024 (current observation time).
+The dashed line in panel B indicates the end of 2024.
 Error bars represent 95\% confidence intervals.
 }
 \end{center}
@@ -1075,14 +1080,26 @@ Error bars represent 95\% confidence intervals.
 
 \pagebreak
 
-
 \begin{figure}[!th]
 \begin{center}
 \includegraphics[width=\textwidth]{../figure6/figure_persistence_noise_period.pdf}
 \caption{
-\textbf{Comparison between the observed and predicted periodicity of the epidemic cycle of the seasonally unforced SIRS model.}
+\textbf{Comparison between the observed and intrisic periodicity of the epidemic cycle of the seasonally unforced SIRS model.}
 The observed periodicity of the epidemic corresponds to the periodicity at which maximum spectral density occurs.
-The predicted periodicity of the epidemic corresponds to $2 \pi/\mathrm{Im}(\lambda)$, where $\mathrm{Im}(\lambda)$ is the imaginary part of the eigenvalue.
+The intrisic periodicity of the epidemic corresponds to $2 \pi/\mathrm{Im}(\lambda)$, where $\mathrm{Im}(\lambda)$ is the imaginary part of the eigenvalue.
+}
+\end{center}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=\textwidth]{../figure6/figure_persistence_noise_resilience_period.pdf}
+\caption{
+\textbf{Comparison between the intrisic resilience and periodicity of the epidemic cycle of the seasonally unforced SIRS model.}
+The intrinsic resilience of the epidemic corresponds to the negative of the real value of the eigenvalue $-\mathrm{Re}(\lambda)$.
+The intrisic periodicity of the epidemic corresponds to $2 \pi/\mathrm{Im}(\lambda)$, where $\mathrm{Im}(\lambda)$ is the imaginary part of the eigenvalue.
 }
 \end{center}
 \end{figure}

@@ -80,7 +80,7 @@ g1 <- ggplot(summdata) +
                   direction = "y",
                   segment.color = NA,
                   hjust=0) +
-  scale_x_continuous("Basic reproduction number", expand=c(0, 0),
+  scale_x_continuous(expression("Basic reproduction number,"~R[0]~"                                                     "), expand=c(0, 0),
                      breaks=c(2, 4, 6),
                      limits = c(NA,9)) +
   scale_y_log10("Duration of immunity (years)", expand=c(0, 0),
@@ -107,7 +107,7 @@ g2 <- ggplot(summdata) +
                   direction = "y",
                   segment.color = NA,
                   hjust=0) +
-  scale_x_continuous("Basic reproduction number", expand=c(0, 0),
+  scale_x_continuous(expression("Basic reproduction number,"~R[0]~"                                                     "), expand=c(0, 0),
                      breaks=c(2, 4, 6),
                      limits = c(NA,9)) +
   scale_y_log10("Duration of immunity (years)", expand=c(0, 0),
@@ -141,4 +141,4 @@ range(filter(replenish_range, !key %in% c("Bocavirus", "Norovirus"))$replenish)
 gcomb <- ggarrange(g1, g2, nrow=1,
                    labels=c("A", "B"))
 
-ggsave("figure5.pdf", gcomb, width=12, height=5)
+ggsave("figure5.pdf", gcomb, width=12, height=6)

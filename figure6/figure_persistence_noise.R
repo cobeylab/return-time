@@ -122,10 +122,20 @@ ggsave("figure_persistence_noise.png", gcomb, width=12, height=6)
 g7 <- ggplot(analysis_factorial_noise) +
   geom_point(aes(period, period_obs)) +
   geom_abline(intercept=0, slope=1, lty=2) +
-  scale_x_log10("Predicted periodicity of epidemic cycle (years)") +
+  scale_x_log10("Intrinsic periodicity of epidemic cycle (years)") +
   scale_y_log10("Observed periodicity of epidemic cycle (years)") +
   theme(
     panel.grid = element_blank()
   )
 
 ggsave("figure_persistence_noise_period.pdf", g7, width=6, height=4)
+
+g8 <- ggplot(analysis_factorial_noise) +
+  geom_point(aes(resilience*365, period)) +
+  scale_x_log10("Intrinsic resilience (1/years)") +
+  scale_y_log10("Intrinsic periodicity of epidemic cycle (years)") +
+  theme(
+    panel.grid = element_blank()
+  )
+
+ggsave("figure_persistence_noise_resilience_period.pdf", g8, width=6, height=4)

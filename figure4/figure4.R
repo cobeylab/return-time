@@ -231,15 +231,15 @@ summary(afit)
 
 g2 <- ggplot(analysis_all_summ_filter) +
   geom_hline(yintercept=measles_resilience, lty=1, col="gray", lwd=3) +
-  annotate("text", x=-Inf, y=0.3, label="Prevaccination measles",
+  annotate("text", x=-Inf, y=0.4, label="Prevaccination measles",
            hjust=-0.05, family="Times") +
   geom_errorbar(aes(key, ymin=resilience_lwr, ymax=resilience_upr, col=country), width=0, 
                 position = position_dodge(width=0.5))+
   geom_point(aes(key, resilience, col=country, shape=country), 
              position = position_dodge(width=0.5), size=3) +
   scale_y_continuous("Resilience (1/year)") +
-  scale_color_viridis_d("Country") +
-  scale_shape_discrete("Country") +
+  scale_color_viridis_d("Country", end=0.8) +
+  scale_shape_manual("Country", values=c(15:18)) +
   theme(
     axis.text.x = element_blank(),
     axis.title.x = element_blank(),
@@ -247,7 +247,16 @@ g2 <- ggplot(analysis_all_summ_filter) +
     legend.title = element_blank()
   )
 
-g3 <- ggplot(analysis_all_summ_filter) +
+analysis_all_summ_filter_rename <- analysis_all_summ_filter %>%
+  mutate(
+    key=factor(key,
+               levels=c("Adenovirus", "Human metapneumovirus", "Parainfluenza virus",
+                        "Rhinovirus/Enterovirus", "RSV", "Human coronavirus", "Norovirus"),
+               labels=c("Adenovirus", "Human\nmetapneumovirus", "Parainfluenza\nvirus",
+                        "Rhinovirus/\nEnterovirus", "RSV", "Human\ncoronavirus", "Norovirus"))
+  )
+
+g3 <- ggplot(analysis_all_summ_filter_rename) +
   geom_hline(yintercept=2020:2030, lty=3, alpha=0.4) +
   geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
                 position = position_dodge(width=0.5)) +
@@ -255,13 +264,12 @@ g3 <- ggplot(analysis_all_summ_filter) +
              position = position_dodge(width=0.5), size=3) +
   # geom_hline(yintercept = 2020:2039, lty=3, col="gray") +
   geom_hline(yintercept = 2025, lty=2) +
-  scale_y_continuous("Expected return time",
+  scale_y_continuous("Expected\nreturn time",
                      breaks=seq(2020, 2030, by=2)) +
-  scale_color_viridis_d("Country") +
-  scale_shape_discrete("Country") +
+  scale_color_viridis_d("Country", end=0.8) +
+  scale_shape_manual("Country", values=c(15:18)) +
   # coord_cartesian(ylim=c(2020, 2030)) +
   theme(
-    axis.text.x = element_text(angle=45, hjust=1),
     axis.title.x = element_blank(),
     panel.grid.major.y = element_blank(),
     panel.grid.minor.y = element_blank(),
@@ -347,6 +355,6 @@ gcomb <- ggarrange(g2, g3, g4,
                    labels=c("A", "B", "C"),
                    heights=c(1, 1, 3))
 
-ggsave("figure4.pdf", gcomb, width=8, height=10)
+ggsave("figure4.pdf", gcomb, width=8, height=8)
 ggsave("figure4_noreturn.pdf", g5, width=8, height=6)
 save("analysis_all_summ_filter", file="figure4_summ.rda")
