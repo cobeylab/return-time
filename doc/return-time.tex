@@ -343,8 +343,8 @@ Here, we used a seasonally unforced SIRS model with birth/death to explore how r
 \textbf{Linking resilience of a host-pathogen system to its sensitivity to stochastic perturbations.}
 (A--C) Epidemic trajectories of a stochastic SIRS model across three different resilience values: low, intermediate, and high.
 The relative prevalence was calculated by dividing infection prevalence by its mean value.
-(D) The heat map represents the intrinsic resilience of a system as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
-(E) The heat map represents the epidemic amplitude as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+(D) Intrinsic resilience of a system as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
+(E) Epidemic amplitude as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
 The epidemic amplitude corresponds to $(\max I - \min I)/(2 \bar{I})$, where $\bar{I}$ represents the mean prevalence.
 (F) The relationship between pathogen resilience and epidemic amplitude.
 }
@@ -372,29 +372,28 @@ These resilience estimates indicate that common respiratory pathogens and norovi
 
 Based on our resilience estimates, we made phenomenological predictions about when each pathogen will return to their endemic cycles.
 For the most part, we accurately predicted which pathogens should have already returned before the end of 2024.
-However, there were few exceptions (i.e., norovirus in Hong Kong and rhinovirus/enterovirus in the US), suggesting a possibility that these may have converged to different endemic cycles compared to their pre-pandemic epidemic patterns.
+However, there were two main exceptions (i.e., norovirus in Hong Kong and rhinovirus/enterovirus in the US), suggesting that these pathogens may be converging to new endemic cycles or experiencing long-term transient behavior.
 These changes may reflect changes in surveillance or actual shift in the dynamics, caused by permanent changes in behavior or population-level immunity.
-While it may seem unlikely that permanent changes in behavior would only affect a few pathogens and not others, we cannot rule out this possibility given heterogeneity in the age of infection across different respiratory pathogens \citep{radin2014epidemiology,lv2024epidemiological}.
+While it may seem unlikely that permanent changes in behavior would only affect a few pathogens and not others, we cannot rule out this possibility given differences in the observed mean age of infections and therefore the differences in age groups that primarily drive transmission \citep{radin2014epidemiology,lv2024epidemiological}.
 Differences in the mode of transmission between respiratory vs gastrointestinal pathogens may also contribute to the differences in responses to pandemic perturbations.
-However, it is unclear why norovirus dynamics in Korea seemed to have returned, whereas those in Hong Kong have not.
 
 For almost half of the pathogens we considered, we predicted that their return to original epidemic patterns is imminent.
 We will need a few more years of data to test whether these pathogens will eventually return to their original dynamics or eventually converge to a different attractor.
+We also cannot rule out the possibility that some pathogens may exhibit long-term transient behaviors following pandemic perturbations.
 Overall, these observations echo earlier studies that highlighted the long-lasting impact of pandemic perturbations \citep{baker2022long,caini2024probable,chen2024covid,park2024predicting}. 
 
 We showed that susceptible host dynamics shape pathogen resilience, where faster replenishment of the susceptible population causes the pathogen to be more resilient.
 For simplicity, we focus on waning immunity and birth as the main drivers of the susceptible host dynamics but other mechanisms can also contribute to the replenishment of the susceptible population.
 In particular, pathogen evolution, especially the emergence of antigenically novel strains, can cause effective waning of immunity in the population;
-therefore, we hypothesize that faster rates of antigenic evolution can also cause a pathogen to be more resilient.
+therefore, we hypothesize that the rate of antigenic evolution is likely a key feature of pathogen resilience.
 Future studies should explore the relationship between the rate of evolution and resilience for antigenically evolving pathogens.
 
 Quantifying pathogen resilience also offers novel approaches to validating population-level epidemiological models.
-So far, most of model validation in infectious disease ecology is based on the ability of a model to reproduce the observed epidemic dynamics and to predict future dynamics \citep{grenfell2002dynamics,bhattacharyya2015cross,pitzer2015environmental,dean2018human,pons2018serotype}.
+So far, most model validation in infectious disease ecology is based on the ability of a model to reproduce the observed epidemic dynamics and to predict future dynamics \citep{grenfell2002dynamics,bhattacharyya2015cross,pitzer2015environmental,dean2018human,pons2018serotype}.
 However, many models can perform similarly under these criteria.
-For example, two major RSV models have been proposed to explain biennial epidemic patterns: (1) a stage- and age-structured model that allows disease severity to vary with number of past infections and age of infection \citep{pitzer2015environmental} and (2) a pathogen-interaction model that accounts for cross immunity between RSV and human metapnuemovirus \citep{bhattacharyya2015cross}.
+For example, two major RSV models have been proposed to explain biennial epidemic patterns: (1) a stage- and age-structured model that allows disease severity to vary with number of past infections and age of infection \citep{pitzer2015environmental} and (2) a pathogen-interaction model that accounts for cross immunity between RSV and human metapneumovirus \citep{bhattacharyya2015cross}.
 Since both models can accurately reproduce the observed epidemic patterns, standard criteria for model validation do not allow us to distinguish between these two models from population-level data alone.
-Instead, it would be possible to measure the empirical resilience of each model by simulating various perturbations and compare them to estimates of empirical resilience from data, using pandemic perturbations as an opportunity.
-% Future studies should further investigate using pathogen resilience for validating epidemic models.
+Instead, it would be possible to measure the empirical resilience of each model by simulating various perturbations and comparing the simulations to estimates of empirical resilience from data, using pandemic perturbations as a reference.
 
 There are several limitations to our work.
 First, we did not extensively explore other approaches to reconstructing the attractor.
@@ -404,7 +403,8 @@ Our resilience estimates are likely overly confident given a lack of uncertainti
 Nonetheless, as illustrated in our sensitivity analyses, inferences about pathogen resilience in our SIRS model appear to be robust to decisions about embedding lags and dimensions---this is because tracking the rate at which the system approaches the attractor is likely a much simpler problem than making inferences about causal directionality.
 Short pre-pandemic time series also limit our ability to accurately reconstruct the attractor and contribute to the crudeness of our resilience estimates;
 although this is less likely a problem for respiratory pathogens that are strongly annual, our attractor reconstruction may be inaccurate for those exhibiting multi-annual cycles, such as adenovirus in Hong Kong and Korea.
-Uncertainties in pathogen dynamics due to changes in testing patterns further contribute to the curdeness of our resilience estimates.
+Our framework also do not allow us to distinguish whether a system has settled to a new attractor or is experiencing long-term transient behavior.
+Uncertainties in pathogen dynamics due to changes in testing patterns further contribute to the crudeness of our resilience estimates.
 Despite these limitations, our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust, given how rapid many respiratory pathogens returned to their original cycles following pandemic perturbations.
 
 Predicting the impact of anthropogenic changes on infectious disease dynamics is a fundamental aim of infectious disease research in a rapidly changing world.
@@ -417,12 +417,12 @@ More broadly, a detailed understanding of the determinants of pathogen resilienc
 \subsection*{Data}
 
 We gathered time series on respiratory infections from Canada, Hong Kong, Korea, and United States (US).
-As a reference, we also included time series data on norovirus infections for available countries.
-In contrast to respiratory pathogens, we expect gastrointestinal viruses, such as norovirus, to be differently affected by pandemic perturbations.
+As a reference, we also included time series data on norovirus infections when available.
+In contrast to respiratory pathogens, we hypothesized gastrointestinal viruses, such as norovirus, to be differently affected by pandemic perturbations.
 
-Weekly time series of respiratory infection cases in Canada comes from a publicly available website by the Respiratory Virus Detection Surveillance System, which collect data from select laboratories across Canada \citep{phac}.
-Weekly time series of respiratory infection cases in Hong Kong comes from a publicly available website by the  Centre for Health Protection, Department of Health \citep{hkdata,hkdata2}.
-Weekly time series of acute respiratory infection cases in Korea comes from a publicly available website by the Korea Disease Control and Prevention Agency \citep{kordata}.
+Weekly time series of respiratory infection cases in Canada came from a publicly available website by the Respiratory Virus Detection Surveillance System, which collects data from select laboratories across Canada \citep{phac}.
+Weekly time series of respiratory infection cases in Hong Kong came from a publicly available website by the Centre for Health Protection, Department of Health \citep{hkdata,hkdata2}.
+Weekly time series of acute respiratory infection cases in Korea came from a publicly available website by the Korea Disease Control and Prevention Agency \citep{kordata}.
 Finally, weekly time series of respiratory infection cases in the US were obtained from the National Respiratory and Enteric Virus Surveillance System.
 Time series on number of tests were also available in Canada, Hong Kong, and the US, but not in Korea.
 \swp{Not sure how to cite NREVSS data because we got it by emailing them...}
@@ -430,22 +430,22 @@ Time series on number of tests were also available in Canada, Hong Kong, and the
 \subsection*{Data processing}
 
 For all time series, we rounded every year to 52 weeks by taking the average number of cases and tests between the 52nd and 53rd week.
-We also rescale all time series to account for changes in testing patterns, which are then used for the actual analysis.
+We also rescale all time series to account for changes in testing patterns, which were then used for the actual analysis.
 
-For Canada, an increase in testing was observed from 2013 to 2024 (Supplementary Figure S15).
+For Canada, an increase in testing was observed from 2013 to 2024 (Supplementary Figure S17).
 To account for this increase, we calculated a 2 year moving average for the number of tests for each pathogen, which we used as a proxy for testing effort.
 Then, we divided the smoothed testing patterns by the smoothed value at the final week such that the testing effort has a maximum of 1.
 We then divided weekly cases by the testing effort to obtain a scaled case time series.
 A similar approach was used earlier for an analysis of RSV time series in the US to account for changes in testing patterns \citep{pitzer2015environmental}.
 
-For Hong Kong, we also applied the same scaling procedure to the time series as we did for Canada.
-In this case, we only adjusted for testing efforts up to the end of 2019 because there was a major reduction in testing for common respiratory pathogens since 2020 (Supplementary Figure S16).
+For Hong Kong, we applied the same scaling procedure to the time series as we did for Canada.
+In this case, we only adjusted for testing efforts up to the end of 2019 because there was a major reduction in testing for common respiratory pathogens between 2020 and 2023 (Supplementary Figure S18).
 
-For Korea, while we did not have information on testing, the reported number of respiratory infections consistently increased from 2013 to the end of 2019, which we interpreted as changes in testing patterns (Supplementary Figure S17).
+For Korea, while we did not have information on testing, the reported number of respiratory infections consistently increased from 2013 to the end of 2019, which we interpreted as changes in testing patterns (Supplementary Figure S19).
 Since we did not have testing numbers, we used the weekly sum of all acute respiratory viral infection cases as a proxy for testing, which were further smoothed with moving averaged and scaled to have a maximum of 1.
 For Korea, we also only adjusted for testing efforts up to the end of 2019.
 
-In the US, there has been a large increase in testing against some respiratory pathogens, especially RSV, which could not be corrected for through simple scaling (Supplementary Figure S18).
+In the US, there has been a large increase in testing against some respiratory pathogens, especially RSV, which could not be corrected by simple scaling (Supplementary Figure S20).
 Instead, we derived an incidence proxy by multiplying the test positivity with influenza-like illness positivity, which was taken from \url{https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html}.
 This method of estimating an incidence proxy has been recently applied in the analysis of seasonal coronaviruses \citep{kissler2020projecting} and \textit{Mycoplasma pneumoniae} infections \citep{park2024predicting}.
 Detailed assumptions and justifications are provided in \citep{goldstein2011predicting}.
@@ -1100,6 +1100,23 @@ The intrisic periodicity of the epidemic corresponds to $2 \pi/\mathrm{Im}(\lamb
 \textbf{Comparison between the intrisic resilience and periodicity of the epidemic cycle of the seasonally unforced SIRS model.}
 The intrinsic resilience of the epidemic corresponds to the negative of the real value of the eigenvalue $-\mathrm{Re}(\lambda)$.
 The intrisic periodicity of the epidemic corresponds to $2 \pi/\mathrm{Im}(\lambda)$, where $\mathrm{Im}(\lambda)$ is the imaginary part of the eigenvalue.
+}
+\end{center}
+\end{figure}
+
+
+\pagebreak
+
+\begin{figure}[!th]
+\begin{center}
+\includegraphics[width=\textwidth]{../figure6/figure_persistence_noise_popgamma.pdf}
+\caption{
+\textbf{Impact of population size and the averge duration of infection of a host-pathogen system to its sensitivity tostochastic perturbations.}
+(A) Intrinsic resilience of a system as a function of population size and the average duration of immunity.
+(B) Epidemic amplitude as a function of population size and the average duration of immunity.
+(C) Intrinsic resilience of a system as a function of the average duration of infection and the average duration of immunity.
+(D) Epidemic amplitude as a function of the average duration of infection and the average duration of immunity.
+The epidemic amplitude corresponds to $(\max I - \min I)/(2 \bar{I})$, where $\bar{I}$ represents the mean prevalence.
 }
 \end{center}
 \end{figure}
