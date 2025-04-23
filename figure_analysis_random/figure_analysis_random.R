@@ -32,6 +32,7 @@ g1 <- ggplot(analysis_random_window_summ) +
   geom_hline(data=analysis_random_simple_summ, aes(yintercept=cor), lty=2,
              col="red") +
   scale_x_continuous("Number of divisions") +
+  scale_y_continuous("Correlation coefficient") +
   facet_grid(cut~R) +
   theme(
     strip.background = element_blank()
