@@ -93,8 +93,7 @@
 }
 \newline
 \\
-Sang Woo Park, \dots, Bryan T. Grenfell, Sarah Cobey
-\\
+% Sang Woo Park, \dots, Bryan T. Grenfell, Sarah Cobey
 \bigskip
 \end{flushleft}
 
@@ -426,7 +425,7 @@ Weekly time series of respiratory infection cases in Hong Kong came from a publi
 Weekly time series of acute respiratory infection cases in Korea came from a publicly available website by the Korea Disease Control and Prevention Agency \citep{kordata}.
 Finally, weekly time series of respiratory infection cases in the US were obtained from the National Respiratory and Enteric Virus Surveillance System.
 Time series on number of tests were also available in Canada, Hong Kong, and the US, but not in Korea.
-\swp{Not sure how to cite NREVSS data because we got it by emailing them...}
+% \swp{Not sure how to cite NREVSS data because we got it by emailing them...}
 
 \subsection*{Data processing}
 
@@ -477,6 +476,7 @@ Once we determined the embedding lag $\tau$ and dimension $M$, we apply the embe
 
 From a time series of distances from the attractor, we estimated pathogen resilience by fitting a linear regression to an appropriate window.
 To automatically select the fitting window, we began by smoothing the distance time series using locally estimated scatterplot smoothing (LOESS) to obtain $\hat{D}_{\tau,M}(t)$, where the smoothing is performed on a log scale and exponentiated afterwards.
+% \swp{say something about smoothing.}
 Then, we determined threshold values ($\tsub{T}{start}$ and $\tsub{T}{end}$) for the smoothed distances and choose the fitting window based on when $\hat{D}_{\tau,M}(t)$ crosses these threshold values for the first time.
 These thresholds were determined by first calculating the maximum distance,
 \begin{equation}
@@ -545,7 +545,7 @@ The unperturbed values were obtained by simulating the same SIRS model without p
 We normalized the differences in susceptible and logged infected proportions to allow both quantities to equally contribute to the changes in distance from the attractor.
 We used logged prevalence, instead of absolute prevalence, in order to capture epidemic dynamics in deep troughs during the intervention period.
 In Supplementary Materials, we also compared how the degree of seasonal transmission affects empirical resilience by varying $\theta$ from 0 to 0.4; when we assumed no seasonality ($\theta = 0$), we did not normalize the distance because the standard deviation of pre-intervention dynamics are zero. 
-\swp{Solver info.}
+% \swp{Solver info.}
 
 We used the SIRS model to understand how underlying epidemiological parameters affect pathogen resilience and determine the relationship to underlying susceptible host dynamics.
 For the simple SIRS model without seasonal transmission ($\theta = 0$), the intrinsic resilience equals
@@ -828,7 +828,7 @@ To constrain the smoothness of $\tsub{\beta}{seas}(t)$, we imposed cyclic, rando
 \tsub{\beta}{seas}(t) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(t-1), \sigma) \qquad t = 2 \dots 52\\
 \tsub{\beta}{seas}(1) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(52), \sigma)
 \end{align}
-\swp{I noticed that I forgot to put a prior on $\sigma$ so need to re-do this but won't change the results.}
+% \swp{I noticed that I forgot to put a prior on $\sigma$ so need to re-do this but won't change the results.}
 We fixed $\alpha(t)=1$ for all $t < 2020$ and estimate $\alpha$ assuming a normal prior:
 \begin{equation}
 \alpha \sim \mathrm{Normal}(1, 0.25).
@@ -859,7 +859,7 @@ The model was fitted to four separate time series: (1) incidence time series fro
 The model was fitted using rstan \citep{carpenter2017stan,rstan}.
 The resulting posterior distribution was used to calculate the intrinsic resilience of the seasonally unforced system with the same parameters;
 eigenvalues of the discrete-time SIR model were computed by numerically finding the equilibrium and calculating the Jacobian matrix.
-\swp{add more description}
+% \swp{add more description}
 
 \subsection*{Validations for window-selection criteria}
 
