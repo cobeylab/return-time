@@ -62,7 +62,7 @@ g3 <- ggplot(filter(dist_SI_sirs, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", lwd=1) +
   geom_smooth(aes(time, dist), method="loess", col="orange") +
   geom_function(fun=function(x) exp(predict(lfit_SI_sirs)[1]) * exp(-ee_sirs*(x-maxt_SI_sirs)),
-                lwd=0.7, lty=3) +
+                lwd=2, lty=3) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5),
                      breaks=seq(2020, 2030, by=2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
@@ -122,7 +122,7 @@ g6 <- ggplot(filter(dist_SI_sirs2, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", lwd=1) +
   geom_smooth(aes(time, dist), method="loess", col="orange") +
   geom_function(fun=function(x) exp(predict(lfit_SI_sirs2)[1]) * exp(-ee_sirs*(x-maxt_SI_sirs2)),
-                lwd=0.7, lty=3) +
+                lwd=2, lty=3) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5),
                      breaks=seq(2020, 2030, by=2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
@@ -183,7 +183,7 @@ g9 <- ggplot(filter(dist_SI_sirs3, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", lwd=1) +
   geom_smooth(aes(time, dist), method="loess", col="orange") +
   geom_function(fun=function(x) exp(predict(lfit_SI_sirs3)[1]) * exp(-ee_sirs*(x-maxt_SI_sirs3)),
-                lwd=0.7, lty=3) +
+                lwd=2, lty=3) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5),
                      breaks=seq(2020, 2030, by=2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +

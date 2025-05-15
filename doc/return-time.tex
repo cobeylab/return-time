@@ -102,10 +102,10 @@
 A major priority for epidemiological research in the time of anthropogenic change is understanding how infectious disease dynamics respond to perturbations.
 Interventions to slow the spread of SARS-CoV-2 significantly disrupted the transmission of other human pathogens. 
 As interventions lifted, whether and when respiratory pathogens would eventually return to their pre-pandemic dynamics remains to be answered.
-Here, we present a framework for estimating pathogen resilience based on how fast epidemic patterns return to their pre-pandemic, endemic dynamics and analyze time series data from Hong Kong, Canada, Korea, and the US.
-By quantifying the resilience of common respiratory pathogens, we are able to predict when each pathogen will eventually return to its pre-pandemic, endemic dynamics.
+Here, we present a framework for estimating pathogen resilience based on how fast epidemic patterns approach their pre-pandemic, endemic dynamics and analyze time series data from Hong Kong, Canada, Korea, and the US.
+By quantifying the resilience of common respiratory pathogens, we are able to predict when each pathogen will eventually return to pre-pandemic dynamics.
 Our predictions closely match the observed deviations (or lack thereof) from its pre-COVID dynamics.
-Discrepancies between predicted and observed dynamics indicate the long-term impact of pandemic perturbations, suggesting that some pathogens may be converging to a different endemic cycle.
+Discrepancies between predicted and observed dynamics indicate the long-term impacts of pandemic perturbations, suggesting that some pathogens may be converging to a different endemic cycle.
 Finally, we show that the replenishment rate of the susceptible pool is a key determinant of pathogen resilience, which in turn determines the sensitivity of a system to stochastic perturbations.
 Overall, our analysis highlights the persistent nature of common respiratory pathogens compared to vaccine-preventable infections, such as measles.
 
@@ -129,7 +129,7 @@ Cases were scaled to account for changes in testing patterns (Materials and Meth
 \end{figure} 
 
 Even though more than five years have passed since the emergence of SARS-CoV-2, we still observe persistent changes in pathogen dynamics following the pandemic perturbations.
-For example, compared to pre-pandemic, seasonal patterns, human metapneumovirus in Korea seem to circulate at lower levels, whereas RSV in Korea seems to exhibit different seasonality (Figure 1).
+For example, compared to pre-pandemic, seasonal patterns, human metapneumovirus in Korea seems to circulate at lower levels, whereas RSV in Korea seems to exhibit different seasonality (Figure 1).
 These observations suggest a fundamental change in pathogen dynamics following the pandemic perturbations, which might be driven by a long-term shift in either human behavior or population-level immunity \citep{kissler2020projecting,baker2022long}.
 For example, the emergence of SARS-CoV-2 could have caused a long-term shift in population-level immunity through its interactions with other pathogens \citep{swets2022sars}, especially with seasonal coronaviruses \citep{kissler2020projecting,lin2022pre,murray2023impact}.
 The possibility of a long-lasting impact of the pandemic perturbations poses an important question for future infectious disease dynamics: can we predict whether and when other pathogens will eventually return to their pre-pandemic dynamics?
@@ -144,7 +144,7 @@ In this study, we lay out theoretical and statistical approaches to characterizi
 We begin by laying out a few representative scenarios that capture the potential impact of pandemic perturbations on endemic pathogen dynamics and illustrate how resilience can be measured by comparing the pre- and post-pandemic dynamics of susceptible and infected hosts.
 In practice, information on susceptible hosts is often unavailable, making this theoretical approach infeasible.
 Instead, we utilize a mathematical technique to reconstruct empirical attractors from the data \citep{takens2006detecting}, which allows us to measure the rate at which the host-pathogen system approaches this empirical attractor after a perturbation;
-this rate corresponds to the resilience of the host-pathogen system.
+we define this rate to be the empirical resilience of the host-pathogen system.
 We use this method to analyze pathogen surveillance data for respiratory and non-respiratory pathogens from Canada, Hong Kong, Korea, and the US.
 Finally, we show that susceptible host dynamics explain variation in pathogen resilience and further demonstrate that more resilient pathogens will be less sensitive to perturbations caused by demographic stochasticity, thereby providing a direct link between pathogen resilience and persistence. 
  
@@ -153,13 +153,13 @@ Finally, we show that susceptible host dynamics explain variation in pathogen re
 In classical ecological literature, the resilience of an ecological system is measured by the rate at which the system returns to its reference state following a perturbation \citep{pimm1979structure, neubert1997alternatives,gunderson2000ecological,dakos2022ecological}.
 This rate corresponds to the largest real part of the eigenvalues of the linearized system near equilibrium---here, we refer to this value as the \emph{intrinsic} resilience of the system, which represents the expected rate of return from perturbed states.
 In practice, we rarely know the true model describing population-level dynamics of common respiratory pathogens, limiting our ability to infer the intrinsic resilience of a system.
-Instead, we can still measure the \emph{empirical} resilience of a host-pathogen system by looking at how fast the system returns to the pre-pandemic, endemic dynamics after pandemic perturbations are lifted.
+Instead, we can measure the \emph{empirical} resilience of a host-pathogen system by looking at how fast the system returns to the pre-pandemic, endemic dynamics after pandemic perturbations are lifted.
 
 As an example, we begin with a simple Susceptible-Infected-Recovered-Susceptible (SIRS) model with seasonally forced transmission and demography (i.e., birth and death).
 The SIRS model is the simplest model that allows for the waning of immunity and is commonly used for modeling the dynamics of respiratory pathogens \citep{dushoff2004dynamical}.
 First, consider a pandemic perturbation that reduces transmission by 50\% for 6 months starting in 2020, which causes epidemic patterns to deviate from their original stable annual cycle for a short period of time and eventually come back (Figure 2A).
 To measure the resilience of this system empirically, we first need to be able to measure the distance from its pre-pandemic attractor.
-There are many ways we can measure the distance from the attractor, but for illustrative purposes, we choose one of the most parsimonious approaches: that is, we look at how the susceptible (S) and infected (I) populations change over time and measure the distance on the SI phase plane (Figure 2B).
+There are many ways we can measure the distance from the attractor, but for illustrative purposes, we choose one of the most parsimonious approaches: that is, we look at how the susceptible (S) and infected (I) populations change over time and measure the Euclidean distance on the SI phase plane, using the unperturbed phase plane as a reference (Figure 2B; Materials and Methods).
 In this simple case, the locally estimated scatterplot smoothing (LOESS) fit indicates that the distance from the attractor decreases exponentially (linearly on a log scale) on average (Figure 2C).
 Furthermore, the overall rate of return approximates the intrinsic resilience of the seasonally unforced system (Figure 2C).
 
@@ -170,11 +170,11 @@ Furthermore, the overall rate of return approximates the intrinsic resilience of
 (A, D, G) Simulated epidemic trajectories across various models. 
 Red and blue solid lines represent epidemic dynamics before and after pandemic perturbations are introduced, respectively.
 Red dashed lines represent counterfactual epidemic dynamics in the absence of perturbations.
-Gray regions indicate the duration of perturbations.
+Gray regions indicate the duration of perturbations with the dark gray region representing a 50\% transmission reduction and the light gray region representing a 10\% transmission reduction.
 (B, E, H) Phase plane representation of the time series in panels A, D, and G alongside the corresponding susceptible host dynamics.
 Red and blue solid lines represent epidemic trajectories on an SI phase plane before and after perturbations are introduced, respectively.
-(C, F, I) Changes in logged distance from the attractor over time.
-Blue lines represent the logged distance from the attractor.
+(C, F, I) Changes in distance from the attractor over time on a log scale.
+Blue lines represent the distance from the attractor.
 Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
 Dotted lines show the intrinsic resilience of the seasonally unforced system.
 }
@@ -188,29 +188,28 @@ The LOESS fit suggests that the distance from the pre-pandemic attractor will in
 Here, a permanent 10\% reduction in transmission rate slows the system, which causes the distance from the pre-pandemic attractor initially to decrease at a slower rate (Figure 2F) than it would have otherwise (Figure 2C) before plateauing at a fixed distance between the two attractors.
 This example shows that resilience is not necessarily an intrinsic property of a specific pathogen.
 Instead, pathogen resilience is a property of a specific attractor that a host-pathogen system approaches, which depends on both pathogen and host characteristics.
-% \swp{Add discussion about observation error, e.g., under-reporting.}
 
 Finally, transient phenomena can further complicate the picture (Figure 2G--I).
-For example, a stage-structured model initially exhibits a stable annual cycle, but perturbations from a 10\% reduction in transmission for 6 months cause the epidemic to shift to biennial cycles (Figure 2G).
+For example, a stage-structured model, which accounts for reduction in secondary susceptibility, initially exhibits a stable annual cycle, but perturbations from a 10\% reduction in transmission for 6 months cause the epidemic to shift to biennial cycles (Figure 2G).
 The system eventually approaches the original pre-pandemic attractor (Figure 2H), suggesting that this biennial cycle is a transient phenomenon.
-The LOESS fit indicates that the distance from the attractor initially decreases exponentially at a rate that is consistent with the intrinsic resilience of the seasonally unforced stage-structured system, but the rate of decrease decelerates with the damped oscillations (Figure 2I).
+The LOESS fit indicates that the distance from the attractor initially decreases exponentially at a rate that is consistent with the intrinsic resilience of the seasonally unforced stage-structured system, but the approach to the attractor slows down with the damped oscillations (Figure 2I).
 This behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions \citep{hastings2018transient}.
 Strong seasonal forcing in transmission can also lead to transient phenomena for a simple SIRS model, causing a slow return to pre-perturbation dynamics (Supplementary Figure S1).
 
-This empirical approach allows us to measure the resilience of a two-strain host-pathogen system even when we have incomplete observation of the infection dynamics.
+This empirical approach allows us to measure the resilience of a two-strain host-pathogen system as well even when we have incomplete observation of the infection dynamics.
 Simulations from a simple two-strain competition system illustrate that separate analyses of individual strain dynamics (e.g., RSV A vs B) and a joint analysis of total infections (e.g., total RSV infections) yield identical resilience estimates (Supplementary Figure S2, 3).
-This is expected because the dynamics of two strains (or two pathogens) around the attractor in a coupled system are described by the same set of eigenvalues and eigenvectors, meaning that both strains should exhibit identical rates of returns following a perturbation.
-Analogous to a single system, strong seasonal forcing in transmission can cause the system to slow down through transient phenomena (Supplementary Figure S4).
+This is expected because eigenvalues determine the dynamics of the entire system around the equilibrium, meaning that both strains should exhibit identical rates of return following a perturbation.
+Analogous to a single-strain system, strong seasonal forcing in transmission can cause the two-strain system to slow down through transient phenomena (Supplementary Figure S4).
 
 These observations yield three insights.
 First, we can directly estimate the empirical resilience of a host-pathogen system by measuring the rate at which the system approaches an attractor, provided that we have a way to quantify the distance from the attractor.
 The empirical approach to estimating pathogen resilience is particularly convenient because it does not require us to know the true underlying model;
 estimating the intrinsic resilience from fitting misspecified models can lead to biased estimates (Supplementary Figure S5).
 Second, resilience estimates allow us to make phenomenological predictions about the dynamics of a host-pathogen system following a perturbation.
-Assuming that an attractor has not changed and the distance from the attractor will decrease exponentially over time, we can obtain a ballpark estimate for when the system should reach an attractor.
-Finally, a change in the rate of an exponential decrease in the distance from the attractor can provide information about whether the system has reached an alternative attractor, or a ghost attractor, that is different from the original, pre-pandemic attractor.
+Assuming that an attractor has not changed and the distance from the attractor will decrease exponentially over time, we can estimate when the system should reach an attractor.
+Finally, a change in the (exponential) rate of approach provide information about whether the system has reached an alternative attractor, or a ghost attractor, that is different from the original, pre-pandemic attractor.
 These alternative attractors may reflect continued perturbations from permanent changes in transmission patterns as well as changes in immune landscapes.
-There will be periods of time when it is difficult to tell whether pathogen dynamics are still diverging from the original attractor or have begun to converge to a new attractor; 
+There will be periods of time when it is difficult to tell whether pathogen dynamics are still diverging from the original attractor due to a long-term perturbation, or have entered the basin of attraction of a new attractor; 
 now that several years have passed since interventions have been lifted, we expect many respiratory pathogens to have had sufficient time to begin returning to their post-intervention attractors.
 With recent data, we can start to evaluate whether we see early signs of convergence to the former attractor or a new one.
 
@@ -222,7 +221,7 @@ Specifically, we analyzed case time series of respiratory pathogens from four co
 
 So far, we have focused on simple examples that assume a constant transmission reduction during the pandemic.
 However, in practice, the impact of pandemic perturbations on pathogen transmission was likely more complex (Figure 3A), reflecting introduction and relaxation of various intervention strategies.
-In some cases, strong perturbations likely caused local fadeouts, requiring immigration from another location for epidemic rebound.
+In some cases, strong perturbations likely caused local fadeouts, requiring immigration/importation from another location for epidemic rebound.
 Such complexities could lead to longer delays between the introduction of pandemic perturbations and pathogen rebound as well as temporal variation in outbreak sizes (Figure 3B):
 in this example, continued transmission reduction from interventions limits the size of the first outbreak in 2021 following the rebound, allowing for a larger outbreak in 2022 when interventions are further relaxed.
 
@@ -256,7 +255,7 @@ Complex changes in the distance from the attractor suggest that estimating patho
 Therefore, before we tried estimating resilience from real data, we explored an automated window selection criterion for linear regression and tested it against randomized, stochastic simulations across a range of realistic pandemic perturbation shapes.
 In doing so, we also explored optimal choices for embedding dimensions and evaluated our choices of fitting window parameters and embedding dimensions by quantifying correlation coefficients between the estimated resilience and the intrinsic resilience of a seasonally unforced system (Materials and Methods).
 Overall, we found large variation in estimation performances with correlation coefficient ranging from 0.21 to 0.61 (Supplementary Figure S7).
-In almost all cases, the automated window selection approach outperformed a naive approach that uses the time series, starting from the peak distance (Supplementary Figure S7).
+In almost all cases, the automated window selection approach outperformed a naive approach, which performs regression between the peak distance and current distance (Supplementary Figure S7).
 
 Based on the best performing window selection criteria and embedding dimension, we applied this approach to pathogen surveillance data presented in Figure 1 (Materials and Methods).
 For each time series, we applied Takens' theorem independently to reconstruct the empirical attractor and obtained the corresponding time series of distances from attractors (Supplementary Figure S8).
@@ -291,7 +290,7 @@ Using resilience estimates, we predicted when each pathogen would hypothetically
 Specifically, we extended our linear regression fits to distance-from-attractor time series and ask when the predicted regression line will cross a threshold value;
 since we relied on nearest neighbor distances, pre-pandemic distances are always greater than zero (Figure 3E), meaning that we can use the mean of pre-pandemic distances as our threshold.
 
-We predicted that a return to pre-pandemic cycles has occurred would be imminent for most pathogens (Figure 4B).
+We predicted that a return to pre-pandemic cycles has occurred or would be imminent for most pathogens (Figure 4B).
 In particular, we predicted that 12 out of 23 pathogen-country pairs should have already returned before the end of 2024.
 For almost all pathogens that were predicted to have returned already, the observed epidemic dynamics showed clear convergence towards their pre-pandemic seasonal averages, confirming our predictions (Figure 4C).
 However, there were a few exceptions, including norovirus in Hong Kong and rhinovirus/enterovirus in the US, where the observed epidemic dynamics in 2024 exhibit clear deviation from their pre-pandemic seasonal averages (Figure 4C; Figure S9).
@@ -331,7 +330,7 @@ We were also able to obtain a plausible range of susceptible replenishment rates
 
 \section*{Pathogen resilience determines sensitivity to stochastic perturbations}
 
-Beyond the pandemic perturbations, we hypothesized host-pathogen systems to experience continued perturbations of varying degrees from changes in epidemiological conditions, such as human behavior, climate, and viral evolution.
+Even in the absence of major pandemic perturbations, host-pathogen systems are expected to experience continued perturbations of varying degrees from changes in epidemiological conditions, such as human behavior, climate, and viral evolution.
 These perturbations can also arise from demographic stochasticity, which is inherent to any ecological systems.
 Here, we used a seasonally unforced SIRS model with birth/death to explore how resilience of a host-pathogen system determines the sensitivity to perturbations caused by demographic stochasticity (Materials and Methods).
 
@@ -352,9 +351,11 @@ Labels A--C in panels D and E correspond to scenarios shown in panels A--C.
 \end{figure}
 
 We found that resilience of a host-pathogen system determines the amount of deviation from the deterministic trajectory caused by demographic stochasticity, with less resilient systems experiencing larger deviations (Figure 6).
-Notably, less resilience systems also exhibited slower epidemic cycles (Figure 6A--C). 
+Notably, less resilient systems also exhibited slower epidemic cycles (Figure 6A--C). 
 The periodicity of this epidemic cycle matched those predicted by the intrinsic periodicity of the system (Supplementary Figure S13) where the intrinsic resilience of the system is inversely proportional to its intrinsic periodicity (Supplementary Figure S14).
-We note that the intrinsic resilience is not the sole determinant for how sensitive the system is to stochastic perturbations.
+However, we note that the interplay between seasonal transmission and intrinsic periodicity can also lead to complex cycles, as illustrated by a recent analysis of \textit{Mycoplasma pneumoniae} dynamics \citep{nielsen2025complex}.
+
+We also note that the intrinsic resilience is not the sole determinant for how sensitive the system is to stochastic perturbations.
 For example, the population size and average duration of infection also affect the amount of deviation from the deterministic trajectory caused by demographic stochasticity, even though these quantities have little to no impact on the intrinsic resilience (Supplementary Figure S15).
 These conclusions were robust for the seasonally forced SIRS model (Supplementary Figure S16).
 
@@ -380,10 +381,10 @@ Differences in the mode of transmission between respiratory vs gastrointestinal 
 For almost half of the pathogens we considered, we predicted that their return to original epidemic patterns is imminent.
 We will need a few more years of data to test whether these pathogens will eventually return to their original dynamics or eventually converge to a different attractor.
 We also cannot rule out the possibility that some pathogens may exhibit long-term transient behaviors following pandemic perturbations.
-Overall, these observations echo earlier studies that highlighted the long-lasting impact of pandemic perturbations \citep{baker2022long,caini2024probable,chen2024covid,park2024predicting}. 
+Overall, these observations echo earlier studies that highlighted the long-lasting impact of pandemic perturbations \citep{baker2022long,caini2024probable,chen2024covid,park2024predicting,nielsen2025complex}. 
 
 We showed that susceptible host dynamics shape pathogen resilience, where faster replenishment of the susceptible population causes the pathogen to be more resilient.
-For simplicity, we focus on waning immunity and birth as the main drivers of the susceptible host dynamics but other mechanisms can also contribute to the replenishment of the susceptible population.
+For simplicity, we focused on waning immunity and birth as the main drivers of the susceptible host dynamics but other mechanisms can also contribute to the replenishment of the susceptible population.
 In particular, pathogen evolution, especially the emergence of antigenically novel strains, can cause effective waning of immunity in the population;
 therefore, we hypothesize that the rate of antigenic evolution is likely a key feature of pathogen resilience.
 Future studies should explore the relationship between the rate of evolution and resilience for antigenically evolving pathogens.
@@ -405,7 +406,7 @@ Short pre-pandemic time series also limit our ability to accurately reconstruct 
 although this is less likely a problem for respiratory pathogens that are strongly annual, our attractor reconstruction may be inaccurate for those exhibiting multi-annual cycles, such as adenovirus in Hong Kong and Korea.
 Our framework also do not allow us to distinguish whether a system has settled to a new attractor or is experiencing long-term transient behavior.
 Uncertainties in pathogen dynamics due to changes in testing patterns further contribute to the crudeness of our resilience estimates.
-Despite these limitations, our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust, given how rapid many respiratory pathogens returned to their original cycles following pandemic perturbations.
+Despite these limitations, our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust, given how rapidly many respiratory pathogens returned to their original cycles following pandemic perturbations.
 
 Predicting the impact of anthropogenic changes on infectious disease dynamics is a fundamental aim of infectious disease research in a rapidly changing world.
 Our study illustrates that how a host-pathogen system responds to both small and large perturbations is largely predictable through the lens of ecological resilience.
@@ -442,19 +443,19 @@ For Hong Kong, we applied the same scaling procedure to the time series as we di
 In this case, we only adjusted for testing efforts up to the end of 2019 because there was a major reduction in testing for common respiratory pathogens between 2020 and 2023 (Supplementary Figure S18).
 
 For Korea, while we did not have information on testing, the reported number of respiratory infections consistently increased from 2013 to the end of 2019, which we interpreted as changes in testing patterns (Supplementary Figure S19).
-Since we did not have testing numbers, we used the weekly sum of all acute respiratory viral infection cases as a proxy for testing, which were further smoothed with moving averaged and scaled to have a maximum of 1.
+Since we did not have testing numbers, we used the weekly sum of all acute respiratory viral infection cases as a proxy for testing, which were further smoothed with moving average and scaled to have a maximum of 1.
 For Korea, we also only adjusted for testing efforts up to the end of 2019.
 
-In the US, there has been a large increase in testing against some respiratory pathogens, especially RSV, which could not be corrected by simple scaling (Supplementary Figure S20).
+In the US, there has been a large increase in testing for some respiratory pathogens, especially RSV, which could not be corrected by simple scaling (Supplementary Figure S20).
 Instead, we derived an incidence proxy by multiplying the test positivity with influenza-like illness positivity, which was taken from \url{https://gis.cdc.gov/grasp/fluview/fluportaldashboard.html}.
 This method of estimating an incidence proxy has been recently applied in the analysis of seasonal coronaviruses \citep{kissler2020projecting} and \textit{Mycoplasma pneumoniae} infections \citep{park2024predicting}.
 Detailed assumptions and justifications are provided in \citep{goldstein2011predicting}.
 
 \subsection*{Data summary}
 
-To make qualitative comparisons between pre- and post-perturbation dynamics of respiratory pathogen circulation patterns, we calculate the mean seasonal patterns using time series of either rescaled cases or incidence proxy estimates before 2020.
-We do so by taking the mean value in each week across all years before 2020.
-Confidence intervals around the means are calculated using a simple t test.
+To make qualitative comparisons between pre- and post-perturbation dynamics of respiratory pathogen circulation patterns, we calculated the mean seasonal patterns using time series of either rescaled cases or incidence proxy estimates before 2020.
+We did so by taking the mean value in each week across all years before 2020.
+Confidence intervals around the means were calculated using a simple t test.
 
 \subsection*{Estimating pathogen resilience}
 
@@ -507,7 +508,7 @@ The dynamics of the SIRS model is described by the following set of differential
 \begin{align}
 \frac{\dd S}{\dd t} &= \mu - \beta(t) SI - \mu S + \delta R \\
 \frac{\dd I}{\dd t} &= \beta(t) SI - (\gamma + \mu) I \\
-\frac{\dd R}{\dd t} &= \gamma I - (\delta + \mu) R \\
+\frac{\dd R}{\dd t} &= \gamma I - (\delta + \mu) R
 \end{align}
 where $\mu$ represents the birth and death rates, $\beta(t)$ represents the time-varying transmission rate, and $\gamma$ represents the recovery rate.
 The basic reproduction number $\mathcal R_0(t) = \beta(t)/(\gamma + \mu)$ is defined as the average number of secondary infections that a single infected individual would cause in a fully susceptible population at time $t$ and measures the intrinsic transmissibility of a pathogen.
@@ -518,7 +519,8 @@ When we introduced the idea of pathogen resilience (Figure 2), we imposed sinuso
 \end{equation}
 where $b_1$ represents the baseline transmission rate, $\theta$ represents the seasonal amplitude, and $\phi$ represents the seasonal offset term.
 Here, we also introduced an extra multiplicative term $\alpha(t)$ to account for the impact of pandemic perturbations, where $\alpha(t) < 1$ indicates transmission reduction.
-Figure 2A and 2B were generated assuming $b_1 = 3 \times (365/7+1/50)/\mathrm{years}$, $\theta=0.2$, $\phi=0$, $\mu=1/50/\mathrm{years}$, $\gamma=365/7/\mathrm{years}$, and $\delta=1/2/\mathrm{years}$,
+Figure 2A and 2B were generated assuming $b_1 = 3 \times (365/7+1/50)/\mathrm{years}$, $\theta=0.2$, $\phi=0$, $\mu=1/50/\mathrm{years}$, $\gamma=365/7/\mathrm{years}$, and $\delta=1/2/\mathrm{years}$.
+Specifically, $b_1 = 3 \times (365/7+1/50)/\mathrm{years}$ implies $\mathcal R_0 = 3$, where $(365/7+1/50)/\mathrm{years}$ represent the rate of recovery.
 In Figure 2A, we imposed a 50\% transmission reduction for 6 months from 2020:
 \begin{equation}
 \alpha(t) = \begin{cases}
@@ -597,6 +599,7 @@ S.C. was supported by Federal funds from the National Institute of Allergy and I
 
 In Figure 2G--I, we used a more realistic, stage-structured model to illustrate how transient phenomena can cause the system to slow down.
 Specifically, we used the stage-structured RSV model proposed by \citep{pitzer2015environmental}, which assumes that subsequent reinfections cause an individual to become less susceptible and transmissible than previous infections.
+In contrast to a standard SIRS model, this model does not include a recovered compartment, which allow for temporary protection against new infections, and assumes that recoverd individuals are immediately susceptible to new infections.
 The model dynamics can be described as follows:
 \begin{align}
 \frac{\dd M}{\dd t} &= \mu - (\omega + \mu) M\\
@@ -607,7 +610,7 @@ The model dynamics can be described as follows:
 \frac{\dd S_2}{\dd t} &= \gamma_2 I_2 - (\sigma_2 \lambda(t) + \mu) S_2\\
 \frac{\dd I_3}{\dd t} &= \sigma_2 \lambda(t) S_2 - (\gamma_3 + \mu) I_3\\
 \frac{\dd S_3}{\dd t} &= \gamma_3 I_3 - (\sigma_3 \lambda(t) + \mu) S_3 + \gamma_4 I_4\\
-\frac{\dd I_4}{\dd t} &= \sigma_3 \lambda(t) S_3 - (\gamma_4 + \mu) I_4\\
+\frac{\dd I_4}{\dd t} &= \sigma_3 \lambda(t) S_3 - (\gamma_4 + \mu) I_4
 \end{align}
 where $M$ represents the proportion of individuals who are maternally immune;
 $S_i$ represents the proportion of individuals who are susceptible after $i$ prior infections;
@@ -647,14 +650,14 @@ These quantities were used to compute the normalized distance from the attractor
 We used a simple two-strain model to show that a multistrain host-pathogen system that is coupled through cross immunity can be described by a single resilience value.
 The model dynamics can be described as follows \citep{bhattacharyya2015cross}: 
 \begin{align}
-\frac{\dd S}{\dd t} &= \mu - \mu S - (\lambda_1 + \lambda_2) S + \rho_1 R_1 + \rho_2 R_2 \\
+\frac{\dd S}{\dd t} &= \mu - \mu S - (\lambda_1 + \lambda_2) S + \delta_1 R_1 + \delta_2 R_2 \\
 \frac{\dd I_1}{\dd t} &= \lambda_1 S - (\gamma_1 + \mu) I_1 \\
 \frac{\dd I_2}{\dd t} &= \lambda_2 S - (\gamma_2 + \mu) I_2 \\
-\frac{\dd R_1}{\dd t} &= \gamma_1 I_1 - \lambda_2 \epsilon_{21} R_1 - \rho_1 R_1 + \rho_2 R - \mu R_1\\
-\frac{\dd R_2}{\dd t} &= \gamma_2 I_2 - \lambda_1 \epsilon_{12} R_2 - \rho_2 R_2 + \rho_1 R - \mu R_2\\
+\frac{\dd R_1}{\dd t} &= \gamma_1 I_1 - \lambda_2 \epsilon_{21} R_1 - \delta_1 R_1 + \delta_2 R - \mu R_1\\
+\frac{\dd R_2}{\dd t} &= \gamma_2 I_2 - \lambda_1 \epsilon_{12} R_2 - \delta_2 R_2 + \delta_1 R - \mu R_2\\
 \frac{\dd J_1}{\dd t} &= \lambda_1 \epsilon_{12} R_2 - (\gamma_1 + \mu) J_1\\
 \frac{\dd J_2}{\dd t} &= \lambda_2 \epsilon_{21} R_1 - (\gamma_2 + \mu) J_2\\
-\frac{\dd R}{\dd t} &= \gamma_1 J_1 + \gamma_2 J_2 - \rho_1 R - \rho_2 R - \mu R
+\frac{\dd R}{\dd t} &= \gamma_1 J_1 + \gamma_2 J_2 - \delta_1 R - \delta_2 R - \mu R
 \end{align}
 where $S$ represents the proportion of individuals who are fully susceptible to infections by both strains;
 $I_1$ represents the proportion of individuals who are infected with strain 1 without prior immunity;
@@ -666,7 +669,7 @@ $J_2$ represents the proportion of individuals who are infected with strain 2 wi
 $R$ represents the proportion of individuals who are immune to infections from both strains;
 $\mu$ represents the birth/death rate;
 $\lambda_1$ and $\lambda_2$ represent the force of infection from strains 1 and 2, respectively;
-$\rho_1$ and $\rho_2$ represent the waning immunity rate;
+$\delta_1$ and $\delta_2$ represent the waning immunity rate;
 $\gamma_1$ and $\gamma_2$ represent the recovery rate;
 $\epsilon_{21}$ and $\epsilon_{12}$ represent the susceptibility to reinfection with strains 2 and 1, respectively, given prior immunity from infection with strains 1 and 2, respectively. 
 The force of infection is modeled as follows:
@@ -678,7 +681,7 @@ The force of infection is modeled as follows:
 \end{align}
 In Supplementary Figures S2--S4, we assumed the following parameters:
 $b_1 = 2 \times 52/\mathrm{years}$, $b_2 = 4 \times 52/\mathrm{years}$, $\phi_1 = \phi_2 = 0$, $\epsilon_{12} = 0.9$, $\epsilon_{21} = 0.5$,
-$\gamma_1 = \gamma_2 = 52/\mathrm{years}$, $\rho_1 = \rho_2 = 1/\mathrm{years}$, and $\mu=1/70/\mathrm{years}$.
+$\gamma_1 = \gamma_2 = 52/\mathrm{years}$, $\delta_1 = \delta_2 = 1/\mathrm{years}$, and $\mu=1/70/\mathrm{years}$.
 For all simulations, we assumed a 50\% transmission reduction for 6 months from 2020:
 \begin{equation}
 \alpha(t) = \begin{cases}
@@ -687,7 +690,7 @@ For all simulations, we assumed a 50\% transmission reduction for 6 months from 
 \end{cases}
 \end{equation}
 The seasonal amplitude $\theta$ is varied from 0 to 0.4.
-All simulations were ran from 1900 to 2030 with following initial conditions: 
+All simulations were run from 1900 to 2030 with following initial conditions: 
 $S(0) = 1 - 2\times 10^{-6}$, $I_1(0) = 1 \times 10^{-6}$, $I_2(0) = 1 \times 10^{-6}$, $R_1(0) = 0$, $R_2(0) = 0$, $J_1(0) = 0$, $J_2(0) = 0$, and $R(0) = 0$.
 
 We considered three scenarios for measuring pathogen resilience: (1) we only have information about strain 1, (2) we only have information about strain 2, and (3) we are unable to distinguish between strains.
@@ -708,7 +711,7 @@ These quantities were used to compute the normalized distance from the attractor
 \subsection*{Estimating intrinsic resilience using a mechanistic model}
 
 We tested whether we can reliably estimate the intrinsic resilience of a system by fitting a mechanistic model.
-Specifically, we simulated case time series from stochastic SIRS and two-strain models and fitted a simple, deterministic SIRS model using a Bayesian framework.
+Specifically, we simulated case time series from stochastic SIRS and two-strain models and fitted a simple, deterministic SIRS model using a Bayesian framework \citep{park2024predicting,nielsen2025complex,park2025interplay}.
 
 We simulated the models in discrete time with a daily time step ($\Delta t = 1$), incorporating demographic stochasticity:
 \begin{align}
@@ -839,7 +842,7 @@ We assumed weakly informative priors on $\omega$ and $\nu$:
 \nu \sim \mathrm{Normal}(104, 26)
 \end{align}
 We assumed that the true birth/death rates, population sizes, and recovery rates are known.
-We note, however, that assuming $\gamma=1/\mathrm{week}$ actually corresponds to a mean simulated infectious period of 1.6 weeks, which is much longer than the true value; this approximation allows us to test whether we can still robustly estimate the intrinsic resilience given parameter mis-specification.
+We note, however, that assuming $\gamma=1/\mathrm{week}$ actually corresponds to a mean simulated infectious period of 1.6 weeks due to a time discretization, which is much longer than the true value; this approximation allows us to test whether we can still robustly estimate the intrinsic resilience given parameter mis-specification.
 Initial conditions were estimated with following priors:
 \begin{align}
 S(0) &= N s(0)\\
@@ -870,6 +873,7 @@ Then, we drew independent normal variables $z_i$ of length $\lfloor 364 \tsub{\t
 \begin{equation}
 x_n = 1 + \sum_{i=n}^{\lfloor 364 \tsub{\tau}{npi}\rfloor} z_i, \quad n = 1, \dots, \lfloor 364 \tsub{\tau}{npi}\rfloor.
 \end{equation}
+In contrast to simple perturbations that assume a constant reduction in transmission, this approach allows us to model transmission reduction that varies over time smoothly.
 We repeated this random generation process until less than 10\% of $x_n$ exceeds 1---this was done to ensure the perturbation term $\alpha(t)$ stays below 1 (and therefore reduce transmission) for the most part.
 Then, we set any values that are above 1 or below 0 to 1 and 0, respectively.
 Then, we randomly drew the minimum transmission during perturbation $\tsub{\alpha}{min}$ from a uniform distribution between 0.5 and 0.7 and scale $x_n$ to have a minimum of $\tsub{\alpha}{min}$:
@@ -1119,11 +1123,11 @@ The intrinsic periodicity of the epidemic corresponds to $2 \pi/\mathrm{Im}(\lam
 \begin{center}
 \includegraphics[width=\textwidth]{../figure6/figure_persistence_noise_popgamma.pdf}
 \caption{
-\textbf{Impact of population size and the averge duration of infection of a host-pathogen system to its sensitivity tostochastic perturbations.}
+\textbf{Impact of population size and the average duration of infection of a host-pathogen system on its sensitivity to stochastic perturbations.}
 (A) Intrinsic resilience of a system as a function of population size and the average duration of immunity.
 (B) Epidemic amplitude as a function of population size and the average duration of immunity.
-(C) Intrinsic resilience of a system as a function of the average duration of infection and the average duration of immunity.
-(D) Epidemic amplitude as a function of the average duration of infection and the average duration of immunity.
+(C) Intrinsic resilience of a system as a function of the average duration of infection and immunity.
+(D) Epidemic amplitude as a function of the average duration of infection and immunity.
 The epidemic amplitude corresponds to $(\max I - \min I)/(2 \bar{I})$, where $\bar{I}$ represents the mean prevalence.
 }
 \end{center}
@@ -1139,7 +1143,7 @@ The epidemic amplitude corresponds to $(\max I - \min I)/(2 \bar{I})$, where $\b
 (A--C) Epidemic trajectories of a stochastic SIRS model with demographic stochasticity across three different resilience values: low, intermediate, and high.
 The relative prevalence was calculated by dividing infection prevalence by its mean value.
 Black lines represent deterministic epidemic trajectories.
-Red lines represent stochastic epidemic epidemic trajectories.
+Red lines represent stochastic epidemic trajectories.
 (D) The intrinsic resilience of the seasonally unforced system as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
 (E) The relative epidemic amplitude, a measure of sensitivity to stochastic perturbations, as a function of the basic reproduction number $\mathcal R_0$ and the duration of immunity.
 To calculate the relative epidemic amplitude, we first take the relative difference in infection prevalence between stochastic and deterministic trajectories: $\epsilon = (\tsub{I}{stoch}-\tsub{I}{det})/\tsub{I}{det}$. 

@@ -108,9 +108,9 @@ lfit_SI_bh1 <- lm(log(dist)~time, data=filter(dist_SI_bh1, time>=maxt_SI_bh1))
 g3 <- ggplot(filter(dist_SI_bh1, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", alpha=1, lwd=1) +
   # geom_smooth(data=filter(dist_SI, time>=maxt_SI+1/ee), aes(time, dist), method="lm", col="#224B95") +
-  geom_function(fun=function(x) exp(predict(lfit_SI_bh1)[1]) * exp(-ee_bh1*(x-maxt_SI_bh1)),
-                lwd=0.7, lty=3) +
   geom_smooth(aes(time, dist), method="loess", col="orange") +
+  geom_function(fun=function(x) exp(predict(lfit_SI_bh1)[1]) * exp(-ee_bh1*(x-maxt_SI_bh1)),
+                lwd=2, lty=3) +
   scale_x_continuous("Year", breaks=seq(2020, 2030, 2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
   coord_cartesian(ylim=c(1e-5, 10)) +
@@ -159,9 +159,9 @@ lfit_SI_bh2 <- lm(log(dist)~time, data=filter(dist_SI_bh2, time>=maxt_SI_bh2))
 
 g6 <- ggplot(filter(dist_SI_bh2, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", alpha=1, lwd=1) +
-  geom_function(fun=function(x) exp(predict(lfit_SI_bh2)[1]) * exp(-ee_bh2*(x-maxt_SI_bh2)),
-                lwd=0.7, lty=3) +
   geom_smooth(aes(time, dist), method="loess", col="orange") +
+  geom_function(fun=function(x) exp(predict(lfit_SI_bh2)[1]) * exp(-ee_bh2*(x-maxt_SI_bh2)),
+                lwd=2, lty=3) +
   scale_x_continuous("Year", breaks=seq(2020, 2030, 2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
   coord_cartesian(ylim=c(1e-5, 10)) +
@@ -208,9 +208,9 @@ lfit_SI_bh3 <- lm(log(dist)~time, data=filter(dist_SI_bh3, time>=maxt_SI_bh3))
 
 g9 <- ggplot(filter(dist_SI_bh3, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", alpha=1, lwd=1) +
-  geom_function(fun=function(x) exp(predict(lfit_SI_bh3)[1]) * exp(-ee_bh1*(x-maxt_SI_bh3)),
-                lwd=0.7, lty=3) +
   geom_smooth(aes(time, dist), method="loess", col="orange") +
+  geom_function(fun=function(x) exp(predict(lfit_SI_bh3)[1]) * exp(-ee_bh1*(x-maxt_SI_bh3)),
+                lwd=2, lty=3) +
   scale_x_continuous("Year", breaks=seq(2020, 2030, 2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
   coord_cartesian(ylim=c(1e-5, 10)) +

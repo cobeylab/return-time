@@ -27,10 +27,11 @@ dist_SI_sirs <- distfun(mat_perturb_SI_sirs, mat_unperturb_SI_sirs,
                    2020, "all")
 
 g1 <- ggplot(ss_perturb_sirs) +
-  annotate("rect", xmin=2020, xmax=2020.5, ymin=-Inf, ymax=Inf, fill="gray80") +
+  annotate("rect", xmin=2020, xmax=2020.5, ymin=-Inf, ymax=Inf, fill="gray70") +
   geom_line(aes(time, I, col=group)) +
   geom_line(data=ss_unperturb_sirs, aes(time, I), lty=2, col="#EF6351") +
-  scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5)) +
+  scale_x_continuous("Year", expand=c(0, 0), limits=c(2016, 2029.5),
+                     breaks=c(2016, 2018, 2020, 2022, 2024, 2026, 2028, 2030)) +
   scale_y_continuous("Infected", expand=c(0, 0), limits=c(0, 0.13)) +
   scale_color_manual(values=c("#224B95", "#EF6351")) +
   ggtitle("SIRS model, same attractor") +
@@ -61,7 +62,7 @@ g3 <- ggplot(filter(dist_SI_sirs, time >= 2020)) +
   # geom_smooth(data=filter(dist_SI_sirs, time>=maxt_SI_sirs), aes(time, dist), method="lm", col="#224B95") +
   geom_smooth(aes(time, dist), method="loess", col="orange") +
   geom_function(fun=function(x) exp(predict(lfit_SI_sirs)[1]) * exp(-ee_sirs*(x-maxt_SI_sirs)),
-                lwd=0.7, lty=3) +
+                lwd=2, lty=3) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5),
                      breaks=seq(2020, 2030, by=2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
@@ -96,10 +97,12 @@ dist_SI_sirs2 <- distfun(mat_perturb_SI_sirs2, mat_unperturb_SI_sirs,
                         2020, "all")
 
 g4 <- ggplot(ss_perturb_sirs2) +
-  annotate("rect", xmin=2020, xmax=Inf, ymin=-Inf, ymax=Inf, fill="gray80") +
+  annotate("rect", xmin=2020, xmax=2020.5, ymin=-Inf, ymax=Inf, fill="gray70") +
+  annotate("rect", xmin=2020.5, xmax=Inf, ymin=-Inf, ymax=Inf, fill="gray90") +
   geom_line(aes(time, I, col=group)) +
   geom_line(data=ss_unperturb_sirs, aes(time, I), lty=2, col="#EF6351") +
-  scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5)) +
+  scale_x_continuous("Year", expand=c(0, 0), limits=c(2016, 2029.5),
+                     breaks=c(2016, 2018, 2020, 2022, 2024, 2026, 2028, 2030)) +
   scale_y_continuous("Infected", expand=c(0, 0), limits=c(0, 0.13)) +
   scale_color_manual(values=c("#224B95", "#EF6351")) +
   ggtitle("SIRS model, different attractor") +
@@ -128,7 +131,7 @@ g6 <- ggplot(filter(dist_SI_sirs2, time >= 2020)) +
   geom_line(aes(time, dist), col="#224B95", lwd=1) +
   geom_smooth(aes(time, dist), method="loess", col="orange") +
   geom_function(fun=function(x) exp(predict(lfit_SI_sirs2)[1]) * exp(-ee_sirs2*(x-maxt_SI_sirs2)),
-                lwd=0.7, lty=3) +
+                lwd=2, lty=3) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5),
                      breaks=seq(2020, 2030, by=2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
@@ -157,10 +160,11 @@ dist_SI_rsv_pitzer <- distfun(mat_perturb_SI_rsv_pitzer, mat_unperturb_SI_rsv_pi
                               2020, "all")
 
 g7 <- ggplot(ss_perturb_rsv_pitzer) +
-  annotate("rect", xmin=2020, xmax=2020.5, ymin=-Inf, ymax=Inf, fill="gray80") +
+  annotate("rect", xmin=2020, xmax=2020.5, ymin=-Inf, ymax=Inf, fill="gray70") +
   geom_line(aes(time, prevalence, col=group)) +
   geom_line(data=ss_unperturb_rsv_pitzer, aes(time, prevalence), lty=2, col="#EF6351") +
-  scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5)) +
+  scale_x_continuous("Year", expand=c(0, 0), limits=c(2016, 2029.5),
+                     breaks=c(2016, 2018, 2020, 2022, 2024, 2026, 2028, 2030)) +
   scale_y_continuous("Infected", expand=c(0, 0), limits=c(0, 0.13)) +
   scale_color_manual(values=c("#224B95", "#EF6351")) +
   ggtitle("Stage-structured model") +
@@ -193,7 +197,7 @@ g9 <- ggplot(filter(dist_SI_rsv_pitzer, time >= 2020)) +
   # geom_smooth(data=filter(dist_SI_rsv_pitzer, time>=maxt_SI_rsv_pitzer), 
   #             aes(time, dist), col="orange") +
   geom_function(fun=function(x) exp(predict(lfit_SI_rsv_pitzer)[1]) * exp(-ee_rsv_pitzer*(x-maxt_SI_rsv_pitzer)),
-                lwd=0.7, lty=3) +
+                lwd=2, lty=3) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5),
                      breaks=seq(2020, 2030, by=2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
