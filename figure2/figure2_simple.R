@@ -46,7 +46,7 @@ g2 <- ggplot(bind_cols(as.data.frame(mat_perturb_SI_sirs), data.frame(time=time)
   geom_path(aes(V1, exp(V2)), col="#224B95") +
   geom_path(data=bind_cols(as.data.frame(mat_unperturb_SI_sirs), data.frame(time=time)),
             aes(V1, exp(V2)), col="#EF6351") +
-  scale_x_continuous("Susceptibles") +
+  scale_x_continuous("Susceptibles", limits=c(0.12, 0.65), expand=c(0, 0)) +
   scale_y_log10("Infected") +
   theme(
     panel.grid = element_blank(),
@@ -115,7 +115,7 @@ g5 <- ggplot(bind_cols(as.data.frame(mat_perturb_SI_sirs2), data.frame(time=time
   geom_path(aes(V1, exp(V2)), col="#224B95") +
   geom_path(data=bind_cols(as.data.frame(mat_unperturb_SI_sirs), data.frame(time=time)),
             aes(V1, exp(V2)), col="#EF6351") +
-  scale_x_continuous("Susceptibles") +
+  scale_x_continuous("Susceptibles", limits=c(0.12, 0.65), expand=c(0, 0)) +
   scale_y_log10("Infected") +
   theme(
     panel.grid = element_blank(),
@@ -201,7 +201,7 @@ g9 <- ggplot(filter(dist_SI_rsv_pitzer, time >= 2020)) +
   scale_x_continuous("Year", expand=c(0, 0), limits=c(NA, 2029.5),
                      breaks=seq(2020, 2030, by=2)) +
   scale_y_log10("Distance from attractor", expand=c(0, 0)) +
-  coord_cartesian(ylim=c(1e-2, 20)) +
+  coord_cartesian(ylim=c(1e-3, 10)) +
   theme(
     panel.grid = element_blank(),
     legend.position = "none"

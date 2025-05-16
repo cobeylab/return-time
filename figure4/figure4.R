@@ -230,14 +230,14 @@ afit <- aov(resilience~country+key, data=analysis_all_summ_filter)
 summary(afit)
 
 g2 <- ggplot(analysis_all_summ_filter) +
-  geom_hline(yintercept=measles_resilience, lty=1, col="gray", lwd=3) +
-  annotate("text", x=-Inf, y=0.4, label="Prevaccination measles",
+  geom_hline(yintercept=measles_resilience, lty=1, col="gray", lwd=2) +
+  annotate("text", x=-Inf, y=0.18, label="Prevaccination measles",
            hjust=-0.05, family="Times") +
   geom_errorbar(aes(key, ymin=resilience_lwr, ymax=resilience_upr, col=country), width=0, 
                 position = position_dodge(width=0.5))+
   geom_point(aes(key, resilience, col=country, shape=country), 
              position = position_dodge(width=0.5), size=3) +
-  scale_y_continuous("Resilience (1/year)") +
+  scale_y_log10("Resilience (1/year)", breaks=c(0.125, 0.25, 0.5, 1, 2)) +
   scale_color_viridis_d("Country", end=0.8) +
   scale_shape_manual("Country", values=c(15:18)) +
   theme(
@@ -257,7 +257,7 @@ analysis_all_summ_filter_rename <- analysis_all_summ_filter %>%
   )
 
 g3 <- ggplot(analysis_all_summ_filter_rename) +
-  geom_hline(yintercept=2020:2030, lty=3, alpha=0.4) +
+  geom_hline(yintercept=2022:2028, lty=3, alpha=0.4) +
   geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
                 position = position_dodge(width=0.5)) +
   geom_point(aes(key, when, col=country, shape=country), 
