@@ -93,8 +93,22 @@
 }
 \newline
 \\
-% Sang Woo Park, \dots, Bryan T. Grenfell, Sarah Cobey
+Sang Woo Park\textsuperscript{1,*}
+Emily Howerton\textsuperscript{2}
+Bjarke Frost Nielsen\textsuperscript{2}
+Bryan T. Grenfell\textsuperscript{2,3,4}
+Sarah Cobey\textsuperscript{1}
 \bigskip
+\\
+\textbf{1} Department of Ecology and Evolution, University of Chicago, Chicago, IL, USA
+\\
+\textbf{2} Department of Ecology and Evolutionary Biology, Princeton University, Princeton, NJ, USA
+\\
+\textbf{3} High Meadows Environmental Institute, Princeton University, Princeton, NJ, USA
+\\
+\textbf{4} Princeton School of Public and International Affairs, Princeton, NJ, USA
+\bigskip
+*Corresponding author: swp2@uchicago.edu
 \end{flushleft}
 
 \section*{Abstract}
@@ -158,7 +172,7 @@ In practice, we rarely know the true model describing population-level dynamics 
 Instead, we can measure the \emph{empirical} resilience of a host-pathogen system by looking at how fast the system returns to the pre-perturbation, endemic dynamics after the perturbation has ended.
 The COVID-19 pandemic provides a particularly useful example of a major perturbation, providing unqiue opportunities to measure the resilience of a host-pathogen system.
 
-As an example, we begin with a simple Susceptible-Infected-Recovered-Susceptible (SIRS) model with seasonally forced transmission and demography (i.e., birth and death).
+\textbf{Resilience of a single-strain system.} As an example, we begin with a simple Susceptible-Infected-Recovered-Susceptible (SIRS) model with seasonally forced transmission and demography (i.e., birth and death).
 The SIRS model is the simplest model that allows for the waning of immunity and is commonly used for modeling the dynamics of respiratory pathogens \citep{dushoff2004dynamical}.
 First, consider a pandemic perturbation that reduces transmission by 50\% for 6 months starting in 2020, which causes epidemic patterns to deviate from their original stable annual cycle for a short period of time and eventually come back (Figure 2A).
 To measure the resilience of this system empirically, we first need to be able to measure the distance from its pre-pandemic attractor, which is defined as a set of points in state space or phase plane that the system is pulled towards \citep{hastings1993chaos}.
@@ -167,7 +181,8 @@ In this simple case, the locally estimated scatterplot smoothing (LOESS) fit ind
 Furthermore, the overall rate of return approximates the intrinsic resilience of the seasonally unforced system (Figure 2C).
 
 \begin{figure}[!th]
-\includegraphics[width=\textwidth]{../figure2/figure2_simple.pdf}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{../figure2/figure2_simple.pdf}
 \caption{
 \textbf{A simple method to measure pathogen resilience following pandemic perturbations across different scenarios.}
 (A, D, G) Simulated epidemic trajectories across various models. 
@@ -181,6 +196,7 @@ Blue lines represent the distance from the attractor.
 Orange lines represent the locally estimated scatterplot smoothing (LOESS) fits to the logged distance from the attractor.
 Dotted lines show the intrinsic resilience of the seasonally unforced system.
 }
+\end{center}
 \end{figure}
 
 Alternatively, pandemic perturbations can have a lasting impact on the forces driving pathogen dynamics through a long-term reduction in transmission or permanent change in immunity.
@@ -199,9 +215,13 @@ The LOESS fit indicates that the distance from the attractor initially decreases
 This behavior is also referred to as a ghost attractor, which causes long transient dynamics and slow transitions \citep{hastings2018transient}.
 Strong seasonal forcing in transmission can also lead to transient phenomena for a simple SIRS model, causing a slow return to pre-perturbation dynamics (Supplementary Figure S1).
 
-This empirical approach allows us to measure the resilience of a two-strain host-pathogen system as well even when we have incomplete observation of the infection dynamics.
+\textbf{Resilience of a two-strain system.} This empirical approach allows us to measure the resilience of a two-strain host-pathogen system as well even when we have incomplete observation of the infection dynamics.
 Simulations from a simple two-strain competition system illustrate that separate analyses of individual strain dynamics (e.g., RSV A vs B) and a joint analysis of total infections (e.g., total RSV infections) yield identical resilience estimates (Supplementary Figure S2, 3).
 This is expected because eigenvalues determine the dynamics of the entire system around the equilibrium, meaning that both strains should exhibit identical rates of return following a perturbation.
+However, these conclusions likely depend on the strength of strain interaction as well as the underlying details of the model.
+For example, ecological interferences between two unrelated pathogens \citep{rohani2003ecological} will likely generate weaker coupling than cross immunity between related pathogens;
+in the former case, we do not necessarily expect two unrelated pathogens to have same resilience despite their ecological interferences.
+For simplicity, we focus on a simple, two-strain model with cross immunity in this paper.
 Analogous to a single-strain system, strong seasonal forcing in transmission can cause the two-strain system to slow down through transient phenomena (Supplementary Figure S4).
 
 These observations yield three insights.
@@ -395,6 +415,7 @@ For simplicity, we focused on waning immunity and birth as the main drivers of t
 In particular, pathogen evolution, especially the emergence of antigenically novel strains, can cause effective waning of immunity in the population;
 therefore, we hypothesize that the rate of antigenic evolution is likely a key feature of pathogen resilience.
 Future studies should explore the relationship between the rate of evolution and resilience for antigenically evolving pathogens.
+This result also highlights the importance of detailed measurements of changes in the susceptible population through serological assays for understanding pathogen dynamics \citep{nguyen2022enterovirus}.
 
 Quantifying pathogen resilience also offers novel approaches to validating population-level epidemiological models.
 So far, most model validation in infectious disease ecology is based on the ability of a model to reproduce the observed epidemic dynamics and to predict future dynamics \citep{grenfell2002dynamics,bhattacharyya2015cross,pitzer2015environmental,dean2018human,pons2018serotype}.
@@ -414,6 +435,8 @@ although this is less likely a problem for respiratory pathogens that are strong
 Our framework also do not allow us to distinguish whether a system has settled to a new attractor or is experiencing long-term transient behavior.
 Uncertainties in pathogen dynamics due to changes in testing patterns further contribute to the crudeness of our resilience estimates.
 Despite these limitations, our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust, given how rapidly many respiratory pathogens returned to their original cycles following pandemic perturbations.
+
+While attractor reconstruction methods 
 
 Predicting the impact of anthropogenic changes on infectious disease dynamics is a fundamental aim of infectious disease research in a rapidly changing world.
 Our study illustrates that how a host-pathogen system responds to both small and large perturbations is largely predictable through the lens of ecological resilience.
@@ -840,7 +863,6 @@ To constrain the smoothness of $\tsub{\beta}{seas}(t)$, we imposed cyclic, rando
 \tsub{\beta}{seas}(1) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(52), \sigma)\\
 \sigma &\sim \textrm{Half-Normal}(0, 1)
 \end{align}
-% \swp{I noticed that I forgot to put a prior on $\sigma$ so need to re-do this but won't change the results.}
 We fixed $\alpha(t)=1$ for all $t < 2020$ and estimate $\alpha$ assuming a normal prior:
 \begin{equation}
 \alpha \sim \mathrm{Normal}(1, 0.25).
