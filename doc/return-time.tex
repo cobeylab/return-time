@@ -94,8 +94,8 @@
 \newline
 \\
 Sang Woo Park\textsuperscript{1,*}
-Emily Howerton\textsuperscript{2}
 Bjarke Frost Nielsen\textsuperscript{2}
+Emily Howerton\textsuperscript{2}
 Bryan T. Grenfell\textsuperscript{2,3,4}
 Sarah Cobey\textsuperscript{1}
 \bigskip
@@ -170,7 +170,7 @@ In classical ecological literature, the resilience of an ecological system is me
 This rate corresponds to the largest real part of the eigenvalues of the linearized system near equilibrium---here, we refer to this value as the \emph{intrinsic} resilience of the system, which represents the expected rate of return from perturbed states.
 In practice, we rarely know the true model describing population-level dynamics of common respiratory pathogens, limiting our ability to infer the intrinsic resilience of a system.
 Instead, we can measure the \emph{empirical} resilience of a host-pathogen system by looking at how fast the system returns to the pre-perturbation, endemic dynamics after the perturbation has ended.
-The COVID-19 pandemic provides a particularly useful example of a major perturbation, providing unqiue opportunities to measure the resilience of a host-pathogen system.
+The COVID-19 pandemic provides a particularly useful example of a major perturbation, providing unique opportunities to measure the resilience of a host-pathogen system.
 
 \textbf{Resilience of a single-strain system.} As an example, we begin with a simple Susceptible-Infected-Recovered-Susceptible (SIRS) model with seasonally forced transmission and demography (i.e., birth and death).
 The SIRS model is the simplest model that allows for the waning of immunity and is commonly used for modeling the dynamics of respiratory pathogens \citep{dushoff2004dynamical}.
@@ -219,8 +219,8 @@ Strong seasonal forcing in transmission can also lead to transient phenomena for
 Simulations from a simple two-strain competition system illustrate that separate analyses of individual strain dynamics (e.g., RSV A vs B) and a joint analysis of total infections (e.g., total RSV infections) yield identical resilience estimates (Supplementary Figure S2, 3).
 This is expected because eigenvalues determine the dynamics of the entire system around the equilibrium, meaning that both strains should exhibit identical rates of return following a perturbation.
 However, these conclusions likely depend on the strength of strain interaction as well as the underlying details of the model.
-For example, ecological interferences between two unrelated pathogens \citep{rohani2003ecological} will likely generate weaker coupling than cross immunity between related pathogens;
-in the former case, we do not necessarily expect two unrelated pathogens to have same resilience despite their ecological interferences.
+For example, ecological interference between two unrelated pathogens \citep{rohani2003ecological} will likely generate weaker coupling than cross immunity between related pathogens;
+in the former case, we do not necessarily expect two unrelated pathogens to have same resilience despite their ecological interference.
 For simplicity, we focus on a simple, two-strain model with cross immunity in this paper.
 Analogous to a single-strain system, strong seasonal forcing in transmission can cause the two-strain system to slow down through transient phenomena (Supplementary Figure S4).
 
@@ -258,7 +258,7 @@ For example, we can use delayed logged values of pre-pandemic cases $C(t)$ (Figu
 where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respectively \citep{kennel1992determining,tan2023selecting}.
 This allows us to define the pre-pandemic attractor as a points on an $M$ dimensional space.
 We can then apply the same delay and embedding dimensions to the entire time series to determine the position in multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical pre-pandemic attractor (Figure 3E).
-Specifically, the nearest neighbor distance is calculated by computing the distance between the current poisition on the $M$ dimensional space and all points in the empirical attractor set and taking the minimum value.
+Specifically, the nearest neighbor distance is calculated by computing the distance between the current position on the $M$ dimensional space and all points in the empirical attractor set and taking the minimum value.
 In theory, we can now quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression empirically measures pathogen resilience with a steeper slope corresponding to a higher resilience estimate (Figure 3E).
 However, resulting estimates of pathogen resilience can be sensitive to choices about embedding delays and dimensions.
 For example, using longer delays and higher dimensions tends to smooth out temporal variations in the distance from the attractor (Supplementary Figure S6).
@@ -434,9 +434,11 @@ Short pre-pandemic time series also limit our ability to accurately reconstruct 
 although this is less likely a problem for respiratory pathogens that are strongly annual, our attractor reconstruction may be inaccurate for those exhibiting multi-annual cycles, such as adenovirus in Hong Kong and Korea.
 Our framework also do not allow us to distinguish whether a system has settled to a new attractor or is experiencing long-term transient behavior.
 Uncertainties in pathogen dynamics due to changes in testing patterns further contribute to the crudeness of our resilience estimates.
-Despite these limitations, our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust, given how rapidly many respiratory pathogens returned to their original cycles following pandemic perturbations.
 
-While attractor reconstruction methods 
+While attractor reconstruction methods allow us to make model-free inferences of pathogen resilience, it does not allow us to tease apart how different mechanisms contribute to the resilience a host-pathogen system.
+Using simple SIRS model, we illustrated that susceptible host dynamics are key determinants for pathogen resilience, but we also found that there isn't a one-to-one correspondence between per capita replenishment rate of the susceptible population and pathogen resilience estimates.
+Future studies should explore using mechanistic models to explain heterogeneity in resilience estimates across different pathogens.
+Despite these limitations, our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust, given how rapidly many respiratory pathogens returned to their original cycles following pandemic perturbations.
 
 Predicting the impact of anthropogenic changes on infectious disease dynamics is a fundamental aim of infectious disease research in a rapidly changing world.
 Our study illustrates that how a host-pathogen system responds to both small and large perturbations is largely predictable through the lens of ecological resilience.
