@@ -484,8 +484,8 @@ For the main analysis, we used $R=10$, which was chosen from a sensitivity analy
 Once we determined the embedding lag $\tau$ and dimension $M$, we apply the embedding to the entire time series and calculate the nearest neighbor distance against the attractor $A_{\tau,M}$ to obtain a time series of distance from the attractor $D_{\tau,M}(t)$.
 
 From a time series of distances from the attractor, we estimated pathogen resilience by fitting a linear regression to an appropriate window.
-To automatically select the fitting window, we began by smoothing the distance time series using locally estimated scatterplot smoothing (LOESS) to obtain $\hat{D}_{\tau,M}(t)$, where the smoothing is performed on a log scale and exponentiated afterwards.
-% \swp{say something about smoothing.}
+To automatically select fitting windows, we began by smoothing the distance time series using locally estimated scatterplot smoothing (LOESS) to obtain $\hat{D}_{\tau,M}(t)$, where the smoothing is performed on a log scale and exponentiated afterwards.
+This smoothing allowed us to find appropriate threshold values for selecting fitting windows that are insensitive to errors in our estimates of distance from the attractor.
 Then, we determined threshold values ($\tsub{T}{start}$ and $\tsub{T}{end}$) for the smoothed distances and choose the fitting window based on when $\hat{D}_{\tau,M}(t)$ crosses these threshold values for the first time.
 These thresholds were determined by first calculating the maximum distance,
 \begin{equation}
@@ -545,6 +545,7 @@ In Figure 2B, we imposed a 50\% transmission reduction for 6 months from 2020 an
 \end{cases}
 \end{equation}
 In both scenarios, we simulated the SIRS model from the same initial conditions ($S(0) = 1/\mathcal R_0$, $I(0) = 1\times 10^{-6}$, and $R(0) = 1 - S(0) - I(0)$) from 1900 until 2030.
+Throughout the paper, all deterministic models were solved using the \texttt{lsoda} solver from the \texttt{deSolve} package \citep{soetaert2010solving} in \texttt{R} \citep{citeR}.
 
 To measure the empirical resilience of the SIRS model (Figure 2C and 2F), we computed the normalized distance between post-intervention susceptible and logged infected proportions and their corresponding unperturbed values at the same time:
 \begin{equation}
@@ -555,7 +556,6 @@ The unperturbed values were obtained by simulating the same SIRS model without p
 We normalized the differences in susceptible and logged infected proportions to allow both quantities to equally contribute to the changes in distance from the attractor.
 We used logged prevalence, instead of absolute prevalence, in order to capture epidemic dynamics in deep troughs during the intervention period.
 In Supplementary Materials, we also compared how the degree of seasonal transmission affects empirical resilience by varying $\theta$ from 0 to 0.4; when we assumed no seasonality ($\theta = 0$), we did not normalize the distance because the standard deviation of pre-intervention dynamics are zero. 
-% \swp{Solver info.}
 
 We used the SIRS model to understand how underlying epidemiological parameters affect pathogen resilience and determine the relationship to underlying susceptible host dynamics.
 For the simple SIRS model without seasonal transmission ($\theta = 0$), the intrinsic resilience equals
@@ -837,7 +837,8 @@ where $\alpha < 1$ corresponds to reduction in transmission due to intervention 
 To constrain the smoothness of $\tsub{\beta}{seas}(t)$, we imposed cyclic, random-walk priors:
 \begin{align}
 \tsub{\beta}{seas}(t) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(t-1), \sigma) \qquad t = 2 \dots 52\\
-\tsub{\beta}{seas}(1) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(52), \sigma)
+\tsub{\beta}{seas}(1) &\sim \mathrm{Normal}(\tsub{\beta}{seas}(52), \sigma)\\
+\sigma &\sim \textrm{Half-Normal}(0, 1)
 \end{align}
 % \swp{I noticed that I forgot to put a prior on $\sigma$ so need to re-do this but won't change the results.}
 We fixed $\alpha(t)=1$ for all $t < 2020$ and estimate $\alpha$ assuming a normal prior:
@@ -846,7 +847,7 @@ We fixed $\alpha(t)=1$ for all $t < 2020$ and estimate $\alpha$ assuming a norma
 \end{equation}
 We assumed weakly informative priors on $\omega$ and $\nu$:
 \begin{align}
-\omega \sim \mathrm{Normal}(0, 200)\\
+\omega \sim \textrm{Half-Normal}(0, 200)\\
 \nu \sim \mathrm{Normal}(104, 26)
 \end{align}
 We assumed that the true birth/death rates, population sizes, and recovery rates are known.
@@ -867,10 +868,9 @@ Finally, the observation model was specified as follows:
 where $\rho$ represents the reporting probability and $\phi$ represents the negative binomial overdispersion parameter.
 
 The model was fitted to four separate time series: (1) incidence time series from the SIRS model, (2) incidence time series for strain 1 from the two-strain model, (3) incidence time series for strain 2 from the two-strain model, and (4) combined incidence time series for strains 1 and 2 from the two-strain model.
-The model was fitted using rstan \citep{carpenter2017stan,rstan}.
-The resulting posterior distribution was used to calculate the intrinsic resilience of the seasonally unforced system with the same parameters;
+The model was fitted using rstan \citep{carpenter2017stan,rstan} with 4 chains, each consisting of 2000 iterations.
+The resulting posterior distribution was used to calculate the intrinsic resilience of the seasonally unforced SIRS model with the same parameters;
 eigenvalues of the discrete-time SIR model were computed by numerically finding the equilibrium and calculating the Jacobian matrix.
-% \swp{add more description}
 
 \subsection*{Validations for window-selection criteria}
 

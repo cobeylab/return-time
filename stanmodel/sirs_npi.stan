@@ -84,6 +84,7 @@ model {
   phi ~ normal(0, 10);
   omega ~ normal(0, 200);
   tau ~ normal(104, 26);
+  sigma ~ normal(0, 1);
   
   for (i in 2:N) {
     cases[i] ~ neg_binomial_2(C[i], phi);

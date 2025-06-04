@@ -35,7 +35,7 @@ stanfit_sirs_bhattacharyya1 <- sampling(model,
                              seed=103,
                              chain=4,
                              cores=4,
-                             iter=4000,
+                             iter=2000,
                              control=list(
                                adapt_delta=0.9,
                                max_treedepth=15
