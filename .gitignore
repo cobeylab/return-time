@@ -11,3 +11,8 @@ figure_pres/
 *\_poster*
 *\_pres*
 comments/
+*.aux
+*.bbl
+*.log
+*.history
+*.gz
