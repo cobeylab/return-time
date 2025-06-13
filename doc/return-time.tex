@@ -252,10 +252,10 @@ For example, we can use delayed logged values of pre-pandemic cases $C(t)$ (Figu
 \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
 \end{equation}
 where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respectively \citep{kennel1992determining,tan2023selecting}.
-This allows us to define the pre-pandemic attractor as a points on an $M$ dimensional space.
+This allows us to define the pre-pandemic attractor as a points on an $M$-dimensional space.
 We can then apply the same delay and embedding dimensions to the entire time series to determine the position in multi-dimensional state space (Figure 3D), which allows us to measure the nearest neighbor distance between the current state of the system and the empirical pre-pandemic attractor (Figure 3E).
-Specifically, the nearest neighbor distance is calculated by computing the distance between the current position on the $M$ dimensional space and all points in the empirical attractor set and taking the minimum value.
-In theory, we can now quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression empirically measures pathogen resilience with a steeper slope corresponding to a higher resilience estimate (Figure 3E).
+Specifically, the nearest neighbor distance is calculated by computing the distance between the current position on the $M$-dimensional space and all points in the empirical attractor set and taking the minimum value.
+In theory, we can now quantify how fast this distance decreases by fitting a linear regression on a log scale, where the slope of the linear regression empirically measures pathogen resilience, with a steeper slope corresponding to a higher resilience estimate (Figure 3E).
 However, resulting estimates of pathogen resilience can be sensitive to choices about embedding delays and dimensions.
 For example, using longer delays and higher dimensions tends to smooth out temporal variations in the distance from the attractor (Supplementary Figure S6).
 
@@ -275,17 +275,17 @@ For illustration purposes, an arbitrary fitting window was chosen.
 \end{figure}
 
 Complex changes in the distance from the attractor suggest that estimating pathogen resilience from linear regression will be particularly sensitive to our choice of fitting windows for the regression (Figure 3E).
-Therefore, before we tried estimating resilience from real data, we explored an automated window selection criterion for linear regression and tested it against randomized, stochastic simulations across a range of realistic pandemic perturbation shapes.
+Therefore, before we tried estimating resilience from real data, we explored an automated window selection criteria for linear regression and tested it against randomized, stochastic simulations across a range of realistic pandemic perturbation shapes.
 In doing so, we also explored optimal choices for embedding dimensions and evaluated our choices of fitting window parameters and embedding dimensions by quantifying correlation coefficients between the estimated resilience and the intrinsic resilience of a seasonally unforced system (Materials and Methods).
-Overall, we found large variation in estimation performances with correlation coefficient ranging from 0.21 to 0.61 (Supplementary Figure S7).
-In almost all cases, the automated window selection approach outperformed a naive approach, which performs regression between the peak distance and current distance (Supplementary Figure S7).
+Overall, we found large variation in estimation performances with correlation coefficients ranging from 0.21 to 0.61 (Supplementary Figure S7).
+In almost all cases, the automated window selection approach outperformed a naive approach, which performs regression using all data from the the timing of peak distance to current time (Supplementary Figure S7).
 
-Based on the best performing window selection criteria and embedding dimension, we applied this approach to pathogen surveillance data presented in Figure 1 (Materials and Methods).
+Based on the best-performing window selection criteria and embedding dimension, we applied this approach to pathogen surveillance data presented in Figure 1 (Materials and Methods).
 For each time series, we applied Takens' theorem independently to reconstruct the empirical attractor and obtained the corresponding time series of distances from attractors (Supplementary Figure S8).
-Then, we used the automated window selection criterion to fit a linear regression and estimated the empirical resilience for each pathogen in each country (Supplementary Figure S8);
-the window selection criterion gave poor regression window for three cases (norovirus in Hong Kong and Korea and rhinovirus/enterovirus in the US), leading to unrealistically low resilience estimates, and so we used ad-hoc regression windows instead (Supplementary Figure S9; Materials and Methods).
+Then, we used the automated window selection criteria to fit a linear regression and estimated the empirical resilience for each pathogen in each country (Supplementary Figure S8);
+the window selection criteria gave poor regression windows in three cases (norovirus in Hong Kong and Korea and rhinovirus/enterovirus in the US), leading to unrealistically low resilience estimates, and so we used ad-hoc regression windows instead (Supplementary Figure S9; Materials and Methods).
 
-For all pathogens we considered, resilience estimates fell between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A).
+For all pathogens we considered, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A).
 We estimated the mean resilience of common respiratory pathogens to be $0.99/\mathrm{year}$ (95\% CI: $0.81/\mathrm{year}$--$1.18/\mathrm{year}$).
 For reference, this is $\approx 7.5$ times higher than the intrinsic resilience of pre-vaccination measles in England and Wales ($\approx 0.13/\mathrm{year}$).
 Finally, resilience estimates for norovirus, a gastrointestinal pathogen, were comparable to those of common respiratory pathogens: $1.44/\mathrm{year}$ (95\% CI: $1.01/\mathrm{year}$--$1.87/\mathrm{year}$) for Hong Kong and $1.07/\mathrm{year}$ (95\% CI: $0.86/\mathrm{year}$--$1.29/\mathrm{year}$) for Korea.
@@ -324,7 +324,7 @@ Our reconstructions of distance time series and estimates of pathogen resilience
 \section*{Susceptible host dynamics explain variation in pathogen resilience}
 
 So far, we have focused on quantifying pathogen resilience from the observed patterns of pathogen re-emergence following pandemic perturbations.
-But what factors determine how resilient a host-pathogen system is?
+But what factors determine the resilience of a host-pathogen system?
 To address this question, we used the SIRS model to explore how changes in susceptible host dynamics affect pathogen resilience.
 To do so, we varied the basic reproduction number $\mathcal R_0$, which represents the average number of secondary infections caused by a newly infected individual in a fully susceptible population, and the duration of immunity and computed intrinsic resilience for each parameter.
 
@@ -347,14 +347,14 @@ We note that a higher $\mathcal R_0$ drives a faster per-capita susceptible repl
 For a simple SIR model that assumes a life-long immunity, we can show analytically that pathogen resilience is proportional to the per-capita rate of susceptible replenishment (Materials and Methods).
 Overall, these observations suggest that a faster per-capita susceptible replenishment rate causes the system to be more resilient.
 
-By taking the average values of empirical resilience values for each pathogen, we were able to map each pathogen onto a set of parameters of the SIRS model that are consistent with corresponding resilience estimates (Figure 5A).
+By taking the average values of empirical resilience for each pathogen, we were able to map each pathogen onto a set of parameters of the SIRS model that are consistent with corresponding resilience estimates (Figure 5A).
 Across all pathogens we considered, we estimated that the average duration of immunity is likely to be short ($<4$ years) across a plausible range of $\mathcal R_0$ ($<6$).
 We were also able to obtain a plausible range of susceptible replenishment rates for each pathogen (Figure 5B), but there was a large uncertainty in the estimates for susceptible replenishment rates due to a lack of one-to-one correspondence between susceptible replenishment rates and pathogen resilience.
 
 \section*{Pathogen resilience determines sensitivity to stochastic perturbations}
 
 Even in the absence of major pandemic perturbations, host-pathogen systems are expected to experience continued perturbations of varying degrees from changes in epidemiological conditions, such as human behavior, climate, and viral evolution.
-These perturbations can also arise from demographic stochasticity, which is inherent to any ecological systems.
+These perturbations can also arise from demographic stochasticity, which is inherent to any ecological system.
 Here, we used a seasonally unforced SIRS model with constant birth and death rates to explore how resilience of a host-pathogen system determines the sensitivity to perturbations caused by demographic stochasticity (Materials and Methods).
 
 \begin{figure}[!th]
@@ -411,7 +411,7 @@ For simplicity, we focused on waning immunity and birth as the main drivers of t
 In particular, pathogen evolution, especially the emergence of antigenically novel strains, can cause effective waning of immunity in the population;
 therefore, we hypothesize that the rate of antigenic evolution is likely a key feature of pathogen resilience.
 Future studies should explore the relationship between the rate of evolution and resilience for antigenically evolving pathogens.
-This result also highlights the importance of detailed measurements of changes in the susceptible population through serological assays for understanding pathogen dynamics \citep{nguyen2022enterovirus}.
+This result also highlights the importance of detailed measurements of changes in the susceptible population through immune assays for understanding pathogen dynamics \citep{nguyen2022enterovirus}.
 
 Quantifying pathogen resilience also offers novel approaches to validating population-level epidemiological models.
 So far, most model validation in infectious disease ecology is based on the ability of a model to reproduce the observed epidemic dynamics and to predict future dynamics \citep{grenfell2002dynamics,bhattacharyya2015cross,pitzer2015environmental,dean2018human,pons2018serotype}.
@@ -428,21 +428,21 @@ Our resilience estimates are likely overly confident given a lack of uncertainti
 Nonetheless, as illustrated in our sensitivity analyses, inferences about pathogen resilience in our SIRS model appear to be robust to decisions about embedding lags and dimensions---this is because tracking the rate at which the system approaches the attractor is likely a much simpler problem than making inferences about causal directionality.
 Short pre-pandemic time series also limit our ability to accurately reconstruct the attractor and contribute to the crudeness of our resilience estimates;
 although this is less likely a problem for respiratory pathogens that are strongly annual, our attractor reconstruction may be inaccurate for those exhibiting multi-annual cycles, such as adenovirus in Hong Kong and Korea.
-Our framework also do not allow us to distinguish whether a system has settled to a new attractor or is experiencing long-term transient behavior.
+Our framework also does not allow us to distinguish whether a system has settled to a new attractor or is experiencing long-term transient behavior.
 Uncertainties in pathogen dynamics due to changes in testing patterns further contribute to the crudeness of our resilience estimates.
 
-While attractor reconstruction methods allow us to make model-free inferences of pathogen resilience, it does not allow us to tease apart how different mechanisms contribute to the resilience a host-pathogen system.
-Using the simple SIRS model, we illustrated that susceptible host dynamics are key determinants for pathogen resilience, but we also found that there isn't a one-to-one correspondence between per capita replenishment rate of the susceptible population and pathogen resilience estimates.
+While attractor reconstruction allows us to make model-free inferences of pathogen resilience, it does not allow us to tease apart how different mechanisms contribute to the resilience a host-pathogen system.
+Using the simple SIRS model, we illustrated that susceptible host dynamics are key determinants of pathogen resilience, but we also found that there isn't a one-to-one correspondence between per capita replenishment rate of the susceptible population and pathogen resilience estimates.
 Future studies should explore using mechanistic models to explain heterogeneity in resilience estimates across different pathogens.
 
-Finally, our simulation-based analyses primarily focused on single-strain systems but real-world pathogens can interact with other pathogens, which can result in complex dynamics \citep{rohani2003ecological,nickbakhsh2019virus}.
-To address this limitation, we considered a simple two-strain competition system with cross immunity and showed that the resilience of a coupled system can be measured by studying the dynamics of either strains. 
-However, this conclusion likely depend on the strength of strain interaction as well as the underlying details of the model.
-For example, ecological interference between two unrelated pathogens \citep{rohani2003ecological} will likely generate weaker coupling than cross immunity between related pathogens;
+Finally, our simulation-based analyses primarily focused on single-strain systems, but real-world pathogens can interact with other pathogens, which can result in complex dynamics \citep{rohani2003ecological,nickbakhsh2019virus}.
+To address this limitation, we considered a simple model of two competing strains (via cross immunity) and showed that the resilience of a coupled system can be measured by studying the dynamics of either strain. 
+However, this conclusion likely depends on the strength and mechanism of strain interactions.
+For example, ecological interference between two unrelated pathogens \citep{rohani2003ecological} will likely generate weaker coupling than cross-immunity between related pathogens;
 in the former case, we do not necessarily expect two unrelated pathogens to have same resilience despite their ecological interference.
 Some pathogen strains can also exhibit positive interactions where infection by one strain can lead to an increased transmission of another competing strain.
 For example, previous studies showed that an increased dengue transmission through antibody-dependent enhancement can permit coexistence and persistence of competing strains \citep{ferguson1999effect};
-based on these observations, we tentatively hypothesize that positive interactions such as antibody-dependent enhancement may increase the resilience of a system.
+since pathogen transmissibility is a major determinant of pathogen resilience, we tentatively hypothesize that positive interactions such as antibody-dependent enhancement may increase the resilience of a system.
 Future studies should explore how different mechanisms of pathogen interactions contribute to the resilience of each competing pathogen as well as the entire system.
 Despite these limitations, our study illustrates that quantifying pathogen resilience can provide novel insights into pathogen dynamics.
 Furthermore, our qualitative prediction that common respiratory pathogens are more resilient than prevaccination measles is also likely to be robust, given how rapidly many respiratory pathogens returned to their original cycles following pandemic perturbations.
@@ -1074,7 +1074,7 @@ Dashed lines represent the correlation coefficient between empirical and intrins
 \begin{figure}[!th]
 \includegraphics[width=\textwidth]{../figure4/figure4_dist_auto.pdf}
 \caption{
-\textbf{Estimated time series of distance from the attractor for each pathogen and corresponding linear regression fits using automated window selection criterion across Canada, Hong Kong, Korea, and the US.}
+\textbf{Estimated time series of distance from the attractor for each pathogen and corresponding linear regression fits using automated window selection criteria across Canada, Hong Kong, Korea, and the US.}
 Black lines represent the estimated distance from the attractor.
 Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
 Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
