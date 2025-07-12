@@ -54,16 +54,18 @@ analysis_all <- bind_rows(
                         "RSV", "Human coronavirus", "Bocavirus", "Norovirus"))
   ) %>%
   filter(
-    key != "Bocavirus", key != "Norovirus"
+    key != "Bocavirus"
   )
 
 analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]), function(x) {
   if (nrow(x) > 0) {
-    x_filter <- x %>%
+    x_filter_all <- x %>%
       filter(!is.na(dist_takens),
              dist_takens > 0) %>%
-      arrange(year, week) %>%
-      filter(year+week/52 < 2023+26/52)
+      arrange(year, week)
+    
+    x_filter <- x_filter_all %>%
+      filter(year+week/52 <= 2023+26/52)
     
     x_pre <- filter(x, year <2020)
     
@@ -74,9 +76,19 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
     
     loesspred <- exp(predict(loess(log(dist)~time, span=0.2)))
     
+    dist_all <- x_filter_all$dist_takens
+    time_all <- x_filter_all$time
+    
+    loesspred_all <- exp(predict(loess(log(dist_all)~time_all, span=0.2)))
+    
     maxdist <- max(loesspred)
     maxdist_time <- time[which.max(loesspred)]
     meandist <- mean(loesspred[time<2020])
+    
+    maxdist_all <- max(loesspred_all)
+    maxdist_time_all <- time_all[which.max(loesspred_all)]
+    
+    return_obs <- time_all[which(time_all > maxdist_time_all & loesspred_all < meandist*1.2)[1]]
     
     target_first <- meandist * (maxdist/meandist)^(17/19)
     target_second <- meandist * (maxdist/meandist)^(2/19)
@@ -136,7 +148,8 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
         when_upr=when_upr,
         resilience=-coef(lfit)[[2]],
         resilience_lwr=-confint(lfit)[2,2],
-        resilience_upr=-confint(lfit)[2,1]
+        resilience_upr=-confint(lfit)[2,1],
+        return_obs=return_obs
       )
     } else {
       NULL
@@ -264,6 +277,21 @@ g3 <- ggplot(analysis_all_summ_filter_oos_rename) +
     legend.position = "none"
   )
 
+cor.test(analysis_all_summ_filter_oos$when, analysis_all_summ_filter_oos$return_obs)
+
+g4 <- ggplot(analysis_all_summ_filter_oos) +
+  geom_abline(intercept=0, slope=1, lty=2) +
+  geom_vline(xintercept=2023.5, lty=3) +
+  geom_hline(yintercept=2023.5, lty=3) +
+  geom_errorbarh(aes(xmin=when_lwr, xmax=when_upr, y=return_obs), height=0, alpha=0.4, lwd=1) +
+  geom_point(aes(when, return_obs), size=2, shape=21, fill="white", stroke=1) +
+  scale_x_continuous("Expected return time\nbased on partial fits") +
+  scale_y_continuous("Observed return time") +
+  coord_cartesian(xlim=c(2022, 2029), ylim=c(2022, 2029)) +
+  theme(
+    panel.grid = element_blank()
+  )
+
 all_summ_comb <- analysis_all_summ_filter %>%
   select(key, country, when, when_lwr, when_upr, resilience, resilience_lwr, resilience_upr) %>%
   rename(
@@ -281,27 +309,27 @@ all_summ_comb <- analysis_all_summ_filter %>%
 
 cor.test(all_summ_comb$when, all_summ_comb$when_true)
 
-g4 <- ggplot(all_summ_comb) +
+g5 <- ggplot(all_summ_comb) +
+  geom_abline(intercept=0, slope=1, lty=2) +
   geom_errorbar(aes(when, ymin=when_lwr_true, ymax=when_upr_true), width=0, alpha=0.4, lwd=1) +
   geom_errorbarh(aes(xmin=when_lwr, xmax=when_upr, y=when_true), height=0, alpha=0.4, lwd=1) +
-  geom_point(aes(when, when_true), size=3, shape=21, fill="white", stroke=1) +
-  geom_abline(intercept=0, slope=1, lty=2) +
-  scale_x_continuous("Expected return time\nbased on partial fits",
-                     breaks=c(2022, 2024, 2026, 2028, 2030, 2032, 2034)) +
+  geom_point(aes(when, when_true), size=2, shape=21, fill="white", stroke=1) +
+  scale_x_continuous("Expected return time\nbased on partial fits") +
   scale_y_continuous("Expected return time\nbased on full fits") +
+  coord_cartesian(xlim=c(2022, 2030), ylim=c(2022, 2030)) +
   theme(
     panel.grid = element_blank()
   )
 
 cor.test(all_summ_comb$resilience, all_summ_comb$resilience_true)
 
-g5 <- ggplot(all_summ_comb) +
+g6 <- ggplot(all_summ_comb) +
   geom_errorbar(aes(resilience, ymin=resilience_lwr_true, ymax=resilience_upr_true), width=0, alpha=0.4, lwd=1) +
   geom_errorbarh(aes(xmin=resilience_lwr, xmax=resilience_upr, y=resilience_true), height=0, alpha=0.4, lwd=1) +
   geom_point(aes(resilience, resilience_true), size=3, shape=21, fill="white", stroke=1) +
   geom_abline(intercept=0, slope=1, lty=2) +
-  scale_x_continuous("Resilience estimates\nbased on partial fits (1/year)") +
-  scale_y_continuous("Resilience estimates\nbased on partial fits (1/year)") +
+  scale_x_continuous("Resilience estimates\nbased on partial fits (1/year)", limits=c(-0.2, 2.8)) +
+  scale_y_continuous("Resilience estimates\nbased on partial fits (1/year)", limits=c(-0.2, 2.8)) +
   theme(
     panel.grid = element_blank()
   )
@@ -310,7 +338,7 @@ gcomb <- ggarrange(g2, g3,
                    labels=c("A", "B"),
                    heights=c(1, 1))
 
-gcomb2 <- ggarrange(g4, g5, nrow=1, labels=c("C", "D"))
+gcomb2 <- ggarrange(g4, g5, g6, nrow=1, labels=c("C", "D", "E"))
 
 gfinal <- arrangeGrob(gcomb, gcomb2, nrow=2, heights=c(2, 1))
 
