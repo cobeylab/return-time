@@ -19,6 +19,26 @@ analysis_all <- bind_rows(
   analysis_korea_takens_acf_fnn %>%
     mutate(country="Korea",
            time=year+week/52),
+  analysis_hongkong_takens_acf_fnn  %>%
+    mutate(
+      country="Hong Kong",
+      key=factor(key,
+                 levels=c("adeno", "hmpv", "rsv", "rvev"),
+                 labels=c("Adenovirus", "Human metapneumovirus",
+                          "RSV", "Rhinovirus/Enterovirus")),
+      time=year+week/52
+    ),
+  analysis_hongkong_piv_takens_acf_fnn %>%
+    mutate(
+      country="Hong Kong",
+      key="Parainfluenza virus",
+      time=year+week/52
+    ),
+  analysis_hongkong_noro_takens_acf_fnn %>%
+    mutate(
+      country="Hong Kong",
+      time=year+match(month,month.name)/12
+    ),
   analysis_canada_takens_acf_fnn %>%
     filter(
       !key %in% c("Flu A", "Flu B")
@@ -65,7 +85,7 @@ analysis_all_lm <- lapply(split(analysis_all, analysis_all[,c("key", "country")]
       arrange(year, week)
     
     x_filter <- x_filter_all %>%
-      filter(year+week/52 <= 2023+26/52)
+      filter(time <= 2023+26/52)
     
     x_pre <- filter(x, year <2020)
     
@@ -173,12 +193,16 @@ analysis_all_summ <- analysis_all_lm %>%
 analysis_all_summ_filter_oos <- analysis_all_summ %>%
   filter(
     reldist < exp(2)
+  ) %>% 
+  mutate(
+    when_upr=ifelse(is.na(when_upr), 2040, when_upr)
   )
 
 analysis_all_lm_filter <- analysis_all_lm %>%
   merge(select(analysis_all_summ_filter_oos, key, country))
 
 g1 <- ggplot(analysis_all) +
+  annotate("rect", xmin=2023+26/52, xmax=Inf, ymin=5e-2, ymax=Inf, fill="blue", alpha=0.5) +
   geom_vline(xintercept=2013:2027, lty=3, col="gray") +
   geom_hline(data=analysis_all_summ, aes(yintercept=exp(pre_mean)), lty=2) +
   geom_line(aes(time, dist_takens)) +
@@ -229,7 +253,7 @@ afit <- aov(resilience~country+key, data=analysis_all_summ_filter_oos)
 
 summary(afit)
 
-g2 <- ggplot(analysis_all_summ_filter_oos) +
+g2 <- ggplot(analysis_all_summ_filter_oos %>% mutate(resilience_lwr=pmax(0.01, resilience_lwr))) +
   geom_hline(yintercept=measles_resilience, lty=1, col="gray", lwd=2) +
   annotate("text", x=-Inf, y=0.18, label="Prevaccination measles",
            hjust=-0.05, family="Times") +
@@ -257,7 +281,7 @@ analysis_all_summ_filter_oos_rename <- analysis_all_summ_filter_oos %>%
                         "Rhinovirus/\nEnterovirus", "RSV", "Human\ncoronavirus", "Norovirus"))
   )
 
-g3 <- ggplot(analysis_all_summ_filter_oos_rename) +
+g3 <- ggplot(analysis_all_summ_filter_oos_rename %>% mutate(when_upr=ifelse(is.na(when_upr), 2040, when_upr))) +
   geom_hline(yintercept=2022:2028, lty=3, alpha=0.4) +
   geom_errorbar(aes(key, ymin=when_lwr, ymax=when_upr, col=country), width=0, 
                 position = position_dodge(width=0.5)) +
@@ -278,6 +302,12 @@ g3 <- ggplot(analysis_all_summ_filter_oos_rename) +
   )
 
 cor.test(analysis_all_summ_filter_oos$when, analysis_all_summ_filter_oos$return_obs)
+
+analysis_all_summ_filter_oos %>%
+  summarize(
+    pos=sum(return_obs > when_lwr & return_obs < when_upr, na.rm=TRUE),
+    tot=sum(!is.na(return_obs))
+  )
 
 g4 <- ggplot(analysis_all_summ_filter_oos) +
   geom_abline(intercept=0, slope=1, lty=2) +
@@ -329,7 +359,7 @@ g6 <- ggplot(all_summ_comb) +
   geom_point(aes(resilience, resilience_true), size=3, shape=21, fill="white", stroke=1) +
   geom_abline(intercept=0, slope=1, lty=2) +
   scale_x_continuous("Resilience estimates\nbased on partial fits (1/year)", limits=c(-0.2, 2.8)) +
-  scale_y_continuous("Resilience estimates\nbased on partial fits (1/year)", limits=c(-0.2, 2.8)) +
+  scale_y_continuous("Resilience estimates\nbased on full fits (1/year)", limits=c(-0.2, 2.8)) +
   theme(
     panel.grid = element_blank()
   )
