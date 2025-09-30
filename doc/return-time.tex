@@ -117,10 +117,10 @@ Interventions to slow the spread of SARS-CoV-2 significantly disrupted the trans
 
 \section*{Significance Statement}
 
-The COVID-19 interventions slowed down the transmission of other respiratory pathogens, raising questions about mechanisms driving differences in responses to COVID-19 intervention measures.
-To address this gap, we seek to characterize the pathogen resilience to perturbations by quantifying how fast each pathogen returns to its pre-pandemic epidemic cycles.
-We apply the resulting framework to data from Hong Kong, Canada, Korea, and the US, and show that common respiratory pathogens are much more resilient than vaccine-preventable infections, like measles.
-Finally, we show that how fast the susceptible population becomes replenished---for example, through waning immunity---is a key determinant for how resilient a pathogen is to perturbations, including large interventions and small stochastic changes in the dynamics.
+COVID-19 interventions slowed the transmission of other respiratory pathogens, raising questions about the mechanisms driving differences in responses to COVID-19 intervention measures.
+To address this gap, we characterized pathogen resilience to perturbations by quantifying how fast each pathogen returned to its pre-pandemic epidemic cycles.
+We applied the resulting framework to data from Hong Kong, Canada, Korea, and the US, and showed that common respiratory pathogens are much more resilient than measles, a vaccine-preventable infection.
+Finally, we showed that the speed of replenishment of the susceptible population---for example, through waning immunity---largely determines a pathogen's resilience to perturbations, including large interventions and small stochastic changes in the dynamics.
 
 \pagebreak
 
@@ -321,11 +321,11 @@ In contrast, pathogens that were predicted to have not returned yet also showed 
 Our reconstructions of distance time series and estimates of pathogen resilience and expected return time were generally robust to choices of embedding dimensions (Supplementary Figure S11--12).
 
 To evaluate the ability of our approach to make out-of-sample predictions, we applied our framework to the same data set using observations up to the 26th week of 2023 (Supplementary Figure S13--14).
-Limiting the data led to greater uncertainty in resilience estimates and corresponding predictions for the expected return time (Supplementary Figure S14A,B).
+Limiting the data led to greater uncertainty in resilience estimates and corresponding predictions of the expected return time (Supplementary Figure S14A,B).
 The expected and observed return times exhibit weak positive correlation ($\rho=0.36$; 95\% CI: -0.34--0.81), and 7 out of 10 confidence intervals contain the true value (Supplementary Figure S14C).
 We found moderate correlations ($\rho=0.51$; 95\% CI: 0.01--0.80) in predictions for the expected return time between partial regression fits, which rely on observations up to the 26th week of 2023, and full regression fits, which rely on the entire data set (Supplementary Figure S14D);
 this implies consistency in our predictions.
-However, resilience estimates from partial regression fits and full regression fits were weakly correlated ($\rho=0.30$; 95\% CI: -0.23--0.70), implying challenges in estimating pathogen resilience from limited data (Supplementary Figure S14E).
+However, resilience estimates from partial regression fits and full regression fits were weakly correlated ($\rho=0.30$; 95\% CI: -0.23--0.70), demonstrating challenges in estimating pathogen resilience from limited data (Supplementary Figure S14E).
 
 \section*{Susceptible host dynamics explain variation in pathogen resilience}
 
@@ -386,7 +386,7 @@ However, we note that the interplay between seasonal transmission and intrinsic 
 
 We also note that the intrinsic resilience is not the sole determinant for how sensitive the system is to stochastic perturbations.
 For example, the population size and average duration of infection also affect the amount of deviation from the deterministic trajectory caused by demographic stochasticity, even though these quantities have little to no impact on the intrinsic resilience (Supplementary Figure S17).
-These conclusions were robust for the seasonally forced SIRS model, where the amount of deviation from the deterministic trajectory depends on the corresponding resilience of theseasonally unforced system (Supplementary Figure S18).
+These conclusions were robust for the seasonally forced SIRS model, where the amount of deviation from the deterministic trajectory depends on the corresponding resilience of the seasonally unforced system (Supplementary Figure S18).
 
 \section*{Discussion}
 
@@ -401,16 +401,16 @@ Overall, we estimated the resilience of these pathogens to range from $0.4/\math
 Consistent with other epidemiological evidence \citep{bosis2008role,o2009symptomatic,pitzer2015environmental,edridge2020seasonal}, these resilience estimates indicate that common respiratory pathogens and norovirus likely exhibit faster susceptible replenishment and are therefore more persistent, indicating potential challenges in controlling these pathogens.
 
 Based on our resilience estimates, we made phenomenological predictions about when each pathogen will return to their endemic cycles.
-Our main regression analysis was able to accurately distinguish which pathogens should have already returned before the end of 2024.
+Our main regression analysis could accurately distinguish which pathogens should have already returned before the end of 2024.
 However, there were two main exceptions (i.e., norovirus in Hong Kong and rhinovirus/enterovirus in the US), suggesting that these pathogens may be converging to new endemic cycles or experiencing long-term transient behavior.
 These changes may reflect changes in surveillance or actual shift in the dynamics, caused by permanent changes in behavior or population-level immunity.
 While it may seem unlikely that permanent changes in behavior would only affect a few pathogens and not others, we cannot rule out this possibility given differences in the observed mean age of infections and therefore the differences in age groups that primarily drive transmission \citep{radin2014epidemiology,lv2024epidemiological}.
 Differences in the mode of transmission between respiratory vs gastrointestinal pathogens may also contribute to the differences in responses to pandemic perturbations.
 
 For almost half of the pathogens we considered, we predicted that their return to original epidemic patterns is imminent.
-However, our evaluation of out-of-sample predictions suggested major challenges in predicting the exact timing of pathogen return as well as estimating pathogen resilience from limited data. 
-Therefore, our estimates of prediction timing should be taken as a ballpark estimate, rather than precise timing.
-We will also need a few more years of data to test whether these pathogens will eventually return to their original dynamics or eventually converge to a different attractor.
+However, our evaluation of out-of-sample predictions suggested major challenges in predicting the exact timing of pathogen return and estimating pathogen resilience from limited data. 
+Therefore, our estimates of prediction timing should be taken as a ballpark estimate.
+We will need a few more years of data to test whether these pathogens will eventually return to their original dynamics or eventually converge to a different attractor.
 We also cannot rule out the possibility that some pathogens may exhibit long-term transient behaviors following pandemic perturbations.
 Overall, these observations echo earlier studies that highlighted the long-lasting impact of pandemic perturbations \citep{baker2022long,caini2024probable,chen2024covid,park2024predicting,nielsen2025complex}. 
 
@@ -473,7 +473,6 @@ Weekly time series of respiratory infection cases in Hong Kong came from a publi
 Weekly time series of acute respiratory infection cases in Korea came from a publicly available website by the Korea Disease Control and Prevention Agency \citep{kordata}.
 Finally, weekly time series of respiratory infection cases in the US were obtained from the National Respiratory and Enteric Virus Surveillance System (NREVSS). Readers can request the data from NREVSS at nrevss@cdc.gov.
 Time series on number of tests were also available in Canada, Hong Kong, and the US, but not in Korea.
-% \swp{Not sure how to cite NREVSS data because we got it by emailing them...}
 
 \subsection*{Data processing}
 
@@ -545,11 +544,14 @@ This allows us to discard the initial period during which the distance increases
 The fitting window is determined based on when the smoothed distance $\hat{D}_{\tau,M}(t)$ crosses these threshold values for the first time; then, we fit a linear regression to logged (unsmoothed) distances $\log D_{\tau,M}(t)$ using that window.
 Alongside the threshold $R$ for the false nearest neighbors approach, we tested optimal choices for $K$ and $a$ values using simulations (Supplementary Text).
 We used $K=19$ and $a=2$ throughout the paper based on the simulation results.
-We excluded data sets from the regression analysis if the logged average of the estimated distance from the attractor during the last year is at least 2 fold greater than the logged average of the pre-pandemic distance from the attractor.
+We excluded data sets from the regression analysis if the logged average of the estimated distance from the attractor during the last year is at least 2-fold greater than the logged average of the pre-pandemic distance from the attractor.
 
-To evaluate the ability to predict precise timing of return time for out-of-sample observations, we applied the same framework using data up to the 26th week of 2023.
-In doing so, we compared the predicted return time with the observed return time, which was determined based on when the estimated distance from the attractor became close enough to pre-pandemic levels, using $1.2 \tsub{\hat{D}}{mean}$ as our threshold.
+To evaluate the ability to predict the precise return time for out-of-sample observations, we applied the same framework using data up to the 26th week of 2023.
+In doing so, we compared the predicted return time with the observed return time, which was determined based on when the smoothed empirical distance from the attractor became close enough to pre-pandemic levels.
+As a pathogen returns to its pre-pandemic cycle, the the smoothed empirical distance from the attractor is expected to converge to the pre-pandemic levels $\tsub{\hat{D}}{mean}$, but the empirical distance may not become smaller than $\tsub{\hat{D}}{mean}$.
+Therefore, we used $1.2 \tsub{\hat{D}}{mean}$ as our threshold to obtain an approximate return time.
 We note that this approach necessarily underestimates the observed return time and therefore should be interpreted as a conservative estimate.
+For additional validation, we compared these out-of-sample predictions with return time predictions based on full time series.
 
 \subsection*{Mathematical modeling}
 
@@ -1167,7 +1169,7 @@ Error bars represent 95\% confidence intervals.
 \textbf{Estimated time series of distance from the attractor for each pathogen and corresponding linear regression fits across Canada, Hong Kong, Korea, and the US based on data up to the 26th week of 2023.}
 We limited our data up to the 26th week of 2023 and applied the same regression approach as before. 
 We used the same ad-hoc regression windows for norovirus in Hong Kong and Korea and rhinovirus/enterovirus in the US as the main analysis.
-Blue regeions represent out of sample data.
+Blue regions represent out of sample data.
 Black lines represent the estimated distance from the attractor.
 Red lines and shaded regions represent the linear regression fits and corresponding 95\% confidence intervals.
 Dashed lines represent the average of the pre-pandemic nearest neighbor distances.
@@ -1185,7 +1187,7 @@ Dashed lines represent the average of the pre-pandemic nearest neighbor distance
 \textbf{Summary of resilience estimates and out-of-sample predictions for return time based on data up to the 26th week of 2023.}
 (A) Estimated pathogen resilience.
 The gray horizontal line represents the intrinsic resilience of pre-vaccination measles dynamics.
-(B) Predicted timing of when each pathogen will return to their pre-pandemic cycles.
+(B) Predicted timing of each pathogen's return to their pre-pandemic cycles.
 The dashed line in panel B indicates the end of 2024.
 Error bars represent 95\% confidence intervals.
 (C) Comparisons between the predicted and observed return time.
