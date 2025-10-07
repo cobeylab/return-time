@@ -48,3 +48,64 @@ g3 <- ggplot(data_hongkong_fecal_scaled %>% filter(key=="noro")) +
 gcomb <- ggarrange(g1, g2, g3, nrow=1)
 
 ggsave("figure_test_hongkong.pdf", gcomb, width=12, height=4)
+
+data_hongkong_resp_scaled2 <- data_hongkong_resp_scaled %>%
+  filter(!key %in% c("rv", "ev")) %>%
+  mutate(
+    key=factor(key,
+               levels=c("adeno", "hmpv", "PIV", "rvev", "rsv", "cov", "noro"),
+               labels=c("Adenovirus", "Human metapneumovirus",
+                        "Parainfluenza virus", "Rhinovirus/Enterovirus",
+                        "RSV", "Human coronavirus", "Norovirus"))
+  )
+
+
+data_hongkong_piv_all_scaled <- data_hongkong_piv_scaled %>%
+  group_by(year, week) %>%
+  summarize(
+    cases=sum(cases),
+    test=unique(test),
+    key="PIV"
+  )
+
+data_pos <- bind_rows(
+  data_hongkong_resp_scaled2 %>% 
+    mutate(
+      time=year+week/52,
+      pos=cases/test*100
+    ),
+  data_hongkong_piv_all_scaled %>% 
+    mutate(
+      key="Parainfluenza virus",
+      time=year+week/52,
+      pos=cases/test*100
+    ),
+  data_hongkong_fecal_scaled %>% 
+    filter(key=="noro") %>%
+    mutate(
+      key="Norovirus",
+      time=year+as.numeric(month)/12,
+      pos=cases/test*100
+    )
+) %>%
+  mutate(
+    key=factor(key,
+               levels=c("Adenovirus", "Human metapneumovirus",
+                        "Parainfluenza virus", "Rhinovirus/Enterovirus",
+                        "RSV", "Human coronavirus", "Norovirus"))
+  )
+
+g4 <- ggplot(data_pos) +
+  geom_line(aes(time, pos)) +
+  scale_x_continuous("Year", expand=c(0, 0),
+                     breaks=2014:2024) +
+  scale_y_continuous("Weekly/monthly positivity (%)", expand=c(0, 0), limits=c(0, NA)) +
+  facet_wrap(~key, scale='free_y') +
+  theme(
+    panel.grid = element_blank(),
+    strip.background = element_blank(),
+    panel.border = element_rect(linewidth=1),
+    axis.title.x = element_blank()
+  )
+
+ggsave("figure_test_hongkong2.pdf", g4, width=12, height=4)

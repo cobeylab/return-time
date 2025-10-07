@@ -31,3 +31,17 @@ g1 <- ggplot(data_canada_resp_scaled2) +
   )
 
 ggsave("figure_test_canada.pdf", g1, width=10, height=4)
+
+g2 <- ggplot(data_canada_resp_scaled2) +
+  geom_line(aes(year+week/52, positive/tests * 100)) +
+  scale_x_continuous("Year", expand=c(0, 0)) +
+  scale_y_continuous("Weekly positivity (%)", expand=c(0, 0), limits=c(0, NA)) +
+  facet_wrap(~key, scale="free_y") +
+  theme(
+    panel.grid = element_blank(),
+    strip.background = element_blank(),
+    panel.border = element_rect(linewidth=1),
+    axis.title.x = element_blank()
+  )
+
+ggsave("figure_test_canada2.pdf", g2, width=10, height=4)
