@@ -154,8 +154,6 @@ The possibility of a long-lasting impact of the pandemic perturbations poses an 
 So far, most analyses of respiratory pathogens after pandemic perturbations have focused on characterizing the timing of rebound (i.e., when the incidence first returns above historical thresholds) and linking this timing to the relaxation of intervention measures or changes in population susceptibility \citep{baker2020impact,eden2022off,perofsky2024impacts}.
 While quantifying this timing is useful for public health agencies, epidemic rebound differs from the return to historical dynamics---the rebound marks the initial return of pathogen activity without any information about the subsequent dynamics.
 Instead, we seek to characterize how fast (and whether) a pathogen returns to its pre-pandemic dynamics by utilizing dynamical information after the perturbation.
-% These two concepts have a subtle but important difference.
-% For example, it took more than 3 years for human metapneumovirus to rebound in Hong Kong, but the observed epidemic patterns in 2024 appear similar to the pre-pandemic seasonal mean, suggesting a potential, rapid return to pre-pandemic dynamics within 2 years (Figure 1).
 Measuring this rate of return is useful because it allows us to quantify the ecological resilience of a host-pathogen system, which can inform responses to future interventions \citep{pimm1979structure, neubert1997alternatives,gunderson2000ecological,dakos2022ecological}.
 
 In this study, we lay out theoretical and statistical approaches to characterizing the resilience of a host-pathogen system based on how fast the system recovers from perturbation.
@@ -255,7 +253,6 @@ Specifically, by taking the logged values of pre-pandemic cases $\log(C(t)+1)$ a
 where the delay $\tau$ and embedding dimension $M$ are determined based on autocorrelations and false nearest neighbors, respectively \citep{kennel1992determining,tan2023selecting}.
 Intuitively, Takens’ theorem tells us that, delayed copies of the observed time series preserve the dynamical properties of the underlying multi-dimensional attractor.
 We can then apply the same delay and embedding dimensions to the entire time series to determine its position in multi-dimensional state space (Figure 3D) and measure the nearest neighbor distance between the current state of the system and the empirical pre-pandemic attractor (Figure 3E).
-% Specifically, the nearest neighbor distance is calculated by computing the distance between the current position on the $M$-dimensional space and all points in the empirical attractor set and taking the minimum value.
 In theory, the rate at which the distance from this attractor decreases, which can be estimated by fitting a linear regression on a log scale, provides an empirical measure of pathogen resilience (Figure 3E).
 However, resulting estimates of pathogen resilience can be sensitive to choices about embedding delays and dimensions. 
 Longer delays and higher dimensions tend to smooth out temporal variations in the distance from the attractor (Supplementary Figure S8).
@@ -275,15 +272,9 @@ For illustration purposes, an arbitrary fitting window was chosen.
 }
 \end{figure}
 
-Estimating pathogen resilience from linear regression is sensitive to choices about regression fitting windows (Figure 3E).
-Therefore, we developed an automated window selection criterion for linear regression and tested it against randomized, stochastic simulations across a range of realistic pandemic perturbation shapes.
-We also explored optimal choices for embedding dimensions and fitting window parameters by quantifying correlation coefficients between the estimated resilience and the intrinsic resilience of a seasonally unforced system (Materials and Methods).
-Estimation performances varied widely (correlation coefficients ranging from 0.21 to 0.61), but the automated approach consistently outperformed a naive approach, which relies on all data from peak distance to the present (Supplementary Figure S9).
-
-We then applied the best-performing window selection criterion and embedding dimension to pathogen surveillance data presented in Figure 1 (Materials and Methods).
-For each time series, we applied Takens' theorem independently to reconstruct the empirical attractor and obtained the corresponding time series of distances from attractors (Supplementary Figure S10).
-Then, we fitted a linear regression and estimated the empirical resilience for each pathogen in each country (Supplementary Figure S10).
-The window selection criterion gave poor regression windows in three cases (norovirus in Hong Kong and Korea and rhinovirus/enterovirus in the US), leading to unrealistically low resilience estimates, and so we used ad-hoc regression windows instead (Supplementary Figure S11; Materials and Methods).
+Estimating pathogen resilience from linear regression is sensitive to choices about the windows used to fit the regression (Figure 3E).
+Therefore, we developed an automated window selection criterion for linear regression and validated our criterion, alongside embedding dimensions choices, against simulations (Materials and Methods; Supplementary Results; Supplementary Figure S9).
+We then applied the resulting criterion and embedding dimension to pathogen surveillance data presented in Figure 1 (Materials and Methods; Supplementary Results; Supplementary Figure S10-S11).
 
 For all pathogens we considered, resilience estimates fall between $0.4/\mathrm{year}$ and $1.8/\mathrm{year}$ (Figure 4A).
 We estimated the mean resilience of common respiratory pathogens to be $0.99/\mathrm{year}$ (95\% CI: $0.81/\mathrm{year}$--$1.18/\mathrm{year}$).
@@ -320,13 +311,7 @@ However, there were a few exceptions, including norovirus in Hong Kong and rhino
 These observations suggest a possibility that some common respiratory pathogens may have converged to different attractors or are still exhibiting non-equilibrium dynamics.
 In contrast, pathogens that were predicted to have not returned yet also showed clear differences from their pre-pandemic seasonal averages; as many of these pathogens are predicted to return in 2025--2026, we may be able to test these predictions in near future (Supplementary Figure S12).
 Our reconstructions of distance time series and estimates of pathogen resilience and expected return time were generally robust to choices of embedding dimensions (Supplementary Figure S13--14).
-
-We also evaluated the ability of our approach to make out-of-sample predictions by using observations up to the 26th week of 2023 (Supplementary Figure S15--16).
-This led to greater uncertainty in resilience estimates and corresponding predictions of the expected return time (Supplementary Figure S16A,B).
-The expected and observed return times exhibit weak positive correlation ($\rho=0.36$; 95\% CI: -0.34--0.81), and 7 out of 10 confidence intervals contain the true value (Supplementary Figure S16C).
-We found moderate correlations ($\rho=0.51$; 95\% CI: 0.01--0.80) in predictions for the expected return time between partial regression fits, which rely on observations up to the 26th week of 2023, and full regression fits, which rely on the entire data set (Supplementary Figure S16D);
-this implies consistency in our predictions.
-However, resilience estimates from partial regression fits and full regression fits were weakly correlated ($\rho=0.30$; 95\% CI: -0.23--0.70), demonstrating challenges in estimating pathogen resilience from limited data (Supplementary Figure S16E).
+We found that making out-of-sample predictions were challenging, but still supported consistency in our predictions (Supplementary Results; Supplementary Figure S15--16).
 
 \section*{Susceptible host dynamics explain variation in pathogen resilience}
 
@@ -363,7 +348,6 @@ These perturbations can also arise from demographic stochasticity, which is inhe
 Here, a seasonally unforced SIRS model with constant birth and death rates illustrates that resilience of a host-pathogen system determines the sensitivity to perturbations caused by demographic stochasticity (Figure 6, Materials and Methods).
 Less resilient systems exhibits greater deviations from the deterministic trajectory and slower epidemic cycles (Figure 6A--C). 
 The periodicity of this epidemic cycle matches those predicted by the intrinsic periodicity of the system (Supplementary Figure S17), which is inversely proportional to the intrinsic resilience (Supplementary Figure S18).
-% We note that the interplay between seasonal transmission and intrinsic periodicity can also lead to complex cycles, as illustrated by a recent analysis of \textit{Mycoplasma pneumoniae} dynamics \citep{nielsen2025complex}.
 
 \begin{figure}[!th]
 \begin{center}

@@ -429,6 +429,29 @@ We repeated this procedure 500 times and quantified the correlation between empi
 
 \pagebreak
 
+\section*{Supplementary Results}
+
+\subsection*{Window-selection criteria and choices about embedding dimensions}
+
+We tested our automated window selection criterion against randomized, stochastic simulations across a range of realistic pandemic perturbation shapes.
+We also explored optimal choices for embedding dimensions and fitting window parameters by quantifying correlation coefficients between the estimated resilience and the intrinsic resilience of a seasonally unforced system (Materials and Methods).
+Estimation performances varied widely (correlation coefficients ranging from 0.21 to 0.61), but the automated approach consistently outperformed a naive approach, which relies on all data from peak distance to the present (Supplementary Figure S9).
+
+We then applied the best-performing window selection criterion and embedding dimension to pathogen surveillance data (Materials and Methods).
+For each time series, we applied Takens' theorem independently to reconstruct the empirical attractor and obtained the corresponding time series of distances from attractors (Supplementary Figure S10).
+Then, we fitted a linear regression and estimated the empirical resilience for each pathogen in each country (Supplementary Figure S10).
+The window selection criterion gave poor regression windows in three cases (norovirus in Hong Kong and Korea and rhinovirus/enterovirus in the US), leading to unrealistically low resilience estimates, and so we used ad-hoc regression windows instead (Supplementary Figure S11; Materials and Methods).
+
+\subsection*{Out-of-sample predictions}
+
+This led to greater uncertainty in resilience estimates and corresponding predictions of the expected return time (Supplementary Figure S16A,B).
+The expected and observed return times exhibit weak positive correlation ($\rho=0.36$; 95\% CI: -0.34--0.81), and 7 out of 10 confidence intervals contain the true value (Supplementary Figure S16C).
+We found moderate correlations ($\rho=0.51$; 95\% CI: 0.01--0.80) in predictions for the expected return time between partial regression fits, which rely on observations up to the 26th week of 2023, and full regression fits, which rely on the entire data set (Supplementary Figure S16D);
+this implies consistency in our predictions.
+However, resilience estimates from partial regression fits and full regression fits were weakly correlated ($\rho=0.30$; 95\% CI: -0.23--0.70), demonstrating challenges in estimating pathogen resilience from limited data (Supplementary Figure S16E).
+
+\pagebreak
+
 \section*{Supplementary Figures}
 
 \begin{figure}[!th]
