@@ -233,7 +233,7 @@ These two concepts have a subtle but important difference.
 For example, it took more than 3 years for human metapneumovirus to rebound in Hong Kong, but the observed epidemic patterns in 2024 appear similar to the pre-pandemic seasonal mean, suggesting a possible return to pre-pandemic dynamics, though confirmation may require multiple seasons (Figure 1)}\DIFdelend \DIFaddbegin \DIFadd{by utilizing dynamical information after the perturbation}\DIFaddend .
 Measuring this rate of return is useful because it allows us to quantify the ecological resilience of a host-pathogen system, which can inform responses to future interventions \citep{pimm1979structure, neubert1997alternatives,gunderson2000ecological,dakos2022ecological}.
 
-In this study, we lay out theoretical and statistical approaches to characterizing the resilience of a host-pathogen system based on how fast the system recovers from perturbation.
+In this study, we \DIFdelbegin \DIFdel{lay out }\DIFdelend \DIFaddbegin \DIFadd{explore }\DIFaddend theoretical and statistical approaches to characterizing the resilience of a host-pathogen system based on how fast the system recovers from perturbation.
 We begin by laying out \DIFdelbegin \DIFdel{a few }\DIFdelend representative scenarios that capture the potential \DIFdelbegin \DIFdel{impact }\DIFdelend \DIFaddbegin \DIFadd{impacts }\DIFaddend of pandemic perturbations on endemic pathogen dynamics and illustrate how resilience can be measured by comparing the pre- and post-pandemic dynamics of susceptible and infected hosts.
 In practice, information on susceptible hosts is often unavailable, making this theoretical approach infeasible.
 Instead, we utilize a mathematical technique to reconstruct attractors from the data \citep{takens2006detecting}, which allows us to measure the rate at which the host-pathogen system approaches this empirical attractor after a perturbation;
@@ -339,7 +339,7 @@ in this }\DIFdelend \DIFaddbegin \DIFadd{For }\DIFaddend example, continued tran
 Previously, we relied on the dynamics of susceptible and infected hosts to compute the distance from the attractor (Figure 2), but information on susceptible hosts is rarely available in practice.
 In addition, uncertainties in case counts due to observation error, strain evolution, and multiannual cycles in the observed epidemic dynamics (e.g., adenovirus \DIFdelbegin \DIFdel{circulation patterns }\DIFdelend in Hong Kong and Korea) \DIFdelbegin \DIFdel{add challenges to }\DIFdelend \DIFaddbegin \DIFadd{complicate }\DIFaddend defining pre-pandemic attractors\DIFdelbegin \DIFdel{, which limits our ability to measure the distance from the attractor}\DIFdelend .
 To address these challenges, we can reconstruct an empirical attractor by utilizing Takens' theorem \citep{takens2006detecting}, which states that an attractor of a nonlinear multidimensional system can be mapped onto a delayed embedding (Materials and Methods).
-\DIFdelbegin \DIFdel{For example, we can use delayed }\DIFdelend \DIFaddbegin \DIFadd{Specifically, by taking the }\DIFaddend logged values of pre-pandemic cases \DIFdelbegin \DIFdel{$C(t)$ (Figure 3C) to reconstruct the attractor}\DIFdelend \DIFaddbegin \DIFadd{$\log(C(t)+1)$ and creating delayed copies, Takens' theorem allows us to define the pre-pandemic attractor as a points in an $M$-dimensional space}\DIFaddend :
+\DIFdelbegin \DIFdel{For example, we can use delayed }\DIFdelend \DIFaddbegin \DIFadd{Specifically, by taking the }\DIFaddend logged values of pre-pandemic cases \DIFdelbegin \DIFdel{$C(t)$ (Figure 3C) to reconstruct the attractor}\DIFdelend \DIFaddbegin \DIFadd{$\log(C(t)+1)$ and creating delayed copies, Takens' theorem allows us to define the pre-pandemic attractor as a set of points in an $M$-dimensional space}\DIFaddend :
 \begin{equation}
 \langle\log(C(t)+1), \log(C(t-\tau)+1), \dots, \log(C(t-(M-1)\tau)+1)\rangle,
 \end{equation}
@@ -347,8 +347,7 @@ where the delay $\tau$ and embedding dimension $M$ are determined based on autoc
 \DIFdelbegin \DIFdel{This allows us to define the pre-pandemic attractoras a points on an $M$-dimensional space}\DIFdelend \DIFaddbegin \DIFadd{Intuitively, Takens’ theorem tells us that, delayed copies of the observed time series preserve the dynamical properties of the underlying multi-dimensional attractor}\DIFaddend .
 We can then apply the same delay and embedding dimensions to the entire time series to determine \DIFdelbegin \DIFdel{the }\DIFdelend \DIFaddbegin \DIFadd{its }\DIFaddend position in multi-dimensional state space (Figure 3D) \DIFdelbegin \DIFdel{, which allows us to }\DIFdelend \DIFaddbegin \DIFadd{and }\DIFaddend measure the nearest neighbor distance between the current state of the system and the empirical pre-pandemic attractor (Figure 3E).
 \DIFdelbegin \DIFdel{Specifically, the nearest neighbor distance is calculated by computing the distance between the current position on the $M$-dimensional space and all points in the empirical attractor set and taking the minimum value.
-In theory, we can now quantify how fast this distance decreases }\DIFdelend %DIF >  Specifically, the nearest neighbor distance is calculated by computing the distance between the current position on the $M$-dimensional space and all points in the empirical attractor set and taking the minimum value.
-\DIFaddbegin \DIFadd{In theory, the rate at which the distance from this attractor decreases, which can be estimated }\DIFaddend by fitting a linear regression on a log scale, \DIFdelbegin \DIFdel{where the slope of the linear regression empirically measures pathogen resilience , with a steeper slope corresponding to a higher resilience estimate }\DIFdelend \DIFaddbegin \DIFadd{provides an empirical measure of pathogen resilience }\DIFaddend (Figure 3E).
+In theory, we can now quantify how fast this distance decreases }\DIFdelend \DIFaddbegin \DIFadd{In theory, the rate at which the distance from this attractor decreases, which can be estimated }\DIFaddend by fitting a linear regression on a log scale, \DIFdelbegin \DIFdel{where the slope of the linear regression empirically measures pathogen resilience , with a steeper slope corresponding to a higher resilience estimate }\DIFdelend \DIFaddbegin \DIFadd{provides an empirical measure of pathogen resilience }\DIFaddend (Figure 3E).
 However, resulting estimates of pathogen resilience can be sensitive to choices about embedding delays and dimensions. 
 \DIFdelbegin \DIFdel{For example, using longer }\DIFdelend \DIFaddbegin \DIFadd{Longer }\DIFaddend delays and higher dimensions \DIFdelbegin \DIFdel{tends }\DIFdelend \DIFaddbegin \DIFadd{tend }\DIFaddend to smooth out temporal variations in the distance from the attractor (Supplementary Figure \DIFdelbegin \DIFdel{S6}\DIFdelend \DIFaddbegin \DIFadd{S8}\DIFaddend ).
 
@@ -492,7 +491,6 @@ However, we note that the interplay between seasonal transmission and intrinsic 
 \citep{nielsen2025complex}}\hskip0pt%DIFAUXCMD
 .
 }\DIFdelend \DIFaddbegin \DIFadd{S18).
-%DIF >  We note that the interplay between seasonal transmission and intrinsic periodicity can also lead to complex cycles, as illustrated by a recent analysis of \textit{Mycoplasma pneumoniae} dynamics \citep{nielsen2025complex}.
 }\DIFaddend 
 
 \DIFdelbegin \DIFdel{We also note that the }\DIFdelend \DIFaddbegin \begin{figure}[!th]
@@ -584,8 +582,7 @@ Nonetheless, as illustrated in our sensitivity analyses, inferences about pathog
 Short pre-pandemic time series also limit our ability to accurately reconstruct the attractor and contribute to the crudeness of our resilience estimates\DIFdelbegin \DIFdel{;
 although this is less likely a problem for respiratory pathogens that are strongly annual, our attractor reconstruction may be inaccurate for those exhibiting multi-annual cycles, such as adenovirus in Hong Kong and Korea}\DIFdelend .
 Our framework also does not allow us to distinguish whether a system has settled to a new attractor or is experiencing long-term transient behavior.
-\DIFaddbegin \DIFadd{We cannot rule out the possibility that potential long-term impacts of pandemic perturbations may be caused by changes in testing.
-}
+\DIFaddbegin 
 
 \DIFaddend Uncertainties in pathogen dynamics due to changes in testing patterns further contribute to the crudeness of our resilience estimates.
 \DIFdelbegin %DIFDELCMD < 
@@ -595,6 +592,7 @@ Our framework also does not allow us to distinguish whether a system has settled
 Using the simple SIRS model, we illustrated that susceptible host dynamics are key determinants of pathogen resilience, but we also found that there isn't a one-to-one correspondence between per capita replenishment rate of the susceptible population and pathogen resilience estimates.
 Future studies should explore using mechanistic models to explain heterogeneity in resilience estimates across different pathogens}\DIFdelend \DIFaddbegin \DIFadd{We tried to account for changes in testing patterns by either scaling the case counts (for Canada, Hong Kong, and Korea) or deriving an incidence proxy (for the US).
 We were unable to derive an incidence proxy for Canada and Hong Kong due to instability of the test positivity ratio.
+Therefore, we cannot rule out the possibility the apparent long-term impact of pandemic perturbations may simply reflect changes in testing and reporting patterns, rather than actual changes in the dynamics.
 More stable proxies of incidence (e.g., from wastewater) might be useful in future studies}\DIFaddend .
 
 Finally, our simulation-based analyses primarily focused on single-strain systems, but real-world pathogens can interact with other pathogens, which can result in complex dynamics \citep{rohani2003ecological,nickbakhsh2019virus}.
@@ -776,14 +774,15 @@ I^{\ast} = \frac{(\delta + \mu)(\beta - (\gamma + \mu))}{\beta(\delta + \gamma +
 \end{equation}
 The susceptible replenishment rate is given by
 \begin{equation}
-\tsub{S}{replenish} = \frac{\mu + \delta R}{S^\ast},
+\DIFdelbegin %DIFDELCMD < \tsub{S}{replenish} %%%
+\DIFdelend \DIFaddbegin \DIFadd{r_S }\DIFaddend = \frac{\mu + \delta R}{S^\ast},
 \end{equation}
 where $S^\ast = 1/\mathcal R_0$ represents the equilibrium proportion of susceptible individuals.
 We varied the basic reproduction number $\mathcal R_0$ between 1.1 to 6 and the average duration of immunity $1/\delta$ between 2 to 4 years, and computed these two quantities.
 In doing so, we fixed all other parameters: $\mu=1/80/\mathrm{years}$ and $\gamma=365/7/\mathrm{years}$.
 When infection provides a life-long immunity ($\delta = 0$), the \DIFaddbegin \DIFadd{model collapses to the SIR model and the }\DIFaddend intrinsic resilience is \DIFdelbegin \DIFdel{inversely }\DIFdelend \DIFaddbegin \DIFadd{exactly }\DIFaddend proportional to the susceptible replenishment rate:
 \begin{equation}
--\DIFdelbegin \DIFdel{\frac{\mathrm{Re}(\lambda)}{2} }\DIFdelend \DIFaddbegin \DIFadd{\mathrm{Re}(\lambda) }\DIFaddend = \frac{\mu}{2 S^\ast} = \frac{\tsub{S}{replenish}}{2}.
+-\DIFdelbegin \DIFdel{\frac{\mathrm{Re}(\lambda)}{2} }\DIFdelend \DIFaddbegin \DIFadd{\mathrm{Re}(\lambda) }\DIFaddend = \frac{\mu}{2 S^\ast} = \DIFdelbegin \DIFdel{\frac{\tsub{S}{replenish}}{2}}\DIFdelend \DIFaddbegin \DIFadd{\frac{r_S}{2}}\DIFaddend .
 \end{equation}
 
 Finally, we used a seasonally unforced stochastic SIRS model without demography to understand how pathogen resilience affects sensitivity of the system to demographic stochasticity (see Supplementary Text for the details of the stochastic SIRS model).
